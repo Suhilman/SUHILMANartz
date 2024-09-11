@@ -1,0 +1,55 @@
+:root {
+  --header-bg-color: #f0fdfd;
+  --body-bg-color: #ffffff;
+  --card-bg-color: #f0fdfd;
+  --text-color: #004d40;
+  --tittle-color: #004d40;
+  --icon-color: #00695c;
+  --button-background-color: rgba(0, 172, 193, 0.2);
+  --button-background-color-hover: rgba(0, 171, 193, 0.478);
+  --button-background-color-mobile: rgba(0, 171, 193, 0.751);
+  --button-background-color-hover-mobile: rgb(0, 171, 193);
+  --card-experience: #ffffff;
+  --ProgressBar:#bababa;
+  
+  /* Base font */
+  --base-font: 'Poppins', sans-serif;
+}
+
+[data-theme='dark'] {
+  --header-bg-color: #3b3a3a;
+  --card-bg-color: #1f1f1f;
+  --body-bg-color: #121212;
+  --text-color: #ffffff;
+  --tittle-color: #ffdd57;
+  --icon-color: #ffdd57;
+  --button-background-color: #ffdd573e;
+  --button-background-color-hover: #ffdd5787;
+  --button-background-color-mobile: #ffdd577c;
+  --button-background-color-hover-mobile: #ffdd57cd;
+  --card-experience: #000;
+  --ProgressBar:#3b3a3a;
+
+  /* Dark theme base font (if you want to change it for dark mode) */
+  --base-font: 'Poppins', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--body-bg-color);
+  color: var(--text-color);
+  font-family: var(--base-font);
+}
+
+html, body {
+  overflow-x: hidden; /* Mencegah scroll horizontal secara global */
+}
+
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}

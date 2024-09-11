@@ -1,0 +1,501 @@
+/* Hat */
+.hat {
+    position: absolute;
+    width: 69px;
+    height: 103px;
+    top: 229px;
+    left: 382px;
+    background: var(--red);
+    border: solid 8px var(--black);
+    border-top-right-radius: 100px;
+    border-bottom-right-radius: 100px;
+    border-left: 0;
+    transform: rotate(5deg);
+  }
+  
+  .hat::before {
+    content: "";
+    position: absolute;
+    width: 236px;
+    height: 337px;
+    top: -217px;
+    left: -252px;
+    background: var(--red);
+    border-top: solid 8px var(--black);
+    border-right: solid 8px var(--black);
+    border-left: solid 8px transparent;
+    border-bottom: solid 8px transparent;
+    border-radius: 50%;
+    transform: rotate(-35deg);
+  }
+  
+  .hat::after {
+    content: "";
+    position: absolute;
+    width: 109px;
+    height: 70px;
+    top: -157px;
+    left: -235px;
+    background: var(--white);
+    border: solid 8px var(--black);
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom: 0;
+    transform: rotate(23deg);
+  }
+  
+  /* Hat Lip */
+  .hat-lip {
+    position: absolute;
+    width: 290px;
+    height: 155px;
+    top: 98px;
+    left: 53px;
+    background: var(--black);
+    clip-path: path("M 285,149 C 229,62 164,21 73,2 C -36,-7 -7,77 55,126");
+  }
+  
+  .hat-lip::after {
+    content: "";
+    position: absolute;
+    width: 285px;
+    height: 146px;
+    top: 0;
+    left: 0;
+    background: var(--red);
+    clip-path: path("M 276,160 C 229,85 164,22 73,9 C -31,-2 27,90 60,114");
+  }
+  
+  /* Hat Logo */
+  .hat-logo {
+    position: absolute;
+    width: 110px;
+    height: 90px;
+    top: 66px;
+    left: 159px;
+    background: var(--black);
+    clip-path: polygon(
+      44% 33%,
+      67% 8%,
+      91% 81%,
+      79% 89%,
+      68% 82%,
+      58% 41%,
+      39% 58%,
+      32% 38%,
+      21% 53%,
+      8% 44%,
+      35% 9%
+    );
+  }
+  
+  .hat-logo::before {
+    content: "";
+    position: absolute;
+    width: 110px;
+    height: 90px;
+    top: 0px;
+    left: 0px;
+    background: var(--red);
+    clip-path: polygon(
+      43% 38%,
+      65% 16%,
+      87% 80%,
+      80% 84%,
+      72% 79%,
+      59% 35%,
+      41% 52%,
+      33% 32%,
+      21% 48%,
+      12% 43%,
+      34% 16%
+    );
+  }
+  
+  /* Right Eye */
+  .eye-right {
+    position: absolute;
+    width: 55px;
+    height: 85px;
+    top: 217px;
+    left: 193px;
+    background: var(--white);
+    border: solid 8px var(--black);
+    border-radius: 50%;
+    transform: rotate(16deg);
+  }
+  
+  .eye-right::before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 66px;
+    top: 9px;
+    left: 12px;
+    background: var(--light-blue);
+    border: solid 4px var(--black);
+    border-radius: 50%;
+  }
+  
+  .eye-right::after {
+    content: "";
+    position: absolute;
+    width: 29px;
+    height: 50px;
+    top: 24px;
+    left: 27px;
+    background: var(--black);
+    border-radius: 50%;
+  }
+  
+  /* Right Eye Brow */
+  .eye-brow-right {
+    position: absolute;
+    width: 70px;
+    height: 104px;
+    top: 176px;
+    left: 205px;
+    background: var(--black);
+    border-radius: 50%;
+    transform: rotate(24deg);
+  }
+  
+  .eye-brow-right::before {
+    content: "";
+    position: absolute;
+    width: 74px;
+    height: 87px;
+    top: 26px;
+    left: -2px;
+    background: var(--beige);
+    border-radius: 50%;
+  }
+  
+  /* Left Eye */
+  .eye-left {
+    position: absolute;
+    width: 36px;
+    height: 62px;
+    top: 202px;
+    left: 121px;
+    background: var(--white);
+    border: solid 8px var(--black);
+    border-radius: 50%;
+    transform: rotate(8deg);
+  }
+  
+  .eye-left::before {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 44px;
+    top: 12px;
+    left: 7px;
+    background: var(--light-blue);
+    border: solid 4px var(--black);
+    border-radius: 50%;
+    transform: rotate(0deg);
+  }
+  
+  .eye-left::after {
+    content: "";
+    position: absolute;
+    width: 23px;
+    height: 33px;
+    top: 23px;
+    left: 17px;
+    background: var(--black);
+    border-radius: 50%;
+  }
+  
+  /* Left Eye Brow */
+  .eye-brow-left {
+    position: absolute;
+    width: 48px;
+    height: 88px;
+    top: 162px;
+    left: 121px;
+    background: var(--black);
+    border-radius: 50%;
+  }
+  
+  .eye-brow-left::before {
+    content: "";
+    position: absolute;
+    width: 50px;
+    height: 73px;
+    top: 24px;
+    left: -1px;
+    background: var(--beige);
+    border-radius: 50%;
+  }
+  
+  /* Eye Highlight */
+  .eye-highlight {
+    position: absolute;
+    width: 9px;
+    height: 12px;
+    top: 242px;
+    left: 155px;
+    background: var(--white);
+    border-radius: 50%;
+    transform: rotate(3deg);
+  }
+  
+  .eye-highlight::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 15px;
+    top: 15px;
+    left: 87px;
+    background: var(--white);
+    border-radius: 50%;
+    transform: rotate(3deg);
+  }
+  
+  /* Face */
+  .face {
+    position: absolute;
+    width: 347px;
+    height: 302px;
+    top: 180px;
+    left: 74px;
+    background: var(--black);
+    clip-path: path(
+      "M 0,202 C 0,200 0,240 58,258 C 71,312 161,316 185,274 C 216,277 247,242 246,237 C 246,236 298,271 336,206 C 371,143 316,112 285,118 C 288,112 265,63 262,65 L 248,64 C 235,69 204,29 204,30 C 163,-10 78,-2 60,13 C 35,31 29,59 29,64 Z"
+    );
+  }
+  
+  .face::after {
+    content: "";
+    position: absolute;
+    width: 347px;
+    height: 302px;
+    top: 0;
+    left: 0;
+    background: var(--beige);
+    clip-path: path(
+      "M 12,203 C 15,222 26,234 66,250 C 75,300 156,307 175,266 C 223,267 241,224 241,224 C 267 239 301 244 325 203 C 356 142 311 122 283 131 C 290,144 266,84 252,67 L 251,67 C 235,79 204,53 200,44 C 163,-4 78,2 60,23 C 50,31 43,57 39,68"
+    );
+  }
+  
+  /* Nose */
+  .nose {
+    position: absolute;
+    width: 146px;
+    height: 132px;
+    top: 243px;
+    left: 40px;
+    background: var(--black);
+    clip-path: path("M 130,31.5 C 63,-21 6,-1 0,61 C 0,109 79,178 145,87");
+    /* Take care of Webkit border-radius bug */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+  
+  .nose::after {
+    content: "";
+    position: absolute;
+    width: 146px;
+    height: 132px;
+    top: 0px;
+    left: 00px;
+    background: var(--beige);
+    clip-path: path("M 136,43.5 C 56,-4 25,4 14,60 C 9,108 101,136 146,66");
+  }
+  
+  /* Mustache */
+  .mustache {
+    position: absolute;
+    width: 222px;
+    height: 94px;
+    top: 304px;
+    left: 46px;
+    background: var(--black);
+    clip-path: path(
+      "M 212,3 C 228,18 223,53 191,53 C 191,80 147,86 137,72 C 137,77 125,103 86,83 C 86,90 57,102 44,79 C 45,78 21,85 16,61 C 11,59 0,54 2,27 C 50,101 117,46 137,30 C 140,32 198,17 205,3"
+    );
+  }
+  
+  /* Mouth */
+  .mouth {
+    position: absolute;
+    width: 78px;
+    height: 61px;
+    top: 386px;
+    left: 157px;
+    background: var(--black);
+    border-radius: 10px 5px 81px 70px;
+    transform: rotate(-15deg);
+  }
+  
+  .mouth::before {
+    content: "";
+    position: absolute;
+    width: 62px;
+    height: 17px;
+    top: 5px;
+    left: 9px;
+    background: var(--white);
+    border-radius: 8px 7px 16px 17px;
+  }
+  
+  .mouth::after {
+    content: "";
+    position: absolute;
+    width: 51px;
+    height: 26px;
+    top: 26px;
+    left: 14px;
+    background: var(--red);
+    border-radius: 17px 21px 79px 86px;
+  }
+  
+  /* Sideburn */
+  .sideburn {
+    position: absolute;
+    width: 86px;
+    height: 106px;
+    top: 264px;
+    left: 277px;
+    background: var(--black);
+    clip-path: path(
+      "M 61,0 L 83,46 Q 59,70 53,80 C 45,127 -19,94 10,61 C -13,44 7,16 35,24 Q 55,19 61,0"
+    );
+  }
+  
+  .sideburn::after {
+    content: "";
+    position: absolute;
+    width: 85px;
+    height: 106px;
+    top: 0px;
+    left: 0px;
+    background: var(--brown);
+    clip-path: path(
+      "M 67,7 L 80,39 L 48,73 C 47,113 -13,93 22,63 C 2,54 4,25 37,35 Q 60,27 66,11"
+    );
+  }
+  
+  /* Ear */
+  .ear {
+    position: absolute;
+    width: 65px;
+    height: 45px;
+    top: 341px;
+    left: 334px;
+    border-top: solid 8px var(--black);
+    border-radius: 50%;
+    /* Take care of Webkit border-radius bug */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    transform: rotate(-42deg);
+  }
+  
+  .ear::before {
+    content: "";
+    position: absolute;
+    width: 32px;
+    height: 20px;
+    top: 0px;
+    left: 13px;
+    border-top: solid 5px var(--black);
+    border-radius: 50%;
+    /* Take care of Webkit border-radius bug */
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+    transform: rotate(32deg);
+  }
+  
+  /**************************************/
+  /* Color, Body and Container Settings */
+  /**************************************/
+  
+  /* Color palette using CSS custom properties (variables) */
+  :root {
+    --white: #fefefe;
+    --red: #fe0000;
+    --dark-red: #b80000;
+    --beige: #efcf86;
+    --light-blue: #038dfb;
+    --brown: #490900;
+    --black: #000000;
+  }
+  
+  .containerArt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .character {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 400px;
+    margin-left: 250px;
+    margin-top: -20px;
+    transform: scale(0.7);
+
+    @media (max-width: 768px) {
+        margin-left: -50px;
+    }
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* Allow color pickers to wrap on smaller screens */
+    gap: 20px;
+  }
+  
+  .color-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
+  .color-picker-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    padding: 0;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  .color-picker-circle::-webkit-color-swatch {
+    border-radius: 50%;
+    border: none;
+  }
+  
+  .color-picker-circle::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  
+  
+  .color-row {
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    text-align: center;
+  }
+  
