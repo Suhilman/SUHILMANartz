@@ -9,8 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 // Define tab data with icon and name
 const tabs = [
   { key: 'carPicker', label: 'Car Color Picker', icon: <img src="https://pngimg.com/uploads/volkswagen/volkswagen_PNG1777.png" alt="Car" style={{ width: '50px', height: '30px' }} /> },
-  { key: 'globe', label: 'Globe', icon: <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png" alt="Globe" style={{ width: '30px', height: '30px', marginLeft: '10px' }} /> },
   { key: 'shoes360', label: 'Shoes 360 Viewer', icon: <img src="https://ir.ebaystatic.com/pictures/aw/pics/sneakers/58_c513b4495f.png" alt="Shoes" style={{ width: '50px', height: '30px' }} /> },
+  { key: 'globe', label: 'Globe', icon: <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png" alt="Globe" style={{ width: '30px', height: '30px', marginLeft: '10px' }} /> },
   { key: 'artwork', label: 'Art Work', icon: <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/e68661bc-4ef3-4c17-8f56-2e06183279b3/d8q8eqc-d4be5479-bd0c-4be4-9ee7-7cf2906f947e.png/v1/fill/w_894,h_894/mario_head_by_esmasrico_d8q8eqc-pre.png" alt="Art Work" style={{ width: '50px', height: '50px' }} /> }, // Make sure the URL is correct
 ];
 
@@ -133,6 +133,7 @@ const Animation = () => {
                     boxShadow: selectedTab === tab.key ? '0px 4px 8px rgba(0, 0, 0, 0.2)' : 'none',
                     marginBottom: '10px',
                     borderRadius: '8px',
+                    color:'var(--text-color)'
                   }}
                 >
                   <ListItemIcon>{tab.icon}</ListItemIcon>
@@ -158,6 +159,8 @@ const Animation = () => {
             sx={{
                 backgroundColor: 'var(--card-bg-color)',
                 borderRadius: '8px',
+                color:' var(--text-color)',
+                border: '1px solid var(--text-color)'
             }}
             displayEmpty
             >
