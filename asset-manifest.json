@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/SUHILMANartz/static/css/main.4a247517.css",
-    "main.js": "/SUHILMANartz/static/js/main.5d985bac.js",
+    "main.css": "/SUHILMANartz/static/css/main.b81c5b79.css",
+    "main.js": "/SUHILMANartz/static/js/main.de04b312.js",
     "static/js/453.eb110e93.chunk.js": "/SUHILMANartz/static/js/453.eb110e93.chunk.js",
     "static/media/nadia.png": "/SUHILMANartz/static/media/nadia.4e1f3ea1e539d05013b5.png",
     "static/media/myipmobile.png": "/SUHILMANartz/static/media/myipmobile.de109bd5e08f43dc5808.png",
@@ -24,12 +24,12 @@
     "static/media/artz.png": "/SUHILMANartz/static/media/artz.e78b73ff36a73c7526f6.png",
     "static/media/bdi.png": "/SUHILMANartz/static/media/bdi.d188bf7e32918df1d714.png",
     "index.html": "/SUHILMANartz/index.html",
-    "main.4a247517.css.map": "/SUHILMANartz/static/css/main.4a247517.css.map",
-    "main.5d985bac.js.map": "/SUHILMANartz/static/js/main.5d985bac.js.map",
+    "main.b81c5b79.css.map": "/SUHILMANartz/static/css/main.b81c5b79.css.map",
+    "main.de04b312.js.map": "/SUHILMANartz/static/js/main.de04b312.js.map",
     "453.eb110e93.chunk.js.map": "/SUHILMANartz/static/js/453.eb110e93.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4a247517.css",
-    "static/js/main.5d985bac.js"
+    "static/css/main.b81c5b79.css",
+    "static/js/main.de04b312.js"
   ]
 }
