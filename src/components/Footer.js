@@ -52,6 +52,11 @@ const Footer = () => {
                             </NavLink>
                         </ListItem>
                         <ListItem>
+                            <NavLink to="animation" smooth={true} duration={500}>
+                                Animation
+                            </NavLink>
+                        </ListItem>
+                        <ListItem>
                             <NavLink to="documentation" smooth={true} duration={500}>
                                 Documentation
                             </NavLink>
