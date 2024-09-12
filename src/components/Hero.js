@@ -298,31 +298,25 @@ const Hero = ({ isDarkMode }) => {
                   variants={staggeredItem} // Apply individual item animation
                   whileHover={{ scale: 1.2 }} // Add hover effect to make the item grow
                   transition={{ type: 'spring', stiffness: 300 }}
-                  style={{ display: 'inline-block', margin: '10px' }} // Ensure the links are aligned properly
                 >
-                  {/* Using a regular <a> tag for link behavior */}
-                  <a
+                   <a
                     href={tech.href} // Ensure correct link is used
                     target="_blank" // Open link in new tab
                     rel="noopener noreferrer" // Security measure for external links
                     style={{ textDecoration: 'none', color: 'inherit' }} // Style for no underline and inherited color
                   >
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: { xs: 'center', md: 'flex-start' },
-                      }}
-                    >
-                      {/* Icon */}
-                      <span style={{ marginRight: '10px', marginLeft: '10px' }}>
-                        {tech.icon}
-                      </span>
-                      {/* Link Name */}
-                      <Typography variant="h6" color="inherit">
-                        {tech.name}
-                      </Typography>
-                    </Box>
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: { xs: 'center', md: 'flex-start' },
+                    }}
+                  >
+                    <span style={{ marginRight: '10px', marginLeft: '10px' }}>
+                      {tech.icon}
+                    </span>
+                    <Typography variant="h6">{tech.name}</Typography>
+                  </Box>
                   </a>
                 </motion.div>
               ))}
