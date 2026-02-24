@@ -4,19 +4,65 @@ import { Timeline } from 'antd';
 import { motion } from 'framer-motion';
 import { FaFileDownload } from 'react-icons/fa';
 
+// --- DATA CONFIGURATION ---
+const FORMAL_SKILLS = [
+    { name: 'Communication', level: '90%' },
+    { name: 'Technical Writing', level: '60%' }, 
+    { name: 'System Analysis', level: '90%' },
+    { name: 'Problem Solving', level: '85%' },
+    { name: 'Algorithm & Logic', level: '80%' },
+];
+
+const PROFESSIONAL_SKILLS = [
+    { name: 'React / Next.js/ Vue.js', level: '90%' },
+    { name: 'Flutter / Swift / React Native', level: '60%' },
+    { name: 'UI/UX Design', level: '75%' },
+    { name: 'Laravel / Nest.js / Express.js / PHP', level: '65%' },
+    { name: 'Adobe / Microsoft ', level: '80%' },
+];
+
+const EDUCATION_HISTORY = [
+    { school: 'Pakuan University', major: 'Computer Science', year: '2017 - 2024' },
+    { school: 'SMK WIKRAMA BOGOR', major: 'Software Engineering', year: '2014 - 2017' },
+    { school: 'SMP Negeri 2 Megamendung', major: '', year: '2011 - 2014' },
+    { school: 'SD Negeri Ciawi 03', major: '', year: '2006 - 2011' },
+];
+
+const FILES = [
+    { name: 'CURICULUM VITAE.PDF', size: '2.4 MB', date: 'Sat Feb 25', path: 'CURICULUM VITAE.pdf' },
+    { name: 'PORTOFOLIO.PDF', size: '2.4 MB', date: 'Sat Feb 25', path: 'PORTOFOLIO.pdf' },
+];
+
+const TAGS = [
+    'Organized', 'Protective', 'Practical', 'Hardworking', 'Passionate', 'Punctual',
+    'Figma', 'C++', 'C#', 'CSS', 'Vue.JS', 'Laravel', 'NestJS', 'Next.JS', 
+    'React.JS', 'SwiftUI', 'Flutter', 'JavaScript', 'Microsoft Word', 
+    'Microsoft Excel', 'Ilustrator', 'Premiere Pro', 'Photoshop', 
+    'PHP', 'MySQL', 'Photo & Video Editing', 'Software & Hardware Installation'
+];
+
 const AboutPage = () => {
     const openFile = (filePath) => {
         window.open(filePath, '_blank');
+    };
+
+    // Varian animasi hover untuk digunakan berulang
+    const hoverEffect = {
+        scale: 1.02,
+        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)",
+        transition: { duration: 0.3 }
     };
 
     return (
         <PageContainer>
             <TitlePage>About</TitlePage>
             <AboutSection>
+                {/* PROFILE SECTION */}
                 <ProfileSection
                     as={motion.div}
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
+                    whileHover={hoverEffect} // Efek Zoom
                     transition={{ duration: 0.5 }}
                 >
                     <ProfileImage src={require('../assets/casual.JPG')} alt="Profile" />
@@ -27,15 +73,16 @@ const AboutPage = () => {
                         <InfoList>
                             <InfoItem><strong>Age:</strong> 25</InfoItem>
                             <InfoItem><strong>Status:</strong> Single</InfoItem>
-                            <InfoItem><strong>Address:</strong> Ciawi, Bogor  🇮🇩</InfoItem>
+                            <InfoItem><strong>Address:</strong> Ciawi, Bogor 🇮🇩</InfoItem>
                         </InfoList>
                         <TagContainer>
-                            {['Organized', 'Protective', 'Practical', 'Hardworking', 'Passionate', 'Punctual'].map((tag, index) => (
+                            {TAGS.map((tag, index) => (
                                 <Tag
-                                    key={index}
+                                    key={tag}
                                     as={motion.span}
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
+                                    whileHover={{ scale: 1.1, backgroundColor: 'var(--tittle-color)', color: '#fff' }}
                                     transition={{ duration: 0.3, delay: index * 0.1 }}
                                 >
                                     {tag}
@@ -45,52 +92,37 @@ const AboutPage = () => {
                     </ProfileDetails>
                 </ProfileSection>
 
+                {/* DETAILS SECTION */}
                 <DetailsSection>
                     <CardWrapper>
-                        <Card
-                            as={motion.div}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.2 }}
-                        >
-                            <SectionTitle>Formal</SectionTitle>
-                            <ProgressBar>
-                                <Progress width="60%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="40%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="90%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="50%" />
-                            </ProgressBar>
-                        </Card>
-
-                        <Card
-                            as={motion.div}
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: 0.4 }}
-                        >
-                            <SectionTitle>Professional</SectionTitle>
-                            <ProgressBar>
-                                <Progress width="80%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="90%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="75%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="65%" />
-                            </ProgressBar>
-                            <ProgressBar>
-                                <Progress width="70%" />
-                            </ProgressBar>
-                        </Card>
+                        {[
+                            { title: 'Formal', data: FORMAL_SKILLS, delay: 0.2 },
+                            { title: 'Professional', data: PROFESSIONAL_SKILLS, delay: 0.4 }
+                        ].map((section) => (
+                            <Card
+                                key={section.title}
+                                as={motion.div}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                whileHover={hoverEffect} // Efek Zoom
+                                transition={{ duration: 0.5, delay: section.delay }}
+                            >
+                                <SectionTitle>{section.title}</SectionTitle>
+                                {section.data.map((skill) => (
+                                    <div className="skill-item" key={skill.name}>
+                                        <SkillText>{skill.name}</SkillText>
+                                        <ProgressBar>
+                                            <Progress 
+                                                as={motion.div}
+                                                initial={{ width: 0 }}
+                                                animate={{ width: skill.level }}
+                                                transition={{ duration: 1, delay: section.delay + 0.5 }}
+                                            />
+                                        </ProgressBar>
+                                    </div>
+                                ))}
+                            </Card>
+                        ))}
                     </CardWrapper>
 
                     <CardWrapper>
@@ -98,51 +130,51 @@ const AboutPage = () => {
                             as={motion.div}
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
+                            whileHover={hoverEffect} // Efek Zoom
                             transition={{ duration: 0.5, delay: 0.6 }}
                         >
                             <SectionTitle style={{ marginBottom: '30px' }}>Education</SectionTitle>
                             <TimelineContainer>
-                                <TimelineItem><strong>Pakuan University</strong><br />Computer Sience<br /> (2017 - 2024)</TimelineItem>
-                                <TimelineItem><strong>SMK WIKRAMA BOGOR</strong><br />Software Engineering<br /> (2014 - 2017)</TimelineItem>
-                                <TimelineItem><strong>SMP Negeri 2 Megamendung</strong><br /> (2011 - 2014)</TimelineItem>
-                                <TimelineItem><strong>SD Negeri Ciawi 03</strong><br /> (2006 - 2011)</TimelineItem>
+                                {EDUCATION_HISTORY.map((edu, idx) => (
+                                    <TimelineItem key={idx}>
+                                        <strong>{edu.school}</strong>
+                                        {edu.major && <><br />{edu.major}</>}
+                                        <br /> ({edu.year})
+                                    </TimelineItem>
+                                ))}
                             </TimelineContainer>
                         </Card>
 
                         <ColumnWrapper>
-                            <FileCard
-                                as={motion.div}
-                                whileHover={{ scale: 1.05 }}
-                                onClick={() => openFile(require('../assets/CURICULUM VITAE.pdf'))}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: 0.8 }}
-                            >
-                                <IconContainer>
-                                    <FaFileDownload size={40} color="var(--tittle-color)" />
-                                </IconContainer>
-                                <FileName>CURICULUM VITAE.PDF</FileName>
-                                <FileDetails>
-                                    <FileDate>Sat Feb 25</FileDate> • <FileSize>2.4 MB</FileSize>
-                                </FileDetails>
-                            </FileCard>
-
-                            <FileCard
-                                as={motion.div}
-                                whileHover={{ scale: 1.05 }}
-                                onClick={() => openFile(require('../assets/PORTOFOLIO.pdf'))}
-                                initial={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                transition={{ duration: 0.5, delay: 1 }}
-                            >
-                                <IconContainer>
-                                    <FaFileDownload size={40} color="var(--tittle-color)" />
-                                </IconContainer>
-                                <FileName>PORTOFOLIO.PDF</FileName>
-                                <FileDetails>
-                                    <FileDate>Sat Feb 25</FileDate> • <FileSize>2.4 MB</FileSize>
-                                </FileDetails>
-                            </FileCard>
+                            {FILES.map((file, idx) => (
+                                <FileCard
+                                    key={file.name}
+                                    as={motion.div}
+                                    whileHover={{ 
+                                        scale: 1.05, 
+                                        borderColor: 'var(--tittle-color)',
+                                        boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)"
+                                    }}
+                                    onClick={() => openFile(require(`../assets/${file.path}`))}
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5, delay: 0.8 + (idx * 0.2) }}
+                                >
+                                    <div className="file-content">
+                                        <IconContainer>
+                                            <FaFileDownload size={40} color="var(--tittle-color)" />
+                                        </IconContainer>
+                                        <FileName>{file.name}</FileName>
+                                        <FileDetails>
+                                            <FileDate>{file.date}</FileDate> • <FileSize>{file.size}</FileSize>
+                                        </FileDetails>
+                                    </div>
+                                    <div className="hover-text">
+                                        <FaFileDownload size={40} />
+                                        <span>Click to Download</span>
+                                    </div>
+                                </FileCard>
+                            ))}
                         </ColumnWrapper>
                     </CardWrapper>
                 </DetailsSection>
@@ -151,37 +183,30 @@ const AboutPage = () => {
     );
 };
 
-// Container untuk halaman utama
+// --- STYLED COMPONENTS ---
+
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
 `;
 
-// Title Page
 const TitlePage = styled.h1`
     font-size: 36px;
     color: var(--text-color);
     margin-bottom: 10px;
-    margin-top:80px;
+    margin-top: 80px;
     text-align: center;
 `;
 
-// About Section
 const AboutSection = styled.section`
     display: flex;
     padding: 10px;
-    color: white;
     max-width: 1200px;
     width: 100%;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-        padding: 20px;
-    }
+    @media (max-width: 768px) { flex-direction: column; padding: 20px; }
 `;
 
-// Profile Section
 const ProfileSection = styled.div`
     flex: 1;
     display: flex;
@@ -192,10 +217,8 @@ const ProfileSection = styled.div`
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin-right: 20px;
-    @media (max-width: 768px) {
-        margin-right: 0;
-        margin-bottom: 20px;
-    }
+    cursor: default;
+    @media (max-width: 768px) { margin-right: 0; margin-bottom: 20px; }
 `;
 
 const ProfileImage = styled.img`
@@ -206,48 +229,14 @@ const ProfileImage = styled.img`
     margin-bottom: 20px;
 `;
 
-const ProfileDetails = styled.div`
-    text-align: center;
-`;
+const ProfileDetails = styled.div` text-align: center; `;
+const Name = styled.h1` font-size: 44px; color: var(--text-color); margin-bottom: -20px; `;
+const Title = styled.h2` font-size: 18px; color: var(--tittle-color); margin-bottom: -10px; `;
+const Quote = styled.p` font-style: italic; color: #777; margin-bottom: 20px; `;
+const InfoList = styled.ul` list-style: none; padding: 0; margin-bottom: 20px; text-align: left; `;
+const InfoItem = styled.li` margin-bottom: 10px; color: var(--text-color); `;
 
-const Name = styled.h1`
-    font-size: 44px;
-    color: var(--text-color);
-    margin-bottom: -20px;
-`;
-
-const Title = styled.h2`
-    font-size: 18px;
-    color: var(--tittle-color);
-    margin-bottom: -10px;
-`;
-
-const Quote = styled.p`
-    font-style: italic;
-    color: #777;
-    margin-bottom: 20px;
-`;
-
-const InfoList = styled.ul`
-    list-style: none;
-    padding: 0;
-    margin-bottom: 20px;
-    text-align: left;
-    align-self: center;
-`;
-
-const InfoItem = styled.li`
-    margin-bottom: 10px;
-    color: var(--text-color);
-`;
-
-// Tags
-const TagContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-`;
-
+const TagContainer = styled.div` display: flex; flex-wrap: wrap; justify-content: center; `;
 const Tag = styled.span`
     background-color: var(--button-background-color);
     color: var(--tittle-color);  
@@ -255,9 +244,9 @@ const Tag = styled.span`
     border-radius: 20px;
     margin: 5px;
     font-size: 12px;
+    cursor: pointer;
 `;
 
-// Details Section
 const DetailsSection = styled.div`
     flex: 2;
     display: flex;
@@ -269,10 +258,8 @@ const CardWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 20px;
-
-    @media (max-width: 768px) {
-        flex-direction: column;
-    }
+    gap: 20px;
+    @media (max-width: 768px) { flex-direction: column; }
 `;
 
 const ColumnWrapper = styled.div`
@@ -281,117 +268,68 @@ const ColumnWrapper = styled.div`
     justify-content: space-between;
     flex: 1;
     gap: 10px; 
-    
 `;
 
-// Card
 const Card = styled.div`
     background-color: var(--card-bg-color);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 10px; /* Mengurangi margin bottom pada Card */
     flex: 1;
-    margin-right: 20px;
-
-    &:last-child {
-        margin-right: 0;
-    }
-
-    @media (max-width: 768px) {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
+    cursor: default;
 `;
 
-const SectionTitle = styled.h3`
-    font-size: 20px;
-    color: var(--text-color);
-    margin-bottom: 10px;
-`;
+const SectionTitle = styled.h3` font-size: 20px; color: var(--text-color); margin-bottom: 20px; `;
+const SkillText = styled.p` color: var(--text-color); margin-bottom: 8px; font-size: 14px; font-weight: 500; `;
+const ProgressBar = styled.div` background-color: var(--ProgressBar); border-radius: 10px; margin-bottom: 15px; overflow: hidden; height: 10px; `;
+const Progress = styled.div` background-color: var(--tittle-color); height: 100%; `;
 
-// Progress Bar
-const ProgressBar = styled.div`
-    background-color: var(--ProgressBar);
-    border-radius: 10px;
-    margin-bottom: 10px;
-    overflow: hidden;
-    height: 10px;
-    &:hover {
-        animation: none; /* Disable floating animation on hover */
-        transform: translateY(0px) scale(1.02); 
-    }
-`;
-
-const Progress = styled.div`
-    background-color: var(--tittle-color);
-    width: ${props => props.width || '100%'};
-    height: 100%;
-    &:hover {
-        animation: none; /* Disable floating animation on hover */
-        transform: translateY(0px) scale(1.02); 
-    }
-`;
-
-// Timeline
 const TimelineContainer = styled(Timeline)`
-    padding-left: 0;
     color: var(--text-color);
-    font-size: 20px;
-    .ant-timeline-item-tail {
-        background-color: var(--text-color);
-    }
-
-    .ant-timeline-item-head {
-        border-color: var(--tittle-color);
-    }
+    .ant-timeline-item-tail { border-inline-start: 2px solid var(--text-color) !important; }
+    .ant-timeline-item-head { border-color: var(--tittle-color) !important; background: transparent; }
 `;
 
-const TimelineItem = styled(Timeline.Item)`
-    font-weight: bold;
-    font-size: 20px;
-    padding-left: 0;
-`;
+const TimelineItem = styled(Timeline.Item)` color: var(--text-color) !important; padding-bottom: 20px; `;
 
-// File Card
 const FileCard = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center align horizontally */
-    justify-content: center; /* Center align vertically */
+    align-items: center;
+    justify-content: center;
     padding: 16px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    position: relative;
-    text-align: center; 
+    border-radius: 12px;
+    cursor: pointer;
     border: 2px dashed #777;
-    margin-bottom: 10px; 
     background-color: var(--card-bg-color);
-    height: 200px; /* Adjust this value to increase the height */
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+
+    .file-content { transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; }
+    .hover-text {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s ease;
+        color: var(--tittle-color);
+        font-weight: bold;
+    }
+
+    &:hover {
+        .file-content { opacity: 0; transform: scale(0.9); }
+        .hover-text { opacity: 1; transform: translateY(0); }
+    }
 `;
 
-const IconContainer = styled.div`
-    margin-bottom: 8px;
-`;
-
-const FileName = styled.h3`
-    font-size: 16px;
-    color: var(--text-color);
-    margin: 0;
-`;
-
-const FileDetails = styled.div`
-    font-size: 14px;
-    color: #757575;
-    margin-top: 8px;
-`;
-
-const FileDate = styled.span`
-    margin-right: 4px;
-`;
-
-const FileSize = styled.span`
-    margin-left: 4px;
-`;
+const IconContainer = styled.div` margin-bottom: 8px; `;
+const FileName = styled.h3` font-size: 16px; color: var(--text-color); margin: 0; `;
+const FileDetails = styled.div` font-size: 12px; color: #757575; margin-top: 8px; `;
+const FileDate = styled.span` margin-right: 4px; `;
+const FileSize = styled.span` margin-left: 4px; `;
 
 export default AboutPage;
