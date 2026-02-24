@@ -3,7 +3,7 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Ganti ke 'master' jika itu nama branch utama kamu
+      - main  # Pastikan ini sesuai dengan nama branch utama kamu
 
 permissions:
   contents: write
@@ -20,15 +20,18 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: 'npm'
+          # Baris cache dihapus agar tidak error jika package-lock.json belum di-push
+          # Jika ingin performa lebih cepat, pastikan package-lock.json ada di repo baru aktifkan lagi
 
       - name: Install and Build 🔧
         run: |
           npm install
-          npm run build
+          npm run build --if-present
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: build # Folder hasil build React (CRA)
-          branch: gh-pages # Branch tujuan deployment
+          # Catatan: Jika kamu menggunakan Vite, ganti 'build' menjadi 'dist'
+          # Jika menggunakan Create React App, tetap gunakan 'build'
+          folder: build 
+          branch: gh-pages
