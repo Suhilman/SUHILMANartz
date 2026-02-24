@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Box, Typography, Grid, Stack, FormControl, InputAdornment, InputLabel, OutlinedInput, Link, IconButton } from '@mui/material';
 import { techStack, getSocialLinks, circleBackgrounds, cogIcons, platforms } from './data'; // Import data for tech stack, social links, circle backgrounds, and cogs
-import profile from "../assets/profile.png"; // Ensure this path is correct
+import profile from "../assets/suhilman.png"; // Ensure this path is correct
 import Kemi from "./tittle"; 
 import Bdi from '../assets/bdi.png'; 
 import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'; // Import the double arrow icon
