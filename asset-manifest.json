@@ -1,16 +1,19 @@
 {
   "files": {
     "main.css": "/SUHILMANartz/static/css/main.cc8c0932.css",
-    "main.js": "/SUHILMANartz/static/js/main.3f75c423.js",
+    "main.js": "/SUHILMANartz/static/js/main.ab1d65a1.js",
     "static/js/453.3a829544.chunk.js": "/SUHILMANartz/static/js/453.3a829544.chunk.js",
+    "static/media/moon.gif": "/SUHILMANartz/static/media/moon.879ee2b44190a4411a59.gif",
     "static/media/nadia.png": "/SUHILMANartz/static/media/nadia.4e1f3ea1e539d05013b5.png",
     "static/media/myipmobile.png": "/SUHILMANartz/static/media/myipmobile.de109bd5e08f43dc5808.png",
     "static/media/myip.png": "/SUHILMANartz/static/media/myip.72955129b016b8f12109.png",
     "static/media/casual.JPG": "/SUHILMANartz/static/media/casual.334ba2f1e4268dc7d090.JPG",
     "static/media/PORTOFOLIO.pdf": "/SUHILMANartz/static/media/PORTOFOLIO.3a3ec05d7763e0df0ede.pdf",
+    "static/media/bdi.gif": "/SUHILMANartz/static/media/bdi.e90c608e6c8278aa100d.gif",
     "static/media/CURICULUM VITAE.pdf": "/SUHILMANartz/static/media/CURICULUM VITAE.d0b57fd8fbbe131f54bb.pdf",
     "static/media/viona.png": "/SUHILMANartz/static/media/viona.bf32871f2db23844b728.png",
     "static/media/ai.png": "/SUHILMANartz/static/media/ai.483a887ce11af48b608f.png",
+    "static/media/viona4.png": "/SUHILMANartz/static/media/viona4.61529627fb1930356a3f.png",
     "static/media/suhilman.png": "/SUHILMANartz/static/media/suhilman.476630b2868cbed8c68a.png",
     "static/media/bnp.png": "/SUHILMANartz/static/media/bnp.7b1c78dbc4828ffd445d.png",
     "static/media/nadiamobile.png": "/SUHILMANartz/static/media/nadiamobile.05d5bd459400de4b31ca.png",
@@ -20,16 +23,17 @@
     "static/media/topup.png": "/SUHILMANartz/static/media/topup.dd6d672311b18669c312.png",
     "static/media/backoffice.png": "/SUHILMANartz/static/media/backoffice.137b2a8c4888214b0167.png",
     "static/media/mrt.png": "/SUHILMANartz/static/media/mrt.f82527718c05d9c52c58.png",
+    "static/media/Logo.webp": "/SUHILMANartz/static/media/Logo.1fa3c2f745158bdf81c2.webp",
     "static/media/artzdark.png": "/SUHILMANartz/static/media/artzdark.128f63123b0c3900a1ce.png",
     "static/media/artz.png": "/SUHILMANartz/static/media/artz.e78b73ff36a73c7526f6.png",
     "static/media/bdi.png": "/SUHILMANartz/static/media/bdi.d188bf7e32918df1d714.png",
     "index.html": "/SUHILMANartz/index.html",
     "main.cc8c0932.css.map": "/SUHILMANartz/static/css/main.cc8c0932.css.map",
-    "main.3f75c423.js.map": "/SUHILMANartz/static/js/main.3f75c423.js.map",
+    "main.ab1d65a1.js.map": "/SUHILMANartz/static/js/main.ab1d65a1.js.map",
     "453.3a829544.chunk.js.map": "/SUHILMANartz/static/js/453.3a829544.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc8c0932.css",
-    "static/js/main.3f75c423.js"
+    "static/js/main.ab1d65a1.js"
   ]
 }
