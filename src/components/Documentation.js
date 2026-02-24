@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const Documentation = () => {
   const ITEMS = [
+    { src: require('../assets/document/nmt.png'), alt: 'Project 8' },
     { src: require('../assets/document/nadia.png'), alt: 'Project 1' },
     { src: require('../assets/document/viona.png'), alt: 'Project 2' },
     { src: require('../assets/document/myip.png'), alt: 'Project 3' },
@@ -9,10 +10,9 @@ const Documentation = () => {
     { src: require('../assets/document/myipmobile.png'), alt: 'Project 5' },
     { src: require('../assets/document/bnp.png'), alt: 'Project 6' },
     { src: require('../assets/document/mrt.png'), alt: 'Project 7' },
-    { src: require('../assets/document/nmt.png'), alt: 'Project 8' },
     { src: require('../assets/document/beetpos.png'), alt: 'Project 9' },
     { src: require('../assets/document/backoffice.png'), alt: 'Project 10' },
-    { src: require('../assets/document/topup.png'), alt: 'Project 11' },
+    { src: require('../assets/document/viona4.png'), alt: 'Project 11' },
   ];
 
   const [activeIndex, setActiveIndex] = useState(0);
