@@ -4,18 +4,23 @@ import BasicGlobe from './Animation/Globe';
 import CarColorPicker from './Animation/Car';
 import Car360Viewer from './Animation/360';
 import ArtWork from './Animation/Artwork';
+import DeviceShowcase from './Animation/netflix';
+import DonutLoader from './Animation/donut';
 import MenuIcon from '@mui/icons-material/Menu';
+
 
 // Define tab data with icon and name
 const tabs = [
-  { key: 'carPicker', label: 'Car Color Picker', icon: <img src="https://pngimg.com/uploads/volkswagen/volkswagen_PNG1777.png" alt="Car" style={{ width: '50px', height: '30px' }} /> },
+  { key: 'netflix', label: 'Netflix', icon: <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Netflix_2016_N_logo.svg/250px-Netflix_2016_N_logo.svg.png" alt="Netflix" style={{ marginLeft: '10px', width: '20px', height: '30px' }} /> },
   { key: 'shoes360', label: 'Shoes 360 Viewer', icon: <img src="https://ir.ebaystatic.com/pictures/aw/pics/sneakers/58_c513b4495f.png" alt="Shoes" style={{ width: '50px', height: '30px' }} /> },
+  { key: 'carPicker', label: 'Car Color Picker', icon: <img src="https://pngimg.com/uploads/volkswagen/volkswagen_PNG1777.png" alt="Car" style={{ width: '50px', height: '30px' }} /> },
   { key: 'globe', label: 'Globe', icon: <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png" alt="Globe" style={{ width: '30px', height: '30px', marginLeft: '10px' }} /> },
-  { key: 'artwork', label: 'Art Work', icon: <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/e68661bc-4ef3-4c17-8f56-2e06183279b3/d8q8eqc-d4be5479-bd0c-4be4-9ee7-7cf2906f947e.png/v1/fill/w_894,h_894/mario_head_by_esmasrico_d8q8eqc-pre.png" alt="Art Work" style={{ width: '50px', height: '50px' }} /> }, // Make sure the URL is correct
+  { key: 'circular', label: 'Circular', icon: <img src="https://png.pngtree.com/recommend-works/png-clipart/20240515/ourmid/pngtree-sircle-art-shape-png-image_12449903.png" alt="Globe" style={{ width: '50px', height: '50px' }} /> },
+  { key: 'artwork', label: 'Art Work', icon: <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/e68661bc-4ef3-4c17-8f56-2e06183279b3/d8q8eqc-d4be5479-bd0c-4be4-9ee7-7cf2906f947e.png/v1/fill/w_894,h_894/mario_head_by_esmasrico_d8q8eqc-pre.png" alt="Art Work" style={{ width: '50px', height: '50px' }} /> },
 ];
 
 const Animation = () => {
-  const [selectedTab, setSelectedTab] = useState('carPicker');
+  const [selectedTab, setSelectedTab] = useState('netflix');
 
   const handleTabChange = (tab) => {
     setSelectedTab(tab);
@@ -45,12 +50,16 @@ const Animation = () => {
             />
           </Box>
         );
-      case 'carPicker':
-        return <CarColorPicker />;
+      case 'netflix':
+        return <DeviceShowcase />;
       case 'shoes360':
         return <Car360Viewer />;
+      case 'carPicker':
+        return <CarColorPicker />;
       case 'artwork':
         return <ArtWork />;
+      case 'circular':
+        return <DonutLoader />;
       default:
         return null;
     }
