@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/SUHILMANartz/static/css/main.cc8c0932.css",
-    "main.js": "/SUHILMANartz/static/js/main.324d4bfa.js",
+    "main.js": "/SUHILMANartz/static/js/main.dadc64ad.js",
     "static/js/453.3a829544.chunk.js": "/SUHILMANartz/static/js/453.3a829544.chunk.js",
     "static/media/moon.gif": "/SUHILMANartz/static/media/moon.879ee2b44190a4411a59.gif",
     "static/media/nadia.png": "/SUHILMANartz/static/media/nadia.4e1f3ea1e539d05013b5.png",
@@ -29,11 +29,11 @@
     "static/media/bdi.png": "/SUHILMANartz/static/media/bdi.d188bf7e32918df1d714.png",
     "index.html": "/SUHILMANartz/index.html",
     "main.cc8c0932.css.map": "/SUHILMANartz/static/css/main.cc8c0932.css.map",
-    "main.324d4bfa.js.map": "/SUHILMANartz/static/js/main.324d4bfa.js.map",
+    "main.dadc64ad.js.map": "/SUHILMANartz/static/js/main.dadc64ad.js.map",
     "453.3a829544.chunk.js.map": "/SUHILMANartz/static/js/453.3a829544.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc8c0932.css",
-    "static/js/main.324d4bfa.js"
+    "static/js/main.dadc64ad.js"
   ]
 }
