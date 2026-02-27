@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/SUHILMANartz/static/css/main.cc8c0932.css",
-    "main.js": "/SUHILMANartz/static/js/main.09ee4e4b.js",
+    "main.js": "/SUHILMANartz/static/js/main.c57db365.js",
     "static/js/453.3a829544.chunk.js": "/SUHILMANartz/static/js/453.3a829544.chunk.js",
     "static/media/moon.gif": "/SUHILMANartz/static/media/moon.879ee2b44190a4411a59.gif",
     "static/media/nadia.png": "/SUHILMANartz/static/media/nadia.4e1f3ea1e539d05013b5.png",
@@ -10,7 +10,7 @@
     "static/media/casual.JPG": "/SUHILMANartz/static/media/casual.334ba2f1e4268dc7d090.JPG",
     "static/media/PORTOFOLIO.pdf": "/SUHILMANartz/static/media/PORTOFOLIO.3a3ec05d7763e0df0ede.pdf",
     "static/media/bdi.gif": "/SUHILMANartz/static/media/bdi.e90c608e6c8278aa100d.gif",
-    "static/media/CV-SUHILMAN.pdf": "/SUHILMANartz/static/media/CV-SUHILMAN.df33323934773c944b7c.pdf",
+    "static/media/CURICULUM VITAE.pdf": "/SUHILMANartz/static/media/CURICULUM VITAE.df33323934773c944b7c.pdf",
     "static/media/viona.png": "/SUHILMANartz/static/media/viona.bf32871f2db23844b728.png",
     "static/media/ai.png": "/SUHILMANartz/static/media/ai.483a887ce11af48b608f.png",
     "static/media/viona4.png": "/SUHILMANartz/static/media/viona4.61529627fb1930356a3f.png",
@@ -29,11 +29,11 @@
     "static/media/bdi.png": "/SUHILMANartz/static/media/bdi.d188bf7e32918df1d714.png",
     "index.html": "/SUHILMANartz/index.html",
     "main.cc8c0932.css.map": "/SUHILMANartz/static/css/main.cc8c0932.css.map",
-    "main.09ee4e4b.js.map": "/SUHILMANartz/static/js/main.09ee4e4b.js.map",
+    "main.c57db365.js.map": "/SUHILMANartz/static/js/main.c57db365.js.map",
     "453.3a829544.chunk.js.map": "/SUHILMANartz/static/js/453.3a829544.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.cc8c0932.css",
-    "static/js/main.09ee4e4b.js"
+    "static/js/main.c57db365.js"
   ]
 }
