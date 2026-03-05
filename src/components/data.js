@@ -64,7 +64,7 @@ export const getSocialLinks = (isDarkMode) => [
   {
     icon: <FaLinkedin style={{ color: isDarkMode ? '#0e76a8' : '#0077b5', fontSize: '24px' }} />,
     name: 'LinkedIn',
-    href: 'https://www.linkedin.com/in/suhilman-9ab90a207/',
+    href: 'https://suhilman.github.io/SUHILMANartz',
   },
   {
     icon: (
