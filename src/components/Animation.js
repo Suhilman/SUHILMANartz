@@ -63,22 +63,93 @@ const Animation = () => {
             value={selectedTab}
             onChange={(e) => setSelectedTab(e.target.value)}
             fullWidth
+            size="small"
+            renderValue={(value) => {
+              const t = tabs.find((x) => x.key === value);
+              if (!t) return null;
+              return (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                  <Box
+                    component="img"
+                    src={t.iconUrl}
+                    alt={t.label}
+                    sx={{ width: 22, height: 22, objectFit: 'contain', borderRadius: '6px', flexShrink: 0 }}
+                  />
+                  <Box sx={{ fontWeight: 600, fontSize: 14 }}>{t.label}</Box>
+                </Box>
+              );
+            }}
             sx={{
               backgroundColor: 'var(--card-bg-color)',
+              backdropFilter: 'var(--blur-glass)',
+              WebkitBackdropFilter: 'var(--blur-glass)',
               color: 'var(--text-color)',
-              borderRadius: '12px',
-              '.MuiOutlinedInput-notchedOutline': { borderColor: 'var(--glass-border-strong)' },
+              borderRadius: 'var(--radius-md)',
+              fontFamily: 'var(--font-body)',
+              '.MuiSelect-select': {
+                py: 1.25,
+                px: 1.5,
+                display: 'flex',
+                alignItems: 'center',
+              },
+              '.MuiOutlinedInput-notchedOutline': {
+                borderColor: 'var(--glass-border-strong)',
+                borderWidth: '1px',
+              },
               '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'var(--accent-1)' },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: 'var(--accent-1)',
+                borderWidth: '1px',
+                boxShadow: '0 0 0 3px var(--accent-glow)',
+              },
               '.MuiSvgIcon-root': { color: 'var(--tittle-color)' },
             }}
             MenuProps={{
-              PaperProps: { sx: { backgroundColor: 'var(--card-bg-solid)', color: 'var(--text-color)' } },
+              PaperProps: {
+                sx: {
+                  mt: 1,
+                  backgroundColor: 'var(--card-bg-solid)',
+                  color: 'var(--text-color)',
+                  border: '1px solid var(--glass-border-strong)',
+                  borderRadius: 'var(--radius-md)',
+                  boxShadow: 'var(--shadow-lg)',
+                  '.MuiMenuItem-root': {
+                    py: 1.25,
+                    px: 1.5,
+                    fontFamily: 'var(--font-body)',
+                    fontSize: 14,
+                    borderRadius: '8px',
+                    mx: 0.75,
+                    my: 0.25,
+                    transition: 'background 0.2s, color 0.2s',
+                  },
+                  '.MuiMenuItem-root:hover': {
+                    backgroundColor: 'var(--button-background-color)',
+                    color: 'var(--tittle-color)',
+                  },
+                  '.MuiMenuItem-root.Mui-selected': {
+                    backgroundColor: 'var(--button-background-color)',
+                    color: 'var(--tittle-color)',
+                    fontWeight: 600,
+                  },
+                  '.MuiMenuItem-root.Mui-selected:hover': {
+                    backgroundColor: 'var(--button-background-color-hover)',
+                  },
+                },
+              },
+              transformOrigin: { vertical: 'top', horizontal: 'left' },
+              anchorOrigin: { vertical: 'bottom', horizontal: 'left' },
             }}
           >
             {tabs.map((t) => (
               <MenuItem key={t.key} value={t.key} sx={{ display: 'flex', gap: 1.5 }}>
-                <Box component="img" src={t.iconUrl} alt={t.label} sx={{ width: 24, height: 24 }} />
-                {t.label}
+                <Box
+                  component="img"
+                  src={t.iconUrl}
+                  alt={t.label}
+                  sx={{ width: 22, height: 22, objectFit: 'contain', borderRadius: '6px', flexShrink: 0 }}
+                />
+                <Box sx={{ flex: 1 }}>{t.label}</Box>
               </MenuItem>
             ))}
           </Select>
@@ -124,7 +195,7 @@ const Title = styled.h2`
   font-weight: 700;
   margin: 0;
   color: var(--text-color);
-  .grad { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+  .grad, .grad * { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 `;
 const Sub = styled.p` color: var(--text-muted); margin-top: 12px; font-size: 16px; `;
 
@@ -182,7 +253,11 @@ const ActiveDot = styled(motion.div)`
 
 const Mobile = styled.div`
   display: none;
-  @media (max-width: 968px) { display: block; margin-bottom: 10px; }
+  @media (max-width: 968px) {
+    display: block;
+    margin-bottom: 16px;
+    width: 100%;
+  }
 `;
 
 const Content = styled.div`

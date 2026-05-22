@@ -370,7 +370,7 @@ const Title = styled.h2`
     font-weight: 700;
     margin: 0;
     color: var(--text-color);
-    .grad { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .grad, .grad * { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 `;
 const Sub = styled.p` color: var(--text-muted); margin-top: 12px; font-size: 16px; `;
 
