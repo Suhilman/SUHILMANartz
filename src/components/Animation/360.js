@@ -96,6 +96,7 @@ const Car360Viewer = () => {
       createjs.Ticker.off("tick", tickListener);
       if (rotateIntervalRef.current) clearInterval(rotateIntervalRef.current);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedShoe]);
 
   const update360 = (dir) => {

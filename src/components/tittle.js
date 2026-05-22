@@ -4,7 +4,7 @@ import styled, { keyframes } from "styled-components";
 const Kemi = () => {
   return (
     <Container>
-      <Title>SUHILMAN</Title>
+      <TitleStroke>SUHILMAN</TitleStroke>
       <TitleAnimated>SUHILMAN</TitleAnimated>
     </Container>
   );
@@ -12,74 +12,57 @@ const Kemi = () => {
 
 export default Kemi;
 
-// Styled Components
-
-// Container for centering text and positioning titles
 const Container = styled.div`
   position: relative;
   width: 100%;
   height: auto;
-  text-align: center;
+  text-align: left;
+  @media (max-width: 968px) { text-align: center; }
 `;
 
-// Title styles with responsive font sizes and absolute positioning
-const Title = styled.h2`
-  color: #282828;
-  font-size: 7em;
-  position: absolute;  /* Absolute positioning */
+const baseTitle = `
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.5rem, 8.5vw, 7rem);
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  margin: 0;
+  position: absolute;
   top: 0;
-  left: 50%;
-  transform: translateX(-50%); /* Center horizontally */
-  -webkit-text-stroke: 0.5px var(--tittle-color);
+  left: 0;
+  right: 0;
+  word-break: keep-all;
+  white-space: nowrap;
+  text-align: inherit;
 
-  @media (max-width: 1024px) {
-    font-size: 4em;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 3em;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 2.5em;
+  @media (max-width: 968px) {
+    font-size: clamp(3.5rem, 15vw, 6rem);
+    text-align: center;
   }
 `;
 
-// Keyframes for the animated title
+const TitleStroke = styled.h2`
+  ${baseTitle}
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--tittle-color);
+  opacity: 0.55;
+`;
+
 const animate = keyframes`
-  0%,
-  100% {
-    clip-path: polygon(
-      0% 45%,
-      16% 44%,
-      33% 50%,
-      54% 60%,
-      70% 61%,
-      84% 59%,
-      100% 52%,
-      100% 100%,
-      0% 100%
-    );
+  0%, 100% {
+    clip-path: polygon(0% 45%, 16% 44%, 33% 50%, 54% 60%, 70% 61%, 84% 59%, 100% 52%, 100% 100%, 0% 100%);
   }
-
   50% {
-    clip-path: polygon(
-      0% 60%,
-      15% 65%,
-      34% 66%,
-      51% 62%,
-      67% 50%,
-      84% 45%,
-      100% 46%,
-      100% 100%,
-      0% 100%
-    );
+    clip-path: polygon(0% 60%, 15% 65%, 34% 66%, 51% 62%, 67% 50%, 84% 45%, 100% 46%, 100% 100%, 0% 100%);
   }
 `;
 
-// TitleAnimated inherits styles from Title and adds animation
-const TitleAnimated = styled(Title)`
-  color: var(--tittle-color);
+const TitleAnimated = styled.h2`
+  ${baseTitle}
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   animation: ${animate} 4s ease-in-out infinite;
-  z-index: 1; /* Ensure it's on top of the static Title */
+  z-index: 1;
 `;

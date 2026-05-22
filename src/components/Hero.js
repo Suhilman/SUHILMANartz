@@ -1,421 +1,535 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Grid, Stack, FormControl, InputAdornment, InputLabel, OutlinedInput, Link, IconButton } from '@mui/material';
-import { techStack, getSocialLinks, circleBackgrounds, cogIcons, platforms } from './data'; // Import data for tech stack, social links, circle backgrounds, and cogs
-import profile from "../assets/suhilman.png"; // Ensure this path is correct
-import Kemi from "./tittle"; 
-import Bdi from '../assets/bdi.png'; 
-import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown'; // Import the double arrow icon
+import { Stack } from '@mui/material';
+import { motion } from 'framer-motion';
 import { Link as ScrollLink } from 'react-scroll';
-import { motion } from 'framer-motion'; // Import framer-motion
+import KeyboardDoubleArrowDownIcon from '@mui/icons-material/KeyboardDoubleArrowDown';
+import styled, { keyframes } from 'styled-components';
+
+import { techStack, getSocialLinks, platforms } from './data';
+import profile from '../assets/suhilman.png';
+import Bdi from '../assets/bdi.png';
+import Kemi from './tittle';
+import { Magnetic } from './fx';
+
+const containerVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
+};
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } },
+};
+const fadeUpItem = {
+  hidden: { opacity: 0, y: 16 },
+  show:   { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } },
+};
 
 const Hero = ({ isDarkMode }) => {
   const socialLinks = getSocialLinks(isDarkMode);
-  const fullText = 'PT. Bis Data Indonesia'; // Full text to display
-  const [displayedText, setDisplayedText] = useState(''); // Text that is being typed
-  const [index, setIndex] = useState(0); // Track current index for typing
-  const [reset, setReset] = useState(true); // Toggle animation reset based on scroll
+  const fullText = 'PT. Bis Data Indonesia';
+  const [displayed, setDisplayed] = useState('');
+  const [idx, setIdx] = useState(0);
 
-  // Typing effect for company name
   useEffect(() => {
-    let timeout;
-
-    if (index < fullText.length) {
-      timeout = setTimeout(() => {
-        setDisplayedText((prev) => prev + fullText[index]);
-        setIndex((prev) => prev + 1);
-      }, 100); // Adjust typing speed here (100ms per character)
+    let t;
+    if (idx < fullText.length) {
+      t = setTimeout(() => {
+        setDisplayed((p) => p + fullText[idx]);
+        setIdx((i) => i + 1);
+      }, 90);
     } else {
-      timeout = setTimeout(() => {
-        setDisplayedText('');
-        setIndex(0);
-      }, 1000); // Adjust delay here before restarting the typing effect
+      t = setTimeout(() => { setDisplayed(''); setIdx(0); }, 1500);
     }
-
-    return () => clearTimeout(timeout);
-  }, [index, fullText]);
-
-  // Add scroll event listener to reset animations when scrollY > 500
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollThreshold = window.innerWidth <= 768 ? 1400 : 500; // Set threshold based on screen size
-      if (window.scrollY > scrollThreshold) {
-        setReset(false); // Reset animations
-      } else {
-        setReset(true); // Re-animate when scrolling back up
-      }
-    };
-  
-    window.addEventListener('scroll', handleScroll);
-    
-    // Cleanup function to remove the event listener
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-  
-
-  // Common animation properties
-  const commonVariants = {
-    hidden: { opacity: 0, y: 20 }, // Off-screen and invisible
-    visible: { opacity: 1, y: 0, transition: { duration: 1, ease: 'easeInOut' } },
-  };
-
-  // Staggered animation for tech stack items and social links
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2, // Delay of 0.2s between each child
-      },
-    },
-  };
-
-  const staggeredItem = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-  };
+    return () => clearTimeout(t);
+  }, [idx]);
 
   return (
-    <Box
-      component={motion.div}
-      initial="hidden"
-      animate={reset ? 'visible' : 'hidden'} // Toggle animation based on scroll
-      variants={commonVariants}
-      sx={{
-        position: 'relative',
-        minHeight: '100vh',
-        backgroundColor: 'var(--card-bg-color)',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        padding: '40px',
-        boxShadow: '0 10px 40px rgba(0, 0, 0, 0.1)',
-      }}
-    >
-      {/* Render all circle backgrounds */}
-      {circleBackgrounds.map((circle, index) => {
-        const Component = circle.component;
-        return (
-          <Component
-            key={index}
-            custom={index} // Pass the index to control animation delay
-            initial="hidden"
-            animate={reset ? 'visible' : 'hidden'}
-            variants={{
-              hidden: { opacity: 0, scale: 0 },
-              visible: {
-                opacity: 1,
-                scale: 1,
-                transition: { duration: 0.6, ease: 'easeOut', delay: index * 0.3 },
-              },
-            }}
-          />
-        );
-      })}
+    <HeroWrapper>
+      {/* Decorative blobs */}
+      <Blob style={{ top: '-12%', left: '-8%', background: 'radial-gradient(circle, var(--accent-1) 0%, transparent 60%)' }} />
+      <Blob style={{ bottom: '-15%', right: '-10%', background: 'radial-gradient(circle, var(--accent-2) 0%, transparent 60%)' }} />
+      <Blob style={{ top: '40%', right: '20%', width: 220, height: 220, background: 'radial-gradient(circle, var(--accent-3) 0%, transparent 70%)' }} />
+      <Grid />
 
-      {/* Render all cog icons */}
-      {cogIcons.map((cog, index) => {
-        const Component = cog.component;
-        return (
-          <Component
-            key={index}
-            initial="hidden"
-            animate={reset ? 'visible' : 'hidden'}
-            variants={{
-              hidden: { opacity: 0, rotate: 0 },
-              visible: {
-                opacity: 1,
-                rotate: 360,
-                transition: { duration: 2, ease: 'easeInOut', delay: index * 0.3 },
-              },
-            }}
-            style={{
-              top: cog.top,
-              left: cog.left,
-              width: cog.size,
-              height: cog.size,
-            }}
-          />
-        );
-      })}
+      {/* Active chip — diposisikan di sisi kanan atas hero */}
+      <ChipSlot
+        as={motion.div}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.3 }}
+      >
+        <ActiveBadge>
+          <span className="pulse" /> ACTIVE
+        </ActiveBadge>
+        <ActiveChip>
+          <img src={Bdi} alt="BDI" />
+          <span className="text">{displayed}</span>
+        </ActiveChip>
+      </ChipSlot>
 
-      <Box sx={{ position: 'relative', marginTop: '150px' }}>
-        {/* Company Chip in the top-right corner */}
-        <motion.div variants={commonVariants} initial="hidden" animate={reset ? 'visible' : 'hidden'}>
-          <FormControl
-            sx={{
-              position: 'absolute',
-              top: '-100px',
-              right: { xs: 'unset', md: '16px' },
-              left: { xs: '50%', md: 'unset' },
-              transform: { xs: 'translateX(-50%)', md: 'none' },
-              fontWeight: 'bold',
-              minWidth: '190px',
-            }}
-          >
-            <InputLabel
-              htmlFor="outlined-adornment-amount"
-              sx={{
-                fontSize: '0.8rem',
-                color: 'var(--text-color)',
-              }}
-            >
-              Active
-            </InputLabel>
-            <OutlinedInput
-              id="outlined-adornment-amount"
-              value={displayedText}
-              startAdornment={
-                <InputAdornment position="start">
-                  <img
-                    src={Bdi}
-                    style={{ width: '20px', marginLeft: '10px' }}
-                    alt="PT. Bis Data Indonesia"
-                  />
-                </InputAdornment>
-              }
-              label="Active"
-              sx={{
-                fontSize: '0.8rem',
-                padding: '0',
-                height: '32px',
-                color: 'var(--text-color)',
-                '& .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'var(--text-color)',
-                },
-                '&:hover .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'var(--text-color)',
-                },
-                '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                  borderColor: 'var(--text-color)',
-                },
-              }}
-              inputProps={{
-                readOnly: true,
-              }}
-            />
-          </FormControl>
-        </motion.div>
-
-        {/* Title Section */}
-        <Grid container spacing={2} sx={{ marginBottom: '40px' }}>
-          <Grid item xs={12} md={6} sx={{ textAlign: { xs: 'center', md: 'left' } }}>
-            <motion.div variants={commonVariants} initial="hidden" animate={reset ? 'visible' : 'hidden'}>
-              <Box
-                sx={{
-                  marginLeft: { xs: '0%', md: '-10%' },
-                  marginBottom: { xs: '30%', md: '0px' },
-                  marginTop: { xs: '-55%', md: '-100px' },
-                }}
-              >
-                <Kemi />
-              </Box>
-            </motion.div>
-
-            <motion.div variants={commonVariants} initial="hidden" animate={reset ? 'visible' : 'hidden'}>
-              <Typography
-                variant="h4"  // Keep a fixed variant
-                sx={{
-                  color: 'var(--tittle-color)',
-                  fontWeight: 'bold', // Set to bold
-                  fontSize: { xs: '1.25rem', md: '2.125rem' }, // Responsive font size (h6 for xs, h4 for md)
-                  marginTop: { xs: '55%', md: '30%' }, // Responsive margin-top
-                }}
-              >
-                PROGRAMMER
-              </Typography>
-            </motion.div>
-
-
-            <motion.div variants={commonVariants} initial="hidden" animate={reset ? 'visible' : 'hidden'}>
-              <Typography variant="h6" sx={{ my: 2, color: 'var(--text-color)', mt: 10 }}>
-                {platforms.map((platform, index) => (
-                  <span key={index} style={{ display: 'inline-flex', alignItems: 'center' }}>
-                    <motion.span
-                      whileHover={{ scale: 1.2 }} // Apply hover effect to scale up
-                      transition={{ type: 'spring', stiffness: 300 }} // Smooth spring-like transition
-                      style={{ cursor: 'pointer', marginRight: '8px' }} // Add margin and pointer
-                    >
-                      {platform}
-                    </motion.span>
-                    {index < platforms.length - 1 && <span style={{ marginRight: '8px' }}>|</span>} {/* Add '|' between platforms */}
-                  </span>
-                ))}
-              </Typography>
-            </motion.div>
-
-            {/* Tech Stack Icons */}
-            <Stack
-              direction="row"
-              flexWrap="wrap"
-              justifyContent={{ xs: 'center', md: 'flex-start' }}
-              component={motion.div}
-              variants={staggerContainer}
-              initial="hidden"
-              animate={reset ? 'visible' : 'hidden'}
-            >
-              {techStack.map((tech, index) => (
-                <motion.div
-                  key={index}
-                  variants={staggeredItem} // Apply individual item animation
-                  whileHover={{ scale: 1.2 }} // Add hover effect to make the item grow
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: { xs: 'center', md: 'flex-start' },
-                    }}
-                  >
-                    <span style={{ marginRight: '10px', marginLeft: '10px' }}>
-                      {tech.icon}
-                    </span>
-                    <Typography variant="h6">{tech.name}</Typography>
-                  </Box>
-                </motion.div>
-              ))}
-            </Stack>
-
-            {/* Social Links Icons */}
-            <Typography
-              variant="h6"
-              sx={{ my: 2, color: 'var(--text-color)', mt: 2 }}
-            >
-              Social
-            </Typography>
-            <Stack
-              direction="row"
-              flexWrap="wrap"
-              justifyContent={{ xs: 'center', md: 'flex-start' }}
-              component={motion.div}
-              variants={staggerContainer}
-              initial="hidden"
-              animate={reset ? 'visible' : 'hidden'}
-            >
-              {socialLinks.map((tech, index) => (
-                <motion.div
-                  key={index}
-                  variants={staggeredItem} // Apply individual item animation
-                  whileHover={{ scale: 1.2 }} // Add hover effect to make the item grow
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                   <a
-                    href={tech.href} // Ensure correct link is used
-                    target="_blank" // Open link in new tab
-                    rel="noopener noreferrer" // Security measure for external links
-                    style={{ textDecoration: 'none', color: 'inherit' }} // Style for no underline and inherited color
-                  >
-                  <Box
-                    sx={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: { xs: 'center', md: 'flex-start' },
-                    }}
-                  >
-                    <span style={{ marginRight: '10px', marginLeft: '10px' }}>
-                      {tech.icon}
-                    </span>
-                    <Typography variant="h6">{tech.name}</Typography>
-                  </Box>
-                  </a>
-                </motion.div>
-              ))}
-            </Stack>
-          </Grid>
-        </Grid>
-      </Box>
-      
-      {/* Right Section: Profile Image */}
-      <Box
-        component={motion.div}
+      <Container
+        as={motion.div}
+        variants={containerVariants}
         initial="hidden"
-        animate={reset ? 'visible' : 'hidden'}
-        variants={commonVariants}
-        transition={{ duration: 1, ease: 'easeInOut', delay: 2 }}
-        sx={{
-          position: { xs: 'static', md: 'absolute' },
-          bottom: { xs: 'unset', md: -40 },
-          right: { xs: 'unset', md: 0 },
-          padding: { xs: '0', md: '20px' },
-          mt: { xs: 4, md: 0 },
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+        animate="show"
       >
-        <Box
-          component="img"
-          src={profile}
-          alt="Programmer"
-          sx={{
-            width: '500px',
-            height: 'auto',
-            marginBottom: { xs: '-100px', md: 'unset' },
-            zIndex: '99',
-            animation: 'float 4s ease-in-out infinite',
-            '&:hover': {
-              width: '510px',  // Increase width on hover
-            },
-            '@keyframes float': {
-              '0%': {
-                transform: 'translateY(0px)',
-              },
-              '50%': {
-                transform: 'translateY(-10px)',
-              },
-              '100%': {
-                transform: 'translateY(0px)',
-              },
-            },
-          }}
-        />
-      </Box>
+        <Left>
+          <span style={{ display: 'none' }}>
+            <img src={Bdi} alt="BDI" />
+            <span>{displayed || ' '}</span>
+          </span>
 
-      {/* Scroll Button */}
-      <ScrollLink
-        to="about"
-        smooth={true}
-        duration={500}
-        spy={true}
-        activeClass="active"
-      >
-        <motion.div
-          initial="hidden"
-          animate={reset ? 'visible' : 'hidden'}
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { duration: 0.5, delay: 0.3 } },
-          }}
-        >
-          <IconButton
-            sx={{
-              position: 'absolute',
-              bottom: '20px',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              zIndex: 1000,
-              boxShadow: '3px 5px 5px rgba(0, 0, 0, 0.2)',
-              backgroundColor: 'var(--button-background-color)',
-              transition: 'background-color 0.3s ease, transform 0.3s ease',
-              '&:hover': {
-                backgroundColor: 'var(--button-background-color-hover)',
-                transform: 'translateX(-50%) scale(1.1)',
-              },
-              '@media (max-width: 768px)': {
-                backgroundColor: 'var(--button-background-color-mobile)',
-                '&:hover': {
-                  backgroundColor: 'var(--button-background-color-hover-mobile)',
-                  transform: 'translateX(-50%) scale(1.1)',
-                },
-              },
-            }}
+          {/* Big name */}
+          <motion.div variants={fadeUp} style={{ marginTop: 2 }}>
+            <NameBlock>
+              <Kemi />
+            </NameBlock>
+          </motion.div>
+
+          {/* Description */}
+          <motion.div variants={fadeUp}>
+            <Description>
+              Software engineer yang membangun pengalaman digital modern —
+              dari dashboard monitoring jaringan satelit hingga aplikasi mobile
+              yang dipakai harian.
+            </Description>
+          </motion.div>
+
+          {/* Platforms */}
+          <motion.div variants={fadeUp}>
+            <Platforms>
+              {platforms.map((p, i) => (
+                <React.Fragment key={p}>
+                  <motion.span whileHover={{ y: -2, color: 'var(--tittle-color)' }}>{p}</motion.span>
+                  {i < platforms.length - 1 && <em>·</em>}
+                </React.Fragment>
+              ))}
+            </Platforms>
+          </motion.div>
+
+          {/* CTA */}
+          <motion.div variants={fadeUp}>
+            <CTARow>
+              <Magnetic strength={0.4}>
+                <CTAPrimary to="documentation" smooth duration={600} offset={-60}>
+                  View Documentation →
+                </CTAPrimary>
+              </Magnetic>
+            </CTARow>
+          </motion.div>
+
+          {/* Tech stack */}
+          <motion.div variants={fadeUp}>
+            <SectionLabel>Tech Stack</SectionLabel>
+          </motion.div>
+          <Stack
+            component={motion.div}
+            variants={containerVariants}
+            direction="row" flexWrap="wrap" gap={1}
+            justifyContent={{ xs: 'center', md: 'flex-start' }}
+            sx={{ mt: 1 }}
           >
-            <KeyboardDoubleArrowDownIcon fontSize="large" sx={{ color: 'var(--tittle-color)' }} />
-          </IconButton>
-        </motion.div>
-      </ScrollLink>
-    </Box>
+            {techStack.map((t, i) => (
+              <TechChip key={i} as={motion.div} variants={fadeUpItem} whileHover={{ y: -3, scale: 1.04 }}>
+                {t.icon}
+                <span>{t.name}</span>
+              </TechChip>
+            ))}
+          </Stack>
+
+          {/* Social */}
+          <motion.div variants={fadeUp}>
+            <SectionLabel>Social</SectionLabel>
+          </motion.div>
+          <Stack
+            component={motion.div}
+            variants={containerVariants}
+            direction="row" flexWrap="wrap" gap={1}
+            justifyContent={{ xs: 'center', md: 'flex-start' }}
+            sx={{ mt: 1, mb: 4 }}
+          >
+            {socialLinks.map((s, i) => (
+              <SocialLink
+                key={i}
+                href={s.href}
+                target="_blank" rel="noopener noreferrer"
+                as={motion.a}
+                variants={fadeUpItem}
+                whileHover={{ y: -3, scale: 1.04 }}
+              >
+                {s.icon}
+                <span>{s.name}</span>
+              </SocialLink>
+            ))}
+          </Stack>
+        </Left>
+
+        <Right>
+          <ProfileWrap as={motion.div} variants={fadeUp}>
+            <Ring1 />
+            <Ring2 />
+            <Glow />
+            <ProfileImage src={profile} alt="Suhilman" />
+          </ProfileWrap>
+
+          <ScrollHint>
+            <ScrollLink to="about" smooth duration={500} offset={-60}>
+              <ScrollPill
+                as={motion.div}
+                animate={{ y: [0, 8, 0] }}
+                transition={{ repeat: Infinity, duration: 1.7, ease: 'easeInOut' }}
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.96 }}
+              >
+                <span className="label">Scroll Down</span>
+                <KeyboardDoubleArrowDownIcon sx={{ fontSize: 28, color: 'var(--tittle-color)' }} />
+              </ScrollPill>
+            </ScrollLink>
+          </ScrollHint>
+        </Right>
+      </Container>
+    </HeroWrapper>
   );
 };
 
 export default Hero;
+
+/* ---------- styled ---------- */
+
+const float = keyframes`
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-14px); }
+`;
+
+const rotate = keyframes`
+  to { transform: rotate(360deg); }
+`;
+
+const HeroWrapper = styled.section`
+  position: relative;
+  min-height: 100vh;
+  padding: 96px 6vw 60px;
+  overflow: hidden;
+  isolation: isolate;
+  @media (max-width: 968px) {
+    padding: 96px 5vw 60px;
+    min-height: auto;
+  }
+`;
+
+const Blob = styled.div`
+  position: absolute;
+  width: 380px; height: 380px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  z-index: -1;
+  animation: ${float} 8s ease-in-out infinite;
+`;
+
+const Grid = styled.div`
+  position: absolute; inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(var(--glass-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--glass-border) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  opacity: 0.4;
+`;
+
+const Container = styled.div`
+  position: relative;
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 60px;
+  align-items: center;
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+`;
+
+const Left = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+`;
+
+const ChipSlot = styled.div`
+  position: absolute;
+  top: 88px;
+  right: 6vw;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media (max-width: 968px) {
+    position: relative;
+    top: auto; right: auto;
+    align-items: center;
+    margin: 0 0 4px;
+    padding: 0 5vw;
+  }
+`;
+
+const pulseDot = keyframes`
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(34,197,94,0.6); }
+  50%      { transform: scale(1.2); opacity: 0.9; box-shadow: 0 0 0 6px rgba(34,197,94,0); }
+`;
+
+const ActiveBadge = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  margin-bottom: 6px;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  line-height: 1;
+  width: fit-content;
+
+  .pulse {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    animation: ${pulseDot} 1.6s ease-in-out infinite;
+  }
+  @media (max-width: 968px) { align-self: center; margin-left: auto; margin-right: auto; }
+`;
+
+const ActiveChip = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px 5px 6px;
+  min-height: 28px;
+  min-width: 200px;
+  border: 1px solid var(--glass-border);
+  background: var(--card-bg-color);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  align-self: flex-start;
+  img  { width: 18px; height: 18px; border-radius: 50%; object-fit: cover; }
+  .text { color: var(--text-color); font-weight: 500; }
+  @media (max-width: 968px) { align-self: center; }
+`;
+
+const NameBlock = styled.div`
+  position: relative;
+  min-height: clamp(56px, 9.5vw, 110px);
+  margin-bottom: 8px;
+  @media (max-width: 968px) {
+    min-height: clamp(64px, 15vw, 100px);
+    margin-bottom: 12px;
+  }
+`;
+
+const Description = styled.p`
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 560px;
+  margin: 4px 0 0;
+  @media (max-width: 968px) { margin: 4px auto 0; }
+`;
+
+const Platforms = styled.div`
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  span { cursor: pointer; transition: color 0.2s, transform 0.2s; }
+  em   { color: var(--accent-2); font-style: normal; }
+  @media (max-width: 968px) { justify-content: center; }
+`;
+
+const CTARow = styled.div`
+  display: flex; flex-wrap: wrap; gap: 12px;
+  margin-top: 8px;
+  @media (max-width: 968px) { justify-content: center; }
+`;
+
+const CTAPrimary = styled(ScrollLink)`
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 14px 28px;
+  background: var(--gradient-primary);
+  color: #fff;
+  font-weight: 600; font-size: 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: var(--shadow-neon);
+  transition: transform 0.25s, box-shadow 0.25s;
+  &:hover { transform: translateY(-2px); box-shadow: 0 0 32px var(--accent-glow); }
+`;
+
+const SectionLabel = styled.div`
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 1px;
+    background: var(--gradient-primary);
+    margin-right: 10px;
+    vertical-align: middle;
+  }
+  @media (max-width: 968px) {
+    text-align: center;
+  }
+`;
+
+const TechChip = styled.div`
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  background: var(--card-bg-color);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--text-color);
+  cursor: default;
+  transition: all 0.25s;
+  svg { color: var(--tittle-color); font-size: 16px; }
+  &:hover { border-color: var(--accent-1); box-shadow: 0 0 12px var(--accent-glow); }
+`;
+
+const SocialLink = styled.a`
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: var(--card-bg-color);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  font-size: 13px; font-weight: 500;
+  color: var(--text-color) !important;
+  text-decoration: none;
+  transition: all 0.25s;
+  span { color: var(--text-color); }
+  & > *:first-child { display: inline-flex; align-items: center; font-size: 18px; }
+  & > *:first-child img { width: 18px !important; height: 18px !important; margin: 0 !important; }
+  &:hover { border-color: var(--accent-1); box-shadow: 0 0 12px var(--accent-glow); transform: translateY(-2px); }
+`;
+
+const Right = styled.div`
+  position: relative;
+  display: flex; justify-content: center; align-items: center;
+  min-height: 380px;
+  @media (max-width: 968px) {
+    flex-direction: column;
+    min-height: auto;
+    gap: 0;
+  }
+`;
+
+const ProfileWrap = styled.div`
+  position: relative;
+  width: clamp(280px, 36vw, 460px);
+  aspect-ratio: 1 / 1;
+  display: flex; align-items: center; justify-content: center;
+`;
+
+const Ring1 = styled.div`
+  position: absolute; inset: 0;
+  border: 2px dashed var(--accent-1);
+  border-radius: 50%;
+  opacity: 0.35;
+  animation: ${rotate} 24s linear infinite;
+`;
+const Ring2 = styled.div`
+  position: absolute; inset: 8%;
+  border: 1px dashed var(--accent-2);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: ${rotate} 18s linear infinite reverse;
+`;
+const Glow = styled.div`
+  position: absolute; inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-1) 0%, transparent 70%);
+  opacity: 0.35;
+  filter: blur(30px);
+  animation: ${float} 6s ease-in-out infinite;
+`;
+const ProfileImage = styled.img`
+  position: relative;
+  z-index: 1;
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  animation: ${float} 5s ease-in-out infinite;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+`;
+
+const ScrollHint = styled.div`
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 3;
+  & > a { display: inline-block; text-decoration: none; }
+  @media (max-width: 968px) {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    margin-top: -72px;
+    z-index: 5;
+    & > a { display: inline-block; }
+  }
+`;
+
+const ScrollPill = styled.div`
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 28px;
+  background: var(--card-bg-color);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  border: 2px solid var(--accent-1);
+  border-radius: 999px;
+  box-shadow: 0 0 28px var(--accent-glow);
+  color: var(--text-color);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: box-shadow 0.25s, border-color 0.25s;
+  .label { color: var(--text-color); }
+  &:hover {
+    box-shadow: 0 0 44px var(--accent-glow);
+    border-color: var(--accent-2);
+  }
+  @media (max-width: 968px) {
+    font-size: 13px;
+    padding: 12px 24px;
+    gap: 12px;
+  }
+`;

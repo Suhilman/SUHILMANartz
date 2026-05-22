@@ -1,619 +1,540 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Timeline, Card } from 'antd';
-import { FaChevronDown, FaChevronUp, FaCrosshairs, FaBars } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaChevronDown, FaChevronUp, FaCrosshairs, FaMapMarkerAlt, FaBriefcase } from 'react-icons/fa';
+import { RevealWords } from './fx';
 import { MapContainer, TileLayer, Marker, Popup, useMap, Polyline } from 'react-leaflet';
-import LocationCard from './Location'; 
+import LocationCard from './Location';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { getDistance } from 'geolib';
 
 const userLocationIcon = new L.DivIcon({
-    html: `<div style="background-color: green; border-radius: 50%; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center;">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24px" height="24px">
-                    <path d="M4.27 12L12 4.27L19.73 12H14V19H10V12H4.27Z"/>
-                </svg>
+    html: `<div style="background:#22c55e;border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px rgba(34,197,94,0.3),0 0 20px rgba(34,197,94,0.6);">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M4.27 12L12 4.27L19.73 12H14V19H10V12H4.27Z"/></svg>
            </div>`,
     className: '',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40]
+    iconSize: [32, 32],
+    iconAnchor: [16, 32],
 });
 
-const redIcon = new L.Icon({
-    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
-    iconSize: [25, 41], 
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34], 
-    shadowSize: [41, 41]
+const redIcon = new L.DivIcon({
+    html: `<div style="background:#ef4444;border-radius:50% 50% 50% 0;transform:rotate(-45deg);width:30px;height:30px;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px rgba(239,68,68,0.3),0 0 16px rgba(239,68,68,0.6);">
+              <div style="transform:rotate(45deg);color:white;font-size:14px;">●</div>
+           </div>`,
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
 });
 
 const BackToCenterButton = ({ center }) => {
     const map = useMap();
-    const handleClick = () => {
-        if (center) {
-            map.setView(center, 13); 
-        }
-    };
-
     return (
-        <Button onClick={handleClick}>
-            <FaCrosshairs size={24} />
-        </Button>
+        <MapBtn onClick={() => center && map.setView(center, 13)}>
+            <FaCrosshairs size={16} />
+        </MapBtn>
     );
 };
 
-const AutoFitBounds = ({ userLocation, centerPosition }) => {
+const AutoFitBounds = ({ userLocation, CENTER_POSITION }) => {
     const map = useMap();
-    
     useEffect(() => {
-        if (userLocation && centerPosition) {
-            const bounds = L.latLngBounds([userLocation, centerPosition]);
-
-            // Check if the screen width is mobile-sized
+        if (userLocation && CENTER_POSITION) {
+            const bounds = L.latLngBounds([userLocation, CENTER_POSITION]);
             const isMobile = window.innerWidth <= 768;
-
-            // Apply different padding for mobile and desktop
             map.fitBounds(bounds, {
-                paddingTopLeft: isMobile ? [50, 50] : [200, 50], // On mobile, use less offset, otherwise, offset to the right
-                paddingBottomRight: [50, 50], // You can adjust this padding as needed
-                maxZoom: 10, // Control maximum zoom level
-                animate: true, // Enable smooth zooming and transition
-                duration: 1.0 // Duration of the animation
+                paddingTopLeft: isMobile ? [40, 40] : [180, 40],
+                paddingBottomRight: [40, 40],
+                maxZoom: 10,
+                animate: true,
+                duration: 1,
             });
         }
-    }, [userLocation, centerPosition, map]);
-
+    }, [userLocation, CENTER_POSITION, map]);
     return null;
 };
 
+const CENTER_POSITION = [-6.659333, 106.850664];
+
+const EXPERIENCES = [
+    {
+        company: 'PT. BIS DATA INDONESIA',
+        role: 'Front End Developer',
+        period: '08/2023 – Present',
+        positions: [
+            {
+                title: 'Network Monitoring System — HUB Satelit SATRIA-1 BAKTI KOMINFO (Jayapura)',
+                bullets: [
+                    'Mobile & Web Development',
+                    'UI/UX Design',
+                    'Device data analysis (FORTIGATE, HUAWEI SWITCH CORE, HPE Proliant) in Jayapura',
+                    'Implementation of NADIA App',
+                    'User research, usability testing & collaboration with back-end team',
+                    'JWT & REST API implementation, Scrum SDLC',
+                ],
+                tech: 'JavaScript, Next.js, MUI, Cloudflare, Termius, GitHub, Figma, Photoshop, Google Maps API, REST API',
+            },
+            {
+                title: 'Network Monitoring System — HUB BAKTI KOMINFO (Jayapura, Manokwari, Timika)',
+                bullets: [
+                    'Mobile & Web Development',
+                    'UI/UX Design',
+                    'Device data analysis (FORTIGATE, HUAWEI SWITCH CORE, HPE Proliant)',
+                    'Implementation of VIONA App',
+                    'JWT & REST API implementation, Scrum SDLC',
+                ],
+                tech: 'JavaScript, Next.js, MUI, Cloudflare, Termius, GitHub, Figma, REST API',
+            },
+            {
+                title: 'LOOKUP IP — Internal NOC',
+                bullets: [
+                    'Create new feature LNM (Landscape Monitoring System)',
+                    'Monitor & maintain AWS infrastructure',
+                    'Weekly meeting & progress report to Bakti Kominfo',
+                    'Fix bugs in VionaApp, deploy to staging & production',
+                ],
+                tech: 'Node.js, React.js, Termius, Google Maps API, REST API, GitHub',
+            },
+            {
+                title: 'ARTZ HR — Internal Human Resource Platform',
+                bullets: [
+                    'Built end-to-end HR platform: attendance, payroll, leave & employee directory',
+                    'Designed RESTful backend in Dart with the Frog framework',
+                    'PostgreSQL schema design, migrations & query optimization',
+                    'Cross-platform Flutter mobile + web client',
+                    'JWT authentication, role-based access control & audit logs',
+                ],
+                tech: 'Dart, Flutter, Frog, PostgreSQL, REST API, Figma, GitHub',
+            },
+            {
+                title: 'BDI Chat — Internal Real-Time Messaging',
+                bullets: [
+                    'Real-time chat for internal team with channels, DMs & file sharing',
+                    'Backend with Dart + Frog over WebSocket for low-latency messaging',
+                    'PostgreSQL for persistence with full-text search',
+                    'Flutter client (mobile + desktop) with offline cache',
+                    'Push notifications & read-receipts',
+                ],
+                tech: 'Dart, Flutter, Frog, WebSocket, PostgreSQL, REST API, GitHub',
+            },
+        ],
+    },
+    {
+        company: 'PT. Life Tech Tanpa Batas',
+        role: 'Front End Developer',
+        period: '08/2021 – 08/2023',
+        positions: [
+            {
+                title: 'POS (Point of Sale) — BeetPOS',
+                bullets: [
+                    'UI/UX design & develop Backoffice BeetPOS App',
+                    'Fix payment method issues',
+                    'Integrate with Tokopedia, Shopee, QRIS',
+                    'Code review & deploy to production',
+                ],
+                tech: 'React.js, REST API, Figma, Photoshop, GitHub',
+            },
+            {
+                title: 'POS (Point of Sale) — BeetClinic',
+                bullets: [
+                    'UI/UX design & develop BeetClinic App',
+                    'Integrate marketplace & QRIS payment',
+                ],
+                tech: 'Vue.js, Vuetify, REST API, Figma, GitHub',
+            },
+            {
+                title: 'CRM — MRT',
+                bullets: ['UI/UX design & develop MRT App', 'Integrate marketplace & payment'],
+                tech: 'Vue.js, Vuetify, REST API, Figma, GitHub',
+            },
+        ],
+    },
+    {
+        company: 'Cave Laundry',
+        role: 'Full Stack Developer',
+        period: '12/2020 – 03/2021',
+        positions: [
+            {
+                title: 'Cashier — Cashier Cave Laundry',
+                bullets: [
+                    'Built cashier app with real-time chat via WebSocket',
+                    'Deploy to staging & production',
+                    'Design low-latency, high-availability app',
+                ],
+                tech: 'Bootstrap, Laravel, MySQL, jQuery',
+            },
+        ],
+    },
+];
 
 const Experience = ({ isDarkMode }) => {
-    const [openSections, setOpenSections] = useState({});
-    const [timelineMode, setTimelineMode] = useState('alternate');
+    const [openSections, setOpenSections] = useState({ 0: true });
     const [userLocation, setUserLocation] = useState(null);
     const [routeCoordinates, setRouteCoordinates] = useState([]);
-    const [isMobile, setIsMobile] = useState(false);
-    const [showLocationCard, setShowLocationCard] = useState(false);
+    const [isMobile, setIsMobile] = useState(typeof window !== 'undefined' && window.innerWidth <= 768);
     const [isLoading, setIsLoading] = useState(true);
-    const [address, setAddress] = useState("");
-    const [distance, setDistance] = useState(null); // To store the calculated distance
-    const [travelTime, setTravelTime] = useState(null); // To store travel time
+    const [address, setAddress] = useState('');
+    const [distance, setDistance] = useState(null);
+    const [travelTime, setTravelTime] = useState(null);
 
-    const toggleSection = (index) => {
-        setOpenSections((prev) => ({
-            ...prev,
-            [index]: !prev[index],
-        }));
-    };
+    const toggleSection = (i) => setOpenSections((p) => ({ ...p, [i]: !p[i] }));
 
     useEffect(() => {
-        const handleResize = () => {
-            setTimelineMode(window.innerWidth <= 768 ? 'left' : 'alternate');
-            setIsMobile(window.innerWidth <= 768);
-        };
-
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        
-        return () => window.removeEventListener('resize', handleResize);
+        const onResize = () => setIsMobile(window.innerWidth <= 768);
+        onResize();
+        window.addEventListener('resize', onResize);
+        return () => window.removeEventListener('resize', onResize);
     }, []);
 
+    // Fetch user location + route + reverse-geocode with safe fallbacks
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setUserLocation([latitude, longitude]);
-                    fetchRoute([longitude, latitude], centerPosition); // Fetch route and travel time
-                },
-                (error) => {
-                    console.error("Error getting location: ", error);
-                    setIsLoading(false);
-                }
-            );
-        } else {
-            console.error("Geolocation not supported");
-            setIsLoading(false);
-        }
+        if (!navigator.geolocation) { setIsLoading(false); return; }
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const { latitude, longitude } = pos.coords;
+                const userPos = [latitude, longitude];
+                setUserLocation(userPos);
+
+                // 1) Distance (geolib — always available, no network)
+                const km = getDistance(
+                    { latitude, longitude },
+                    { latitude: CENTER_POSITION[0], longitude: CENTER_POSITION[1] }
+                ) / 1000;
+                setDistance(km);
+
+                // 2) Travel-time fallback estimate (~30 km/h average city speed)
+                const fallbackMinutes = Math.round((km / 30) * 60);
+                setTravelTime(fallbackMinutes);
+
+                // 3) Polyline fallback: straight line user → destination (in case OSRM fails)
+                setRouteCoordinates([userPos, CENTER_POSITION]);
+
+                // 4) Try OSRM for real route + accurate travel-time (upgrades both)
+                fetch(`https://router.project-osrm.org/route/v1/driving/${longitude},${latitude};${CENTER_POSITION[1]},${CENTER_POSITION[0]}?overview=full&geometries=geojson`)
+                    .then((r) => r.json())
+                    .then((d) => {
+                        if (d.routes?.length) {
+                            setRouteCoordinates(d.routes[0].geometry.coordinates.map((c) => [c[1], c[0]]));
+                            setTravelTime(Math.round(d.routes[0].duration / 60));
+                        }
+                    })
+                    .catch(() => {});
+
+                // 5) Reverse geocode (best-effort)
+                fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
+                    .then((r) => r.json())
+                    .then((d) => {
+                        if (d?.staddress && d?.city) {
+                            setAddress(`${d.staddress}, ${d.city}${d.country ? ', ' + d.country : ''}`);
+                        } else {
+                            setAddress(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
+                        }
+                    })
+                    .catch(() => setAddress(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`))
+                    .finally(() => setIsLoading(false));
+            },
+            () => setIsLoading(false),
+            { enableHighAccuracy: false, timeout: 10000, maximumAge: 60000 }
+        );
     }, []);
-
-    const fetchRoute = (userPos, centerPos) => {
-        const url = `https://router.project-osrm.org/route/v1/driving/${userPos[0]},${userPos[1]};${centerPos[1]},${centerPos[0]}?overview=full&geometries=geojson`;
-
-        fetch(url)
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.routes && data.routes.length > 0) {
-                    const route = data.routes[0].geometry.coordinates.map((coord) => [coord[1], coord[0]]);
-                    setRouteCoordinates(route);
-
-                    // Calculate travel time from OSRM API (duration is in seconds)
-                    const durationInSeconds = data.routes[0].duration;
-                    setTravelTime(durationInSeconds / 60); // Convert to minutes
-                } else {
-                    console.error('No routes found:', data);
-                }
-            })
-            .catch((error) => console.error("Error fetching route:", error));
-    };
-
-    useEffect(() => {
-        if (userLocation) {
-            const [latitude, longitude] = userLocation;
-            const url = `https://geocode.xyz/${latitude},${longitude}?geoit=json`;
-        
-            fetch(url)
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data && data.staddress && data.city && data.country) {
-                        setAddress(`${data.staddress}, ${data.city}, ${data.country}`);
-                    } else {
-                        setAddress('Address not found');
-                    }
-                    setIsLoading(false);
-                })
-                .catch((error) => {
-                    console.error("Error fetching address:", error);
-                    setIsLoading(false);
-                });
-        }
-    }, [userLocation]);
-
-    useEffect(() => {
-        if (userLocation) {
-            // Calculate distance between userLocation and centerPosition
-            const calculatedDistance = getDistance(
-                { latitude: userLocation[0], longitude: userLocation[1] },
-                { latitude: centerPosition[0], longitude: centerPosition[1] }
-            );
-            setDistance(calculatedDistance / 1000); // Convert to kilometers
-        }
-    }, [userLocation]);
 
     const mapTileUrl = isDarkMode
-    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-    : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
-
-
-    const centerPosition = [-6.659333, 106.850664];
-
-    const toggleLocationCard = () => {
-        setShowLocationCard(!showLocationCard);
-    };
-
-    const hideLocationCard = () => setShowLocationCard(false);
-
+        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
+        : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
 
     return (
-        <Container>
-            <CardContainer>
-                <StyledCardContainer>
-                    <CardTitle>Location</CardTitle>
-                    <MapContainer
-                        center={centerPosition} 
-                        zoom={15}
-                        style={{ height: '400px', width: '100%' }}
-                        key={isDarkMode}
-                    >
-                        <TileLayer
-                            url={mapTileUrl}
-                        />
-                        <Marker position={centerPosition} icon={redIcon}>
-                            <Popup>
-                                Ciawi, Bogor, Indonesia
-                            </Popup>
-                        </Marker>
+        <Page>
+            <Header>
+                <Eyebrow>{'// 02 — Experience'}</Eyebrow>
+                <Title><RevealWords>Where I've</RevealWords> <RevealWords as="span" className="grad" delay={0.25}>worked</RevealWords></Title>
+                <Sub>Building scalable apps across telco, satellite, POS & laundry domains.</Sub>
+            </Header>
 
-                        {/* User Location Marker */}
-                        {userLocation && (
-                            <Marker position={userLocation} icon={userLocationIcon}>
-                                <Popup>Your Location</Popup>
+            <Panel
+                as={motion.div}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7 }}
+            >
+                <PanelTitle><FaMapMarkerAlt /> Location</PanelTitle>
+                <MapRow>
+                    <MapWrap>
+                        <MapContainer center={CENTER_POSITION} zoom={13} style={{ height: isMobile ? 320 : 420, width: '100%' }} key={String(isDarkMode)}>
+                            <TileLayer url={mapTileUrl} />
+                            <Marker position={CENTER_POSITION} icon={redIcon}>
+                                <Popup>Ciawi, Bogor, Indonesia</Popup>
                             </Marker>
-                        )}
-
-                        {/* Polyline for route */}
-                        {routeCoordinates.length > 0 && (
-                            <Polyline positions={routeCoordinates} color={isDarkMode ? "yellow" : "blue"} weight={5} />
-                        )}
-
-                         {/* AutoFitBounds */}
-                         {userLocation && (
-                            <AutoFitBounds userLocation={userLocation} centerPosition={centerPosition} />
-                        )}
-
-                        {/* Back to Center Button */}
-                        {userLocation && <BackToCenterButton center={userLocation} />}
-
-
-
-                        {/* Show LocationButton only on mobile */}
-                        {isMobile && (
-                            <LocationeButton  onClick={toggleLocationCard} onMouseLeave={hideLocationCard}>
-                            <FaBars style={{ fontSize: '24px', color: 'white' }} />
-                            </LocationeButton>
-                        )}
-
-                                            
+                            {userLocation && (
+                                <Marker position={userLocation} icon={userLocationIcon}>
+                                    <Popup>Your Location</Popup>
+                                </Marker>
+                            )}
+                            {routeCoordinates.length > 0 && (
+                                <Polyline positions={routeCoordinates} color={isDarkMode ? '#00f0ff' : '#0066ff'} weight={4} opacity={0.85} />
+                            )}
+                            {userLocation && <AutoFitBounds userLocation={userLocation} CENTER_POSITION={CENTER_POSITION} />}
+                            {userLocation && <BackToCenterButton center={userLocation} />}
                         </MapContainer>
-                        {!isMobile || (isMobile && showLocationCard) ? (
-                            <LocationCardWrapper>
-                                <LocationCard address={address} isLoading={isLoading} distance={distance} travelTime={travelTime}/>
-                            </LocationCardWrapper>
-                        ) : null}
-                </StyledCardContainer>
+                    </MapWrap>
+                    <LocationSide>
+                        <LocationCard address={address} isLoading={isLoading} distance={distance} travelTime={travelTime} />
+                    </LocationSide>
+                </MapRow>
+            </Panel>
 
-                <StyledCardContainer>
-                <CardTitle>Experience</CardTitle>
-                    <ExperienceSection>
-                        <TimelineContainer mode={timelineMode}>
-                            <TimelineItem>
-                                <StyledCard>
-                                    <JobHeader>
-                                        <div>
-                                            <JobTitle>PT. BIS DATA INDONESIA</JobTitle>
-                                            <JobDate>FRONT END DEVELOPER</JobDate>
-                                            <JobDate>(8/2023 – Present)</JobDate>
-                                        </div>
-                                        <IconButton onClick={() => toggleSection(0)}>
-                                            {openSections[0] ? <FaChevronUp /> : <FaChevronDown />}
-                                        </IconButton>
-                                    </JobHeader>
-                                    {openSections[0] && (
-                                        <>
-                                            <PositionTitle>
-                                                NETWORK MONITORING SYSTEM - HUB SATELIT SATRIA-1 BAKTI KOMINFO
-                                            </PositionTitle>
-                                            <ul>
-                                                <li>Mobile & Web Development</li>
-                                                <li>UI/UX Design</li>
-                                                <li>Device data analysis (FORTIGATE, HUAWEI SWITCH CORE, HPE Proliant) in Jayapura</li>
-                                                <li>Implementation of NADIA App</li>
-                                                <li>Conduct user research and usability testing</li>
-                                                <li>Collaborate with back-end developers to integrate user-facing elements with server-side logic</li>
-                                                <li>Optimize applications for maximum speed and scalability</li>
-                                                <li>Ensure the technical feasibility of UI/UX designs</li>
-                                                <li>JWT and Rest API implementation</li>
-                                                <li>Scrum SDLC methodology</li>
-                                                <li>Review code and merge to master branch after developers push to Git repository</li>
-                                            </ul>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> JavaScript, Next.js, MUI, CSS, Cloudflare, Termius, GitHub, Figma, Photoshop, Google Maps API, Rest API.
-                                            </TechnologiesUsed>
-
-                                            <PositionTitle>
-                                                NETWORK MONITORING SYSTEM – LC BAKTI KOMINFO
-                                            </PositionTitle>
-                                            <ul>
-                                                <li>Mobile & Web Development</li>
-                                                <li>UI/UX Design</li>
-                                                <li>Device data analysis (FORTIGATE, HUAWEI SWITCH CORE, HPE Proliant) in Jayapura</li>
-                                                <li>Implementation of NADIA App</li>
-                                                <li>Conduct user research and usability testing</li>
-                                                <li>Collaborate with back-end developers to integrate user-facing elements with server-side logic</li>
-                                                <li>Optimize applications for maximum speed and scalability</li>
-                                                <li>Ensure the technical feasibility of UI/UX designs</li>
-                                                <li>JWT and Rest API implementation</li>
-                                                <li>Scrum SDLC methodology</li>
-                                                <li>Review code and merge to master branch after developers push to Git repository</li>
-                                            </ul>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> JavaScript, Next.js, MUI, CSS, Cloudflare, Termius, GitHub, Figma, Photoshop, Google Maps API, Rest API.
-                                            </TechnologiesUsed>
-
-                                            <JobTitle>
-                                                LOOKUP IP – Internal NOC
-                                            </JobTitle>
-                                            <ul>
-                                                <li>Create new feature, LNM (Landscape Monitoring System)</li>
-                                                <li>Monitor and maintain AWS infrastructure and manage billing issues</li>
-                                                <li>Conduct weekly meetings and report progress to Bakti Kominfo</li>
-                                                <li>Fix bugs in VionaApp</li>
-                                                <li>Deploy to staging and production servers</li>
-                                                <li>Design and implement low-latency, high-availability, and performance applications</li>
-                                                <li>Ensure application security and data protection</li>
-                                                <li>Write clean, scalable code following best practices</li>
-                                                <li>JWT and Rest API implementation</li>
-                                                <li>Scrum SDLC methodology</li>
-                                                <li>Document development processes and changes</li>
-                                            </ul>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> Node.js, React.js, Termius, Google Maps API, Rest API, GitHub.
-                                            </TechnologiesUsed>
-                                        </>
+            <Panel
+                as={motion.div}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.7, delay: 0.1 }}
+                style={{ marginTop: 24 }}
+            >
+                <PanelTitle><FaBriefcase /> Career</PanelTitle>
+                <TimelineWrap>
+                    <TimelineLine />
+                    {EXPERIENCES.map((exp, idx) => (
+                        <TLItem
+                            key={idx}
+                            as={motion.div}
+                            initial={{ opacity: 0, x: -20 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            transition={{ duration: 0.5, delay: idx * 0.08 }}
+                        >
+                            <TLDot>{idx + 1}</TLDot>
+                            <JobCard>
+                                <JobHeader onClick={() => toggleSection(idx)}>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <JobCompany>{exp.company}</JobCompany>
+                                        <JobRoleRow>
+                                            <JobRole>{exp.role}</JobRole>
+                                            <JobPeriod>{exp.period}</JobPeriod>
+                                        </JobRoleRow>
+                                    </div>
+                                    <ExpandBtn>
+                                        {openSections[idx] ? <FaChevronUp /> : <FaChevronDown />}
+                                    </ExpandBtn>
+                                </JobHeader>
+                                <AnimatePresence initial={false}>
+                                    {openSections[idx] && (
+                                        <motion.div
+                                            initial={{ height: 0, opacity: 0 }}
+                                            animate={{ height: 'auto', opacity: 1 }}
+                                            exit={{ height: 0, opacity: 0 }}
+                                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                            style={{ overflow: 'hidden' }}
+                                        >
+                                            {exp.positions.map((p, j) => (
+                                                <Position key={j}>
+                                                    <PosTitle>{p.title}</PosTitle>
+                                                    <BulletList>
+                                                        {p.bullets.map((b, k) => <li key={k}>{b}</li>)}
+                                                    </BulletList>
+                                                    <TechLine><strong>Used Technologies:</strong> {p.tech}</TechLine>
+                                                </Position>
+                                            ))}
+                                        </motion.div>
                                     )}
-                                </StyledCard>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <StyledCard>
-                                    <JobHeader>
-                                        <div>
-                                            <JobTitle>PT. Life Tech Tanpa Batas</JobTitle>
-                                            <JobDate>FRONT END DEVELOPER</JobDate>
-                                            <JobDate>(08/2021 – 08/2023)</JobDate>
-                                        </div>
-                                        <IconButton onClick={() => toggleSection(1)}>
-                                            {openSections[1] ? <FaChevronUp /> : <FaChevronDown />}
-                                        </IconButton>
-                                    </JobHeader>
-                                    {openSections[1] && (
-                                        <>
-                                            <PositionTitle>
-                                                POS (Point of Sale) – BeetPOS
-                                            </PositionTitle>
-                                            <NoBulletList>
-                                                <li>Design UI/UX</li>
-                                                <li>Develop Backoffice BeetPOS App</li>
-                                                <li>Fix payment method issues</li>
-                                                <li>Integrate with Tokopedia, Shopee, and QRIS</li>
-                                                <li>Troubleshoot and resolve bugs/errors</li>
-                                                <li>Collaborate with the team to improve application functionality and user experience</li>
-                                                <li>Conduct code reviews and provide feedback to team members</li>
-                                                <li>Deploy to staging and production servers</li>
-                                            </NoBulletList>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> React.js, Rest API, Figma, Photoshop, GitHub.
-                                            </TechnologiesUsed>
-
-                                            <PositionTitle>
-                                                POS (Point of Sale) – BeetClinic
-                                            </PositionTitle>
-                                            <NoBulletList>
-                                                <li>Design UI/UX</li>
-                                                <li>Develop BeetClinic App</li>
-                                                <li>Fix payment method issues</li>
-                                                <li>Integrate with Tokopedia, Shopee, and QRIS</li>
-                                                <li>Troubleshoot and resolve bugs/errors</li>
-                                                <li>Collaborate with the team to improve application functionality and user experience</li>
-                                                <li>Conduct code reviews and provide feedback to team members</li>
-                                                <li>Deploy to staging and production servers</li>
-                                            </NoBulletList>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> Vue.js,Vuetify, Rest API, Figma, Photoshop, GitHub.
-                                            </TechnologiesUsed>
-
-                                            <PositionTitle>
-                                                CRM – MRT
-                                            </PositionTitle>
-                                            <NoBulletList>
-                                                <li>Design UI/UX</li>
-                                                <li>Develop MRT App</li>
-                                                <li>Fix payment method issues</li>
-                                                <li>Integrate with Tokopedia, Shopee, and QRIS</li>
-                                                <li>Troubleshoot and resolve bugs/errors</li>
-                                                <li>Collaborate with the team to improve application functionality and user experience</li>
-                                                <li>Conduct code reviews and provide feedback to team members</li>
-                                                <li>Deploy to staging and production servers</li>
-                                            </NoBulletList>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> Vue.js,Vuetify, Rest API, Figma, Photoshop, GitHub.
-                                            </TechnologiesUsed>
-                                        </>
-                                    )}
-                                </StyledCard>
-                            </TimelineItem>
-
-                            <TimelineItem>
-                                <StyledCard>
-                                    <JobHeader>
-                                        <div>
-                                            <JobTitle>Cave Laundry</JobTitle>
-                                            <JobDate>Full Stack Developer</JobDate>
-                                            <JobDate>(12/2020 – 03/2021)</JobDate>
-                                        </div>
-                                        <IconButton onClick={() => toggleSection(2)}>
-                                            {openSections[2] ? <FaChevronUp /> : <FaChevronDown />}
-                                        </IconButton>
-                                    </JobHeader>
-                                    {openSections[2] && (
-                                        <>
-                                            <PositionTitle>
-                                                Cashier – Cashier Cave Laundry
-                                            </PositionTitle>
-                                            <ul>
-                                                <li>Create Cashier app</li>
-                                                <li>Prepare a library to be used</li>
-                                                <li>Use a real-time web-socket platform to build a chat feature</li>
-                                                <li>Dictate deployment workflow processes to ensure the highest level of productivity</li>
-                                                <li>Deploy to staging and production servers</li>
-                                                <li>Design and implement low-latency, high-availability, and performant applications</li>
-                                            </ul>
-                                            <TechnologiesUsed>
-                                                <strong>Used Technologies :</strong> Bootstrap, CSS, Laravel, MySQL, jQuery.
-                                            </TechnologiesUsed>
-                                        </>
-                                    )}
-                                </StyledCard>
-                            </TimelineItem>
-                        </TimelineContainer>
-                    </ExperienceSection>
-                </StyledCardContainer>
-            </CardContainer>
-        </Container>
+                                </AnimatePresence>
+                            </JobCard>
+                        </TLItem>
+                    ))}
+                </TimelineWrap>
+            </Panel>
+        </Page>
     );
 };
 
-// Styled Components
-const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
-
-    @media(min-width: 769px) {
-        flex-direction: row;
-    }
-`;
-
-const CardContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    gap: 20px;
-    margin-top: 150px;
-
-    @media(min-width: 769px) {
-        flex-direction: row;
-    }
-`;
-
-const StyledCard = styled(Card)`
-    flex: 1;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    background-color:var(--card-experience);
-    color:var(--text-color);
-`;
-
-const StyledCardContainer = styled(Card)`
-    flex: 1;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    background-color: var(--card-bg-color);
-`;
-
-const ExperienceSection = styled.section`
-    margin-bottom: 20px;
-`;
-
-const TimelineContainer = styled(Timeline)`
-    .ant-timeline-item {
-        &:last-child .ant-timeline-item-tail {
-            display: none;
-        }
-    }
-`;
-
-const TimelineItem = styled(Timeline.Item)`
-    margin-bottom: 10px;
-`;
-
-const JobHeader = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const CardTitle = styled.h1`
-    font-size: 24px;
-    margin: 0;
-    margin-bottom: 20px;
-    color: var(--text-color);
-`;
-
-const JobTitle = styled.h3`
-    margin: 0;
-    font-size: 18px;
-`;
-
-const JobDate = styled.p`
-    margin: 0;
-    color: #888;
-`;
-
-const IconButton = styled.button`
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 18px;
-    color: var(--text-color);
-`;
-
-const PositionTitle = styled.h4`
-    margin: 10px 0;
-    font-size: 16px;
-`;
-
-const TechnologiesUsed = styled.p`
-    margin: 10px 0;
-`;
-
-const NoBulletList = styled.ul`
-  list-style: none; /* Remove default bullet points */
-  padding-left: 0; /* Remove default padding */
-  margin: 0; /* Remove default margins */
-
-  li {
-    position: relative;
-    margin-bottom: 5px;
-    padding-right: 20px; /* Add space between text and bullet */
-    text-align: right; /* Align text to the right for larger screens by default */
-
-    /* Add bullet point on the right for larger screens */
-    &::after {
-      content: '•'; /* Bullet symbol */
-      color: var(--text-color); /* Bullet color */
-      position: absolute;
-      right: -15px; /* Position bullet to the right */
-    }
-
-    /* On mobile, change alignment and bullet position */
-    @media (max-width: 768px) {
-      text-align: left; /* Align text to the left for mobile */
-      padding-left: 20px; /* Add padding for bullet on the left */
-      padding-right: 0; /* Remove right padding */
-
-      &::after {
-        content: ''; /* Remove bullet from the right */
-      }
-
-      &::before {
-        content: '•'; /* Add bullet on the left */
-        color: var(--text-color); /* Bullet color */
-        position: absolute;
-        left: -15px; /* Position bullet to the left */
-      }
-    }
-  }
-  `;
-
-const Button = styled.button`
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 10%; /* Make it a circle */
-    display: flex;
-    background-color:white;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: absolute; /* Place button on top of the map */
-    top: 80px;
-    left: 10px;
-    z-index: 1000;
-    
-    &:active {
-        background-color: #222; /* Brighter on active */
-    }
-`;
-
-const LocationeButton = styled.button`
-    width: 32px;
-    height: 32px;
-    border: none;
-    border-radius: 10%; /* Make it a circle */
-    display: flex;
-    background-color:blue;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: absolute; /* Place button on top of the map */
-    bottom: 10px;
-    left: 10px;
-    z-index: 1000;
-
-    &:active {
-   
-`;
-
-const LocationCardWrapper = styled.div`
-  position: absolute;
-  top: 230px; 
-  left:14px;
-  z-index: 1000;
-  width: 300px; /* Adjust the width of the card */
-`;
-
 export default Experience;
+
+/* ---------- styled ---------- */
+const Page = styled.div`
+    padding: 100px 6vw 80px;
+    max-width: 1280px;
+    margin: 0 auto;
+    @media (max-width: 768px) { padding: 80px 5vw 60px; }
+`;
+const Header = styled.div` text-align: center; margin-bottom: 56px; `;
+const Eyebrow = styled.div`
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--tittle-color);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+`;
+const Title = styled.h2`
+    font-size: clamp(2rem, 4.5vw, 3.5rem);
+    font-weight: 700;
+    margin: 0;
+    color: var(--text-color);
+    .grad { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+`;
+const Sub = styled.p` color: var(--text-muted); margin-top: 12px; font-size: 16px; `;
+
+const Panel = styled.div`
+    background: var(--gradient-card);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    transition: border-color 0.3s;
+    &:hover { border-color: var(--accent-1); }
+`;
+const PanelTitle = styled.h3`
+    margin: 0 0 18px;
+    font-size: 22px;
+    color: var(--text-color);
+    display: flex; align-items: center; gap: 10px;
+    svg { color: var(--tittle-color); }
+    &::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(90deg, var(--glass-border-strong), transparent);
+        margin-left: 8px;
+    }
+`;
+
+const MapRow = styled.div`
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 16px;
+    align-items: stretch;
+    @media (max-width: 968px) {
+        grid-template-columns: 1fr;
+    }
+`;
+const MapWrap = styled.div`
+    position: relative;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--glass-border);
+    min-width: 0;
+    .leaflet-container { background: var(--card-bg-solid); }
+`;
+const LocationSide = styled.div`
+    display: flex; align-items: stretch;
+    & > * { width: 100%; }
+`;
+const MapBtn = styled.button`
+    position: absolute;
+    top: 80px; left: 12px;
+    z-index: 1000;
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    border: 1px solid var(--glass-border-strong);
+    background: var(--card-bg-solid);
+    color: var(--text-color);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+    &:hover { background: var(--button-background-color); color: var(--tittle-color); }
+`;
+
+const TimelineWrap = styled.div`
+    position: relative;
+    margin-top: 24px;
+    padding-left: 60px;
+    @media (max-width: 768px) { padding-left: 44px; }
+`;
+const TimelineLine = styled.div`
+    position: absolute;
+    top: 8px; bottom: 8px;
+    left: 18px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--accent-1), var(--accent-2), var(--accent-3));
+    opacity: 0.4;
+    border-radius: 999px;
+    @media (max-width: 768px) { left: 12px; }
+`;
+const TLItem = styled.div`
+    position: relative;
+    margin-bottom: 20px;
+    &:last-child { margin-bottom: 0; }
+`;
+const TLDot = styled.div`
+    position: absolute;
+    top: 18px;
+    left: -52px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-mono);
+    font-size: 13px; font-weight: 700;
+    border: 3px solid var(--body-bg-color);
+    box-shadow: 0 0 0 2px var(--accent-1), 0 0 24px var(--accent-glow);
+    z-index: 2;
+    @media (max-width: 768px) {
+        width: 28px; height: 28px;
+        left: -38px;
+        top: 14px;
+        font-size: 11px;
+    }
+`;
+
+const JobCard = styled.div`
+    background: var(--card-bg-color);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    padding: 16px;
+    transition: border-color 0.25s;
+    &:hover { border-color: var(--accent-1); }
+`;
+const JobHeader = styled.div`
+    display: flex; justify-content: space-between; align-items: flex-start;
+    cursor: pointer;
+    gap: 12px;
+`;
+const JobCompany = styled.h4` margin: 0; font-size: 17px; color: var(--text-color); font-family: var(--font-display); letter-spacing: -0.01em; `;
+const JobRoleRow = styled.div` display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 4px; align-items: baseline; `;
+const JobRole    = styled.span` font-size: 13px; color: var(--tittle-color); font-weight: 600; `;
+const JobPeriod  = styled.span` font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); `;
+const ExpandBtn  = styled.button`
+    background: var(--button-background-color);
+    color: var(--tittle-color);
+    border: 1px solid var(--glass-border);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+    &:hover { background: var(--button-background-color-hover); }
+`;
+
+const Position = styled.div`
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--divider-color);
+`;
+const PosTitle = styled.h5`
+    margin: 0 0 8px;
+    font-size: 13px;
+    color: var(--accent-2);
+    font-weight: 600;
+`;
+const BulletList = styled.ul`
+    margin: 0 0 8px;
+    padding-left: 18px;
+    li {
+        font-size: 13px;
+        color: var(--text-color);
+        line-height: 1.6;
+        margin-bottom: 4px;
+        &::marker { color: var(--accent-1); }
+    }
+`;
+const TechLine = styled.p`
+    margin: 8px 0 0;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    line-height: 1.55;
+    strong { color: var(--text-color); font-family: var(--font-body); }
+`;

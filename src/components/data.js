@@ -6,7 +6,8 @@ import {
   FaSwift,
   FaLinkedin,
   FaInstagram,
-  FaCog
+  FaCog,
+  FaPhotoVideo,
 } from 'react-icons/fa';
 
 import {
@@ -27,7 +28,6 @@ import {
   SiPostgresql,
   SiPhp,
   SiFigma,
-  SiAdobe,
 } from 'react-icons/si';
 
 import styled, { keyframes } from 'styled-components';
@@ -53,7 +53,7 @@ export const techStack = [
   { icon: <SiHtml5 />, name: 'HTML' },
   { icon: <SiPhp />, name: 'PHP' },
   { icon: <SiFigma />, name: 'Figma' },
-  { icon: <SiAdobe />, name: 'Photoshop' },
+  { icon: <FaPhotoVideo />, name: 'Photoshop' },
   { icon: <SiMui />, name: 'MUI' },
   { icon: <SiTailwindcss />, name: 'Tailwind CSS' },
   { icon: <SiVuetify />, name: 'Vuetify' },
@@ -69,13 +69,14 @@ export const getSocialLinks = (isDarkMode) => [
   {
     icon: (
       <img
-        src={
-          isDarkMode
-            ? 'https://employers.glints.id/images/logo-dark.png'
-            : 'https://kontenesia.com/wp-content/uploads/2022/08/logo-glints-kontenesia-review.png'
-        }
+        src="https://images.glints.com/unsafe/1200x0/glints-dashboard.oss-ap-southeast-1-internal.aliyuncs.com/dst/logo-square-opengraph-image.png"
         alt="Glints"
-        style={{ width: '32px', height: '32px', marginRight: '8px' }}
+        style={{
+          width: '24px',
+          height: '24px',
+          borderRadius: '6px',
+          objectFit: 'cover',
+        }}
       />
     ),
     name: 'Glints',
@@ -84,9 +85,16 @@ export const getSocialLinks = (isDarkMode) => [
   {
     icon: (
       <img
-        src="https://uploads-ssl.webflow.com/662fbf69a72889ec66f07686/662fbf69a72889ec66f0a406_seek.png"
+        src="https://companieslogo.com/img/orig/SEK.AX-d232c935.png?t=1720244493"
         alt="Jobstreet"
-        style={{ width: '25px', height: '25px', marginRight: '8px' }}
+        style={{
+          width: '24px',
+          height: '24px',
+          borderRadius: '6px',
+          background: '#fff',
+          padding: '2px',
+          objectFit: 'contain',
+        }}
       />
     ),
     name: 'Jobstreet',
