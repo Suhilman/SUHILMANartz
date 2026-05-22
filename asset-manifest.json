@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/SUHILMANartz/static/css/main.20396a36.css",
-    "main.js": "/SUHILMANartz/static/js/main.f4658080.js",
+    "main.js": "/SUHILMANartz/static/js/main.9f59d1de.js",
     "static/css/91.fe4513cb.chunk.css": "/SUHILMANartz/static/css/91.fe4513cb.chunk.css",
-    "static/js/91.d584a940.chunk.js": "/SUHILMANartz/static/js/91.d584a940.chunk.js",
+    "static/js/91.dd9ae7a4.chunk.js": "/SUHILMANartz/static/js/91.dd9ae7a4.chunk.js",
     "static/css/602.591a06bd.chunk.css": "/SUHILMANartz/static/css/602.591a06bd.chunk.css",
-    "static/js/602.c6ae0521.chunk.js": "/SUHILMANartz/static/js/602.c6ae0521.chunk.js",
-    "static/js/607.7783e919.chunk.js": "/SUHILMANartz/static/js/607.7783e919.chunk.js",
+    "static/js/602.e69c3861.chunk.js": "/SUHILMANartz/static/js/602.e69c3861.chunk.js",
+    "static/js/607.f0c48edf.chunk.js": "/SUHILMANartz/static/js/607.f0c48edf.chunk.js",
     "static/js/813.69932d6d.chunk.js": "/SUHILMANartz/static/js/813.69932d6d.chunk.js",
-    "static/js/57.85931883.chunk.js": "/SUHILMANartz/static/js/57.85931883.chunk.js",
+    "static/js/57.c9417adb.chunk.js": "/SUHILMANartz/static/js/57.c9417adb.chunk.js",
     "static/js/834.7ba142fa.chunk.js": "/SUHILMANartz/static/js/834.7ba142fa.chunk.js",
     "static/js/453.3a829544.chunk.js": "/SUHILMANartz/static/js/453.3a829544.chunk.js",
     "static/js/575.45948ee4.chunk.js": "/SUHILMANartz/static/js/575.45948ee4.chunk.js",
@@ -43,14 +43,14 @@
     "static/media/artzdark.png": "/SUHILMANartz/static/media/artzdark.7d14b99341f36d9f566b.png",
     "index.html": "/SUHILMANartz/index.html",
     "main.20396a36.css.map": "/SUHILMANartz/static/css/main.20396a36.css.map",
-    "main.f4658080.js.map": "/SUHILMANartz/static/js/main.f4658080.js.map",
+    "main.9f59d1de.js.map": "/SUHILMANartz/static/js/main.9f59d1de.js.map",
     "91.fe4513cb.chunk.css.map": "/SUHILMANartz/static/css/91.fe4513cb.chunk.css.map",
-    "91.d584a940.chunk.js.map": "/SUHILMANartz/static/js/91.d584a940.chunk.js.map",
+    "91.dd9ae7a4.chunk.js.map": "/SUHILMANartz/static/js/91.dd9ae7a4.chunk.js.map",
     "602.591a06bd.chunk.css.map": "/SUHILMANartz/static/css/602.591a06bd.chunk.css.map",
-    "602.c6ae0521.chunk.js.map": "/SUHILMANartz/static/js/602.c6ae0521.chunk.js.map",
-    "607.7783e919.chunk.js.map": "/SUHILMANartz/static/js/607.7783e919.chunk.js.map",
+    "602.e69c3861.chunk.js.map": "/SUHILMANartz/static/js/602.e69c3861.chunk.js.map",
+    "607.f0c48edf.chunk.js.map": "/SUHILMANartz/static/js/607.f0c48edf.chunk.js.map",
     "813.69932d6d.chunk.js.map": "/SUHILMANartz/static/js/813.69932d6d.chunk.js.map",
-    "57.85931883.chunk.js.map": "/SUHILMANartz/static/js/57.85931883.chunk.js.map",
+    "57.c9417adb.chunk.js.map": "/SUHILMANartz/static/js/57.c9417adb.chunk.js.map",
     "834.7ba142fa.chunk.js.map": "/SUHILMANartz/static/js/834.7ba142fa.chunk.js.map",
     "453.3a829544.chunk.js.map": "/SUHILMANartz/static/js/453.3a829544.chunk.js.map",
     "575.45948ee4.chunk.js.map": "/SUHILMANartz/static/js/575.45948ee4.chunk.js.map",
@@ -61,6 +61,6 @@
   },
   "entrypoints": [
     "static/css/main.20396a36.css",
-    "static/js/main.f4658080.js"
+    "static/js/main.9f59d1de.js"
   ]
 }
