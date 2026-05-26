@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>SUHILMAN — Curiculum Vitae</title>
+<meta name="description" content="Suhilman — Front-End & Mobile Engineer · React, Next.js, Flutter, Dart, Frog, PostgreSQL." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<style>
+:root{
+  --dark:#07070d; --dark-2:#11111c; --dark-div:#1f1f2e;
+  --cyan:#00f0ff; --violet:#b14aff; --pink:#ff5b94;
+  --text:#0f172a; --muted:#475569; --hairline:#e2e8f0;
+  --white-t:#e8e9f3; --muted-dark:#8b8da3;
+  --gradient: linear-gradient(135deg,#00f0ff 0%,#b14aff 50%,#ff5b94 100%);
+  --gradient-2: linear-gradient(135deg,#00f0ff,#b14aff);
+  --font-display: 'Space Grotesk', 'Inter', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{font-family:var(--font-body);background:#f4f6fa;color:var(--text);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
+
+/* PAGE -- strict A4 single page */
+.page{
+  width:210mm;
+  height:297mm;
+  margin:24px auto;
+  background:#fff;
+  box-shadow:0 8px 40px rgba(15,23,42,.18);
+  display:grid;
+  grid-template-columns: 76mm 1fr;
+  overflow:hidden;
+  border-radius:6px;
+  position:relative;
+  page-break-after: avoid;
+  break-after: avoid-page;
+}
+
+/* Top accent stripe across whole page */
+.page::before{
+  content:'';
+  position:absolute;
+  inset:0 0 auto 0;
+  height:4px;
+  background: var(--gradient);
+  z-index:5;
+}
+
+/* ============== SIDEBAR (dark) ============== */
+.sidebar{
+  background:var(--dark);
+  color:var(--white-t);
+  padding:28px 22px 22px;
+  position:relative;
+}
+.sidebar::after{
+  /* subtle radial accent */
+  content:'';
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 20% 8%, rgba(0,240,255,.12), transparent 50%),
+    radial-gradient(circle at 80% 90%, rgba(177,74,255,.10), transparent 50%);
+  pointer-events:none;
+}
+.sidebar > *{position:relative;z-index:1}
+
+/* ============== AVATAR ============== */
+.avatar-wrap{
+  position:relative;
+  width:128px;
+  height:128px;
+  margin:0 auto 18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.avatar-ring{
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background: conic-gradient(from 0deg, #00f0ff, #b14aff, #ff5b94, #00f0ff);
+  filter: blur(.5px);
+  animation: spin 8s linear infinite;
+  z-index:0;
+}
+.avatar-ring::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  background: conic-gradient(from 0deg, #00f0ff, #b14aff, #ff5b94, #00f0ff);
+  filter: blur(14px);
+  opacity:.55;
+  z-index:-1;
+}
+.avatar-inner{
+  position:relative;
+  width:120px;
+  height:120px;
+  border-radius:50%;
+  overflow:hidden;
+  background:var(--dark-2);
+  border:2px solid var(--dark);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.08),
+    0 8px 24px rgba(0,0,0,.45);
+  z-index:1;
+}
+.avatar-inner img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position: center 20%;
+  display:block;
+  filter: contrast(1.05) saturate(1.05);
+}
+/* corner accent ticks */
+.avatar-wrap::before,
+.avatar-wrap::after{
+  content:'';
+  position:absolute;
+  width:14px; height:14px;
+  border:2px solid var(--cyan);
+  z-index:2;
+  pointer-events:none;
+}
+.avatar-wrap::before{
+  top:-6px; left:-6px;
+  border-right:none; border-bottom:none;
+  box-shadow:-2px -2px 8px rgba(0,240,255,.5);
+}
+.avatar-wrap::after{
+  bottom:-6px; right:-6px;
+  border-left:none; border-top:none;
+  border-color:var(--pink);
+  box-shadow:2px 2px 8px rgba(255,91,148,.5);
+}
+.avatar-status{
+  position:absolute;
+  bottom:4px; right:4px;
+  width:14px; height:14px;
+  border-radius:50%;
+  background:#22c55e;
+  border:2px solid var(--dark);
+  box-shadow:0 0 0 2px rgba(34,197,94,.25), 0 0 10px rgba(34,197,94,.7);
+  z-index:3;
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes spin{
+  to{ transform: rotate(360deg); }
+}
+@keyframes pulse{
+  0%,100%{ box-shadow:0 0 0 2px rgba(34,197,94,.25), 0 0 10px rgba(34,197,94,.7); }
+  50%{ box-shadow:0 0 0 4px rgba(34,197,94,.15), 0 0 14px rgba(34,197,94,.9); }
+}
+
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:.18em;
+  color:var(--cyan);
+  text-transform:uppercase;
+  margin-bottom:12px;
+}
+.name{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:34px;
+  line-height:1;
+  letter-spacing:-.02em;
+  background: var(--gradient);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  margin-bottom:6px;
+}
+.role{
+  font-size:11px;
+  color:var(--muted-dark);
+  margin-bottom:18px;
+}
+.accent-bar{
+  width:60%; height:3px;
+  background:var(--gradient);
+  border-radius:2px;
+  margin-bottom:22px;
+}
+
+.s-section{margin-bottom:20px}
+.s-title{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:11px;
+  letter-spacing:.18em;
+  color:var(--cyan);
+  text-transform:uppercase;
+  display:flex; align-items:center;
+  gap:8px;
+  margin-bottom:12px;
+}
+.s-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background: linear-gradient(90deg, rgba(0,240,255,.5), transparent);
+}
+
+.contact-list{display:flex;flex-direction:column;gap:10px}
+.contact-item{display:flex;flex-direction:column;gap:2px;font-size:10.5px;word-break:break-word}
+.contact-item .label{
+  font-family:var(--font-mono);
+  font-size:8px;
+  letter-spacing:.18em;
+  color:var(--cyan);
+  text-transform:uppercase;
+}
+.contact-item .value{color:var(--white-t)}
+
+/* SKILL BARS */
+.skill{margin-bottom:10px}
+.skill-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+.skill-name{font-size:10.5px;color:var(--white-t);font-weight:500}
+.skill-lv{font-family:var(--font-mono);font-size:8.5px;color:var(--muted-dark)}
+.bar{
+  height:4px;
+  background:rgba(255,255,255,.06);
+  border-radius:999px;
+  overflow:hidden;
+}
+.bar > span{
+  display:block;
+  height:100%;
+  background: var(--gradient-2);
+  border-radius:999px;
+  box-shadow: 0 0 8px rgba(0,240,255,.4);
+}
+
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chip{
+  font-family:var(--font-body);
+  font-size:9.5px;
+  font-weight:500;
+  padding:3px 9px;
+  background:#13131f;
+  border:1px solid #26263a;
+  border-radius:999px;
+  color:var(--white-t);
+}
+.chip.small{font-size:9px;padding:2.5px 8px}
+
+/* LANGUAGES */
+.lang-item{display:flex;justify-content:space-between;font-size:10.5px;padding:3px 0}
+.lang-item strong{color:var(--white-t);font-weight:600}
+.lang-item span{color:var(--muted-dark);font-family:var(--font-mono);font-size:9px}
+
+.sidebar-footer{
+  margin-top:18px;
+  padding-top:14px;
+  border-top:1px solid var(--dark-div);
+  font-family:var(--font-mono);
+  font-size:8.5px;
+  color:var(--muted-dark);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+}
+.sidebar-footer a{color:var(--cyan);text-decoration:none;word-break:break-all;text-align:center}
+
+/* ============ QR (no card) ============ */
+.qr-block{
+  display:flex; flex-direction:column; align-items:center;
+  gap:8px;
+  width:100%;
+}
+.qr-block .qr-label{
+  font-family:var(--font-mono);
+  font-size:9px;
+  letter-spacing:.24em;
+  text-transform:uppercase;
+  color:var(--cyan);
+  font-weight:700;
+  display:flex; align-items:center; gap:6px;
+}
+.qr-block .qr-label::before{
+  content:''; width:6px; height:6px; border-radius:50%;
+  background:var(--cyan);
+  box-shadow:0 0 8px var(--cyan);
+}
+.qr-block img{
+  width:110px; height:110px;
+  display:block;
+}
+.qr-block .qr-sub{
+  font-size:8.5px;
+  color:var(--muted-dark);
+  line-height:1.5;
+  text-align:center;
+  max-width:140px;
+}
+
+/* ============== MAIN (white) ============== */
+.main{padding:32px 28px 28px;color:var(--text)}
+
+.main-eyebrow{
+  font-family:var(--font-mono);
+  font-size:9.5px;
+  letter-spacing:.2em;
+  color:var(--violet);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.main-accent-bar{
+  width:80px; height:3px;
+  background: var(--gradient);
+  border-radius:2px;
+  margin-bottom:24px;
+}
+
+.m-section{margin-bottom:22px}
+.m-title{
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  margin-bottom:14px;
+}
+.m-title .num{
+  font-family:var(--font-mono);
+  font-size:9.5px;
+  color:var(--violet);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  padding-bottom:3px;
+}
+.m-title h2{
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:20px;
+  letter-spacing:-.02em;
+  color:var(--text);
+  line-height:1;
+}
+.m-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:var(--hairline);
+  margin-bottom:6px;
+}
+
+.profile-text{
+  font-size:11.5px;
+  line-height:1.7;
+  color:var(--muted);
+  max-width:60ch;
+}
+
+/* JOB */
+.job{margin-bottom:18px}
+.job:not(:last-child){padding-bottom:18px;border-bottom:1px dashed var(--hairline)}
+.job-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px}
+.job-company{font-family:var(--font-display);font-weight:700;font-size:14px;color:var(--text)}
+.job-period{font-family:var(--font-mono);font-size:10px;color:var(--violet);font-weight:500}
+.job-sub{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.job-role{font-size:11px;font-weight:600;color:#0891b2}
+.job-loc{font-size:10px;color:var(--muted);font-family:var(--font-mono)}
+.job ul{
+  list-style:none;
+  padding:0;
+  margin:0 0 10px;
+}
+.job li{
+  position:relative;
+  padding-left:14px;
+  margin-bottom:5px;
+  font-size:10.8px;
+  line-height:1.55;
+  color:var(--text);
+}
+.job li::before{
+  content:'▸';
+  position:absolute;
+  left:0; top:0;
+  color:var(--cyan);
+  font-weight:700;
+}
+.job-tech{
+  font-family:var(--font-mono);
+  font-size:9px;
+  color:#7c3aed;
+  background:#f5f3ff;
+  border-left:2px solid var(--violet);
+  padding:5px 8px;
+  border-radius:0 4px 4px 0;
+  margin-top:6px;
+  line-height:1.5;
+}
+.job-tech strong{color:var(--violet);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:8.5px}
+
+/* EDU */
+.edu-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:8px 0;
+  border-bottom:1px dashed var(--hairline);
+}
+.edu-item:last-child{border-bottom:none}
+.edu-dot{
+  width:8px; height:8px;
+  border-radius:50%;
+  background: var(--gradient-2);
+  flex-shrink:0;
+  box-shadow:0 0 8px rgba(0,240,255,.5);
+}
+.edu-info{flex:1}
+.edu-school{font-weight:700;font-size:11.5px;color:var(--text)}
+.edu-major{font-size:10px;color:var(--muted);margin-top:1px}
+.edu-year{
+  font-family:var(--font-mono);
+  font-size:9.5px;
+  color:var(--violet);
+  font-weight:500;
+}
+
+/* PRINT */
+@media print{
+  html,body{
+    background:#fff;
+    margin:0 !important;
+    padding:0 !important;
+    width:210mm !important;
+    height:297mm !important;
+    overflow:hidden !important;
+  }
+  .page{
+    width:210mm !important;
+    height:297mm !important;
+    margin:0 !important;
+    box-shadow:none !important;
+    border-radius:0 !important;
+    overflow:hidden !important;
+    page-break-after:avoid !important;
+    page-break-before:avoid !important;
+    page-break-inside:avoid !important;
+    break-after:avoid-page !important;
+    break-inside:avoid-page !important;
+  }
+  *{
+    -webkit-print-color-adjust:exact !important;
+    print-color-adjust:exact !important;
+    color-adjust:exact !important;
+  }
+  .print-bar{display:none !important}
+}
+@page{size:A4;margin:0}
+
+/* ============ STRICT 1-PAGE FIT (aggressive override) ============ */
+/* Hide oldest entries that typically aren't shown on senior CVs */
+.edu-item:nth-of-type(n+3){ display:none !important; }   /* keep Pakuan + SMK only */
+.job:nth-of-type(n+3){ display:none !important; }        /* hide oldest job (Cave Laundry) */
+
+/* Scale entire content via Chrome zoom so the natural document height fits 297mm */
+.sidebar, .main { zoom: 0.82 !important; }
+
+
+.sidebar{ padding:18px 16px 14px !important; }
+.avatar-wrap{ width:84px !important; height:84px !important; margin:0 auto 8px !important; }
+.avatar-inner{ width:76px !important; height:76px !important; }
+.avatar-status{ width:10px !important; height:10px !important; }
+.name{ font-size:24px !important; margin-bottom:2px !important; }
+.role{ font-size:9px !important; margin-bottom:10px !important; }
+.accent-bar{ margin-bottom:10px !important; height:2px !important; }
+.eyebrow{ font-size:8px !important; margin-bottom:6px !important; }
+.s-section{ margin-bottom:9px !important; }
+.s-title{ font-size:9px !important; margin-bottom:6px !important; letter-spacing:.14em !important; }
+.contact-list{ gap:4px !important; }
+.contact-item{ font-size:8.5px !important; gap:0 !important; }
+.contact-item .label{ font-size:7px !important; }
+.skill{ margin-bottom:4px !important; }
+.skill-head{ margin-bottom:2px !important; }
+.skill-name{ font-size:8.5px !important; }
+.skill-lv{ font-size:7.5px !important; }
+.bar{ height:2.5px !important; }
+.chip{ font-size:7.5px !important; padding:1px 6px !important; }
+.chip.small{ font-size:7px !important; padding:1px 5px !important; }
+.chips{ gap:3px !important; }
+.lang-item{ font-size:8.5px !important; padding:1px 0 !important; }
+.sidebar-footer{ margin-top:6px !important; padding-top:6px !important; gap:4px !important; }
+.sidebar-footer a{ font-size:7px !important; }
+.qr-block{ gap:3px !important; }
+.qr-block img{ width:78px !important; height:78px !important; }
+.qr-block .qr-label{ font-size:7.5px !important; }
+.qr-block .qr-sub{ font-size:7px !important; max-width:130px !important; }
+
+.main{ padding:24px 22px 18px !important; }
+.main-eyebrow{ font-size:8.5px !important; margin-bottom:3px !important; }
+.main-accent-bar{ width:60px !important; height:2px !important; margin-bottom:12px !important; }
+.m-section{ margin-bottom:11px !important; }
+.m-title{ margin-bottom:7px !important; }
+.m-title h2{ font-size:16px !important; }
+.m-title .num{ font-size:8.5px !important; }
+.profile-text{ font-size:9.8px !important; line-height:1.5 !important; max-width:none !important; }
+.job{ margin-bottom:8px !important; }
+.job:not(:last-child){ padding-bottom:8px !important; }
+.job-head{ margin-bottom:1px !important; }
+.job-company{ font-size:12px !important; }
+.job-role{ font-size:9.5px !important; }
+.job-period{ font-size:8.5px !important; }
+.job-sub{ margin-bottom:5px !important; }
+.job ul{ margin-bottom:4px !important; padding-left:0 !important; }
+.job li{ font-size:9.3px !important; line-height:1.4 !important; margin-bottom:2px !important; padding-left:11px !important; }
+.job-tech{ font-size:8px !important; padding:3px 7px !important; line-height:1.4 !important; margin-top:4px !important; }
+.edu-item{ padding:3px 0 !important; gap:9px !important; }
+.edu-school{ font-size:9.8px !important; }
+.edu-major{ font-size:8.5px !important; }
+.edu-year{ font-size:8.5px !important; }
+.edu-dot{ width:6px !important; height:6px !important; }
+
+/* PRINT BUTTON BAR (hidden on print) */
+.print-bar{
+  position:fixed;
+  bottom:24px; right:24px;
+  z-index:50;
+  display:flex; gap:8px;
+}
+.print-bar button{
+  background: var(--gradient-2);
+  color:#fff;
+  border:none;
+  font-family:var(--font-body);
+  font-weight:600;
+  font-size:13px;
+  padding:12px 20px;
+  border-radius:999px;
+  cursor:pointer;
+  box-shadow:0 8px 28px rgba(0,240,255,.4), 0 4px 12px rgba(0,0,0,.15);
+  transition:transform .2s, box-shadow .2s;
+}
+.print-bar button:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(0,240,255,.55)}
+
+/* Mobile -- only collapse when really narrow (below A4 width) */
+@media (max-width: 760px){
+  .page{
+    width:100%;
+    height:auto !important;
+    margin:0;
+    border-radius:0;
+    grid-template-columns:1fr;
+  }
+  .sidebar{padding:28px 22px !important}
+  .main{padding:28px 22px !important}
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- =================== SIDEBAR =================== -->
+  <aside class="sidebar">
+    <div class="avatar-wrap">
+      <div class="avatar-ring"></div>
+      <div class="avatar-inner">
+        <img src="suhilman.jpg" alt="Suhilman" />
+      </div>
+      <div class="avatar-status" title="Available"></div>
+    </div>
+    <div class="eyebrow">// Portfolio</div>
+    <h1 class="name">SUHILMAN</h1>
+    <div class="role">Front-End &amp; Mobile Engineer</div>
+    <div class="accent-bar"></div>
+
+    <!-- CONTACT -->
+    <div class="s-section">
+      <div class="s-title">Contact</div>
+      <div class="contact-list">
+        <div class="contact-item">
+          <span class="label">Phone</span>
+          <span class="value">+62 8517-2335-192</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">Email</span>
+          <span class="value">Suhilman.sch@gmail.com</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">Location</span>
+          <span class="value">Ciawi, Bogor 16720, Indonesia</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">Nationality</span>
+          <span class="value">Indonesian</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">Portfolio</span>
+          <span class="value">suhilman.github.io/SUHILMANartz</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">LinkedIn</span>
+          <span class="value">linkedin.com/in/suhilman</span>
+        </div>
+        <div class="contact-item">
+          <span class="label">GitHub</span>
+          <span class="value">github.com/Suhilman</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKILLS -->
+    <div class="s-section">
+      <div class="s-title">Skills</div>
+      <div class="skill"><div class="skill-head"><span class="skill-name">React / Next.js / Vue.js</span><span class="skill-lv">90%</span></div><div class="bar"><span style="width:90%"></span></div></div>
+      <div class="skill"><div class="skill-head"><span class="skill-name">Dart / Flutter / Frog</span><span class="skill-lv">80%</span></div><div class="bar"><span style="width:80%"></span></div></div>
+      <div class="skill"><div class="skill-head"><span class="skill-name">PostgreSQL / MySQL / MongoDB</span><span class="skill-lv">78%</span></div><div class="bar"><span style="width:78%"></span></div></div>
+      <div class="skill"><div class="skill-head"><span class="skill-name">UI/UX Design (Figma)</span><span class="skill-lv">75%</span></div><div class="bar"><span style="width:75%"></span></div></div>
+      <div class="skill"><div class="skill-head"><span class="skill-name">Laravel / Node.js / PHP</span><span class="skill-lv">65%</span></div><div class="bar"><span style="width:65%"></span></div></div>
+      <div class="skill"><div class="skill-head"><span class="skill-name">Swift / React Native</span><span class="skill-lv">60%</span></div><div class="bar"><span style="width:60%"></span></div></div>
+    </div>
+
+    <!-- STRENGTHS -->
+    <div class="s-section">
+      <div class="s-title">Strengths</div>
+      <div class="chips">
+        <span class="chip">Organized</span>
+        <span class="chip">Hardworking</span>
+        <span class="chip">Passionate</span>
+        <span class="chip">Punctual</span>
+        <span class="chip">Practical</span>
+        <span class="chip">Detail-oriented</span>
+      </div>
+    </div>
+
+    <!-- LANGUAGES -->
+    <div class="s-section">
+      <div class="s-title">Languages</div>
+      <div class="lang-item"><strong>Indonesian</strong><span>Native</span></div>
+      <div class="lang-item"><strong>English</strong><span>Professional</span></div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="s-section">
+      <div class="s-title">Tech Stack</div>
+      <div class="chips">
+        <span class="chip small">React</span>
+        <span class="chip small">Next.js</span>
+        <span class="chip small">Vue.js</span>
+        <span class="chip small">Flutter</span>
+        <span class="chip small">Dart</span>
+        <span class="chip small">Frog</span>
+        <span class="chip small">JavaScript</span>
+        <span class="chip small">TypeScript</span>
+        <span class="chip small">Node.js</span>
+        <span class="chip small">Express</span>
+        <span class="chip small">Laravel</span>
+        <span class="chip small">PHP</span>
+        <span class="chip small">Swift</span>
+        <span class="chip small">PostgreSQL</span>
+        <span class="chip small">MySQL</span>
+        <span class="chip small">MongoDB</span>
+        <span class="chip small">Docker</span>
+        <span class="chip small">Termius</span>
+        <span class="chip small">MUI</span>
+        <span class="chip small">Tailwind</span>
+        <span class="chip small">Vuetify</span>
+        <span class="chip small">Figma</span>
+      </div>
+    </div>
+
+    <div class="sidebar-footer">
+      <div class="qr-block">
+        <div class="qr-label">SCAN ME</div>
+        <img alt="Scan to view portfolio"
+             crossorigin="anonymous"
+             src="https://quickchart.io/qr?text=https%3A%2F%2Fsuhilman.github.io%2FSUHILMANartz%2F&size=320&dark=ffffff&light=07070d&margin=0&ecLevel=Q&format=png" />
+        <div class="qr-sub">Open the interactive portfolio directly from your phone camera.</div>
+      </div>
+      <a href="https://suhilman.github.io/SUHILMANartz/" target="_blank" rel="noopener">suhilman.github.io/SUHILMANartz</a>
+    </div>
+  </aside>
+
+  <!-- =================== MAIN =================== -->
+  <main class="main">
+    <div class="main-eyebrow">// CURICULUM VITAE</div>
+    <div class="main-accent-bar"></div>
+
+    <!-- PROFILE -->
+    <section class="m-section">
+      <div class="m-title">
+        <span class="num">// 01</span>
+        <h2>Profile</h2>
+      </div>
+      <p class="profile-text">
+        Software engineer with 5+ years of experience building digital products across
+        satellite telecommunications, POS, CRM, and internal platforms. Specialized in
+        React.js, Next.js, Vue.js, and Flutter — currently focused on full-stack Dart
+        (Flutter + Frog + PostgreSQL). Led UI/UX development of the Network Monitoring
+        System dashboard used daily by the BAKTI KOMINFO NOC team.
+      </p>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="m-section">
+      <div class="m-title">
+        <span class="num">// 02</span>
+        <h2>Experience</h2>
+      </div>
+
+      <article class="job">
+        <div class="job-head">
+          <div class="job-company">PT. BIS DATA INDONESIA</div>
+          <div class="job-period">08/2023 — Present</div>
+        </div>
+        <div class="job-sub">
+          <div class="job-role">Front End Developer</div>
+          <div class="job-loc">Jakarta, Indonesia</div>
+        </div>
+        <ul>
+          <li><strong>Network Monitoring System — SATRIA-1 Satellite HUB, BAKTI KOMINFO (Jayapura):</strong> implemented the NADIA App; integrated device data (FORTIGATE, HUAWEI Core Switch, HPE ProLiant) via JWT + REST API.</li>
+          <li><strong>Network Monitoring System — BAKTI KOMINFO HUB (Jayapura, Manokwari, Timika):</strong> implemented the VIONA App.</li>
+          <li><strong>LOOKUP IP &amp; LNM</strong> internal NOC tools: maintained AWS infrastructure and fixed bugs in the Viona App.</li>
+          <li><strong>ARTZ HR</strong> — internal HR platform (attendance, payroll, leave): Dart, Flutter, Frog, PostgreSQL, JWT, role-based access control.</li>
+          <li><strong>BDI Chat</strong> — real-time messaging app with AI assistant: Flutter, Frog, WebSocket, PostgreSQL, push notifications &amp; offline cache.</li>
+        </ul>
+        <div class="job-tech"><strong>Tech</strong> &nbsp; JavaScript · Next.js · MUI · Dart · Flutter · Frog · PostgreSQL · Cloudflare · Termius · GitHub · Figma · Google Maps API</div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div class="job-company">PT. Life Tech Tanpa Batas</div>
+          <div class="job-period">08/2021 — 08/2023</div>
+        </div>
+        <div class="job-sub">
+          <div class="job-role">Front End Developer</div>
+          <div class="job-loc">Bandung, Indonesia</div>
+        </div>
+        <ul>
+          <li><strong>POS BeetPOS &amp; BeetClinic</strong> — designed UI/UX and developed the back-office; integrated Tokopedia, Shopee, and QRIS.</li>
+          <li><strong>CRM MRT</strong> — designed UI/UX and developed the app, including payment integration.</li>
+          <li>Performed code reviews, deployed to staging/production, and collaborated cross-functionally.</li>
+        </ul>
+        <div class="job-tech"><strong>Tech</strong> &nbsp; React.js · Vue.js · Vuetify · REST API · Figma · Photoshop · GitHub</div>
+      </article>
+
+      <article class="job">
+        <div class="job-head">
+          <div class="job-company">Cave Laundry</div>
+          <div class="job-period">12/2020 — 03/2021</div>
+        </div>
+        <div class="job-sub">
+          <div class="job-role">Full Stack Developer</div>
+          <div class="job-loc">Bogor, Indonesia</div>
+        </div>
+        <ul>
+          <li>Built a cashier app with real-time chat via WebSocket.</li>
+          <li>Deployed to staging &amp; production; designed for low latency and high availability.</li>
+        </ul>
+        <div class="job-tech"><strong>Tech</strong> &nbsp; Bootstrap · Laravel · MySQL · jQuery</div>
+      </article>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="m-section">
+      <div class="m-title">
+        <span class="num">// 03</span>
+        <h2>Education</h2>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-info">
+          <div class="edu-school">Pakuan University</div>
+          <div class="edu-major">Computer Science</div>
+        </div>
+        <div class="edu-year">2017 — 2024</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-info">
+          <div class="edu-school">SMK Wikrama Bogor</div>
+          <div class="edu-major">Software Engineering</div>
+        </div>
+        <div class="edu-year">2014 — 2017</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-info">
+          <div class="edu-school">SMP Negeri 2 Megamendung</div>
+        </div>
+        <div class="edu-year">2011 — 2014</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-dot"></div>
+        <div class="edu-info">
+          <div class="edu-school">SD Negeri Ciawi 03</div>
+        </div>
+        <div class="edu-year">2006 — 2011</div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- Floating download button — hidden when printing -->
+<div class="print-bar">
+  <a id="downloadBtn" href="Suhilman_CV.pdf" download="Suhilman_Curiculum_Vitae.pdf">⤓ Download PDF</a>
+</div>
+
+</body>
+</html>

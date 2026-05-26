@@ -5,21 +5,21 @@ import { FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const TESTIMONIALS = [
   {
-    quote: 'Suhilman membangun dashboard monitoring jaringan satelit kami dengan presisi tinggi dan UI yang memudahkan tim NOC kami bekerja 24/7. Hasilnya melebihi ekspektasi.',
+    quote: 'Suhilman built our satellite network monitoring dashboard with high precision and a UI that makes it easy for our NOC team to work 24/7. The result exceeded expectations.',
     name: 'Tim NOC',
     role: 'PT. BIS DATA INDONESIA',
     avatar: 'B',
     color: 'var(--gradient-primary)',
   },
   {
-    quote: 'Komunikasi cepat, kode bersih, dan selalu mengutamakan user experience. Salah satu front-end engineer terbaik yang pernah kami ajak kolaborasi.',
+    quote: 'Quick communication, clean code, and always prioritizes user experience. One of the best front-end engineers we have ever collaborated with.',
     name: 'Lead Engineer',
     role: 'PT. Life Tech Tanpa Batas',
     avatar: 'L',
     color: 'var(--gradient-secondary)',
   },
   {
-    quote: 'Dari ide hingga production deploy, semuanya dikerjakan dengan attitude profesional. Pengiriman fitur tepat waktu dan dokumentasinya rapi.',
+    quote: 'From ideation to production deploy, everything is handled with a professional attitude. Features ship on time and the documentation is clean.',
     name: 'Product Owner',
     role: 'BeetPOS / BeetClinic',
     avatar: 'P',

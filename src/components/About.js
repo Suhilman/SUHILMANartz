@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Timeline } from 'antd';
 import { motion } from 'framer-motion';
 import { FaFileDownload, FaGraduationCap } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import { Tilt, RevealWords } from './fx';
 
 const FORMAL_SKILLS = [
@@ -29,8 +30,8 @@ const EDUCATION_HISTORY = [
 ];
 
 const FILES = [
-    { name: 'CURRICULUM VITAE',  size: '2.4 MB', date: 'Updated 2025', path: 'CURICULUM VITAE.pdf' },
-    { name: 'PORTFOLIO',         size: '2.4 MB', date: 'Updated 2025', path: 'PORTOFOLIO.pdf' },
+    { name: 'CURICULUM VITAE', size: '29 KB',  date: 'Updated 2025', route: '/cv' },
+    { name: 'PORTFOLIO', size: '1.9 MB', date: 'Updated 2025', route: '/portfolio' },
 ];
 
 const TAGS = [
@@ -44,7 +45,8 @@ const TAGS = [
 const viewport = { once: true, amount: 0.2 };
 
 const AboutPage = () => {
-    const openFile = (filePath) => window.open(filePath, '_blank');
+    const navigate = useNavigate();
+    const openFile = (route) => navigate(route);
 
     return (
         <Page>
@@ -163,14 +165,14 @@ const AboutPage = () => {
                                         viewport={viewport}
                                         transition={{ duration: 0.5, delay: i * 0.12 }}
                                         whileTap={{ scale: 0.98 }}
-                                        onClick={() => openFile(require(`../assets/${f.path}`))}
+                                        onClick={() => openFile(f.route)}
                                     >
                                         <FileIcon><FaFileDownload size={22} /></FileIcon>
                                         <FileBody>
                                             <FileName>{f.name}</FileName>
                                             <FileMeta>{f.date} · {f.size}</FileMeta>
                                         </FileBody>
-                                        <FileArrow>↓</FileArrow>
+                                        <FileArrow>→</FileArrow>
                                     </FileCard>
                                 </Tilt>
                             ))}

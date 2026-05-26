@@ -89,9 +89,9 @@ const Hero = ({ isDarkMode }) => {
           {/* Description */}
           <motion.div variants={fadeUp}>
             <Description>
-              Software engineer yang membangun pengalaman digital modern —
-              dari dashboard monitoring jaringan satelit hingga aplikasi mobile
-              yang dipakai harian.
+              Software engineer building modern digital experiences — from
+              satellite network monitoring dashboards to mobile apps used
+              every day.
             </Description>
           </motion.div>
 
