@@ -5,7 +5,7 @@ import emailjs from 'emailjs-com';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { FaUser, FaEnvelope, FaPaperPlane, FaWhatsapp, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
-import { Magnetic, RevealWords } from './fx';
+import { Magnetic, RevealWords, Tilt } from './fx';
 
 const ContactForm = ({ isDarkMode }) => {
     const [formData, setFormData] = useState({
@@ -51,6 +51,7 @@ const ContactForm = ({ isDarkMode }) => {
             </Header>
 
             <Grid>
+                <Tilt max={6} scale={1.02}>
                 <Info
                     as={motion.div}
                     initial={{ opacity: 0, x: -30 }}
@@ -93,6 +94,7 @@ const ContactForm = ({ isDarkMode }) => {
                         </div>
                     </InfoRow>
                 </Info>
+                </Tilt>
 
                 <FormCard
                     as={motion.form}
@@ -202,7 +204,10 @@ const baseCard = `
 
 const Info = styled.div`
   ${baseCard}
+  height: 100%;
   display: flex; flex-direction: column; gap: 14px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  &:hover { border-color: var(--accent-1); box-shadow: 0 0 28px var(--accent-glow); }
 `;
 const InfoTitle = styled.h3`
   font-size: 24px; margin: 0;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FaTimes } from 'react-icons/fa';
+import { FaTimes, FaChevronDown } from 'react-icons/fa';
 import { Tilt, RevealWords } from './fx';
 
 const ITEMS = [
@@ -28,6 +28,7 @@ const sizeFor = (i) => SIZE_PATTERN[i % SIZE_PATTERN.length];
 
 const Documentation = () => {
   const [zoom, setZoom] = useState(null);
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <Page>
@@ -40,29 +41,60 @@ const Documentation = () => {
         <Sub>A glimpse of products I've helped ship across multiple industries.</Sub>
       </SectionHeader>
 
-      <Bento>
-        {ITEMS.map((item, i) => (
-          <TileSlot key={i} size={sizeFor(i)}>
-            <Tilt max={5} scale={1.02}>
-              <Tile
-                as={motion.button}
-                type="button"
-                onClick={() => setZoom(item)}
-                initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.55, delay: (i % 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <TileImg style={{ backgroundImage: `url(${item.src})` }} />
-                <TileOverlay>
-                  <TileTag>{item.tag}</TileTag>
-                  <TileTitle>{item.alt}</TileTitle>
-                </TileOverlay>
-                <TileGlow />
-              </Tile>
-            </Tilt>
-          </TileSlot>
-        ))}
-      </Bento>
+      <BentoWrap expanded={expanded ? 1 : 0}>
+        <Bento>
+          {ITEMS.map((item, i) => (
+            <TileSlot key={i} size={sizeFor(i)}>
+              <Tilt max={5} scale={1.02}>
+                <Tile
+                  as={motion.button}
+                  type="button"
+                  onClick={() => setZoom(item)}
+                  initial={{ opacity: 0, y: 24 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.55, delay: (i % 6) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  <TileImg style={{ backgroundImage: `url(${item.src})` }} />
+                  <TileOverlay>
+                    <TileTag>{item.tag}</TileTag>
+                    <TileTitle>{item.alt}</TileTitle>
+                  </TileOverlay>
+                  <TileGlow />
+                </Tile>
+              </Tilt>
+            </TileSlot>
+          ))}
+        </Bento>
+        {!expanded && (
+          <FadeOverlay>
+            <ShowMoreBtn
+              type="button"
+              onClick={() => setExpanded(true)}
+              as={motion.button}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+            >
+              <span>Show More Project</span>
+              <Chev expanded={0}><FaChevronDown /></Chev>
+            </ShowMoreBtn>
+          </FadeOverlay>
+        )}
+      </BentoWrap>
+
+      {expanded && (
+        <ShowMoreWrap>
+          <ShowMoreBtn
+            type="button"
+            onClick={() => setExpanded(false)}
+            as={motion.button}
+            whileHover={{ y: -2 }}
+            whileTap={{ scale: 0.97 }}
+          >
+            <span>Show Less Project</span>
+            <Chev expanded={1}><FaChevronDown /></Chev>
+          </ShowMoreBtn>
+        </ShowMoreWrap>
+      )}
 
       <AnimatePresence>
         {zoom && (
@@ -120,6 +152,81 @@ const Title = styled.h2`
   .grad, .grad * { background: var(--gradient-text); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 `;
 const Sub = styled.p` color: var(--text-muted); margin-top: 12px; font-size: 16px; `;
+
+const BentoWrap = styled.div`
+  position: relative;
+  overflow: hidden;
+  max-height: ${({ expanded }) => (expanded ? '6000px' : '632px')};
+  transition: max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  @media (max-width: 968px) {
+    max-height: ${({ expanded }) => (expanded ? '6000px' : '542px')};
+  }
+  @media (max-width: 568px) {
+    max-height: ${({ expanded }) => (expanded ? '6000px' : '466px')};
+  }
+`;
+const FadeOverlay = styled.div`
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  height: 220px;
+  pointer-events: none;
+  z-index: 3;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 22px;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--body-bg-color) 55%, transparent) 45%,
+    var(--body-bg-color) 92%
+  );
+  -webkit-backdrop-filter: blur(3px);
+  backdrop-filter: blur(3px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 45%);
+  /* the button must stay sharp & clickable above the blurred/masked layer */
+  & > * {
+    pointer-events: auto;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+`;
+const ShowMoreWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+`;
+const ShowMoreBtn = styled.button`
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 26px;
+  border-radius: 999px;
+  border: 1px solid var(--glass-border-strong);
+  background: var(--card-bg-color);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+  color: var(--text-color);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  transition: border-color 0.25s, box-shadow 0.25s, color 0.25s;
+  &:hover {
+    border-color: var(--accent-1);
+    color: var(--tittle-color);
+    box-shadow: 0 0 24px var(--accent-glow);
+  }
+`;
+const Chev = styled.span`
+  display: inline-flex;
+  font-size: 12px;
+  color: var(--tittle-color);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: rotate(${({ expanded }) => (expanded ? '180deg' : '0deg')});
+`;
 
 const Bento = styled.div`
   display: grid;

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useInView } from 'framer-motion';
+import { Tilt } from './fx';
 
 const STATS = [
   { value: 5,   suffix: '+',  label: 'Years Experience',  color: 'var(--accent-1)' },
@@ -40,6 +41,7 @@ const Stats = () => {
 
   return (
     <Section ref={ref}>
+      <Tilt max={4} scale={1.01}>
       <Grid>
         {STATS.map((s, i) => (
           <Item
@@ -54,6 +56,7 @@ const Stats = () => {
           </Item>
         ))}
       </Grid>
+      </Tilt>
     </Section>
   );
 };
@@ -76,6 +79,8 @@ const Grid = styled.div`
   padding: 32px;
   backdrop-filter: var(--blur-glass);
   -webkit-backdrop-filter: var(--blur-glass);
+  transition: border-color 0.3s, box-shadow 0.3s;
+  &:hover { border-color: var(--accent-1); box-shadow: 0 0 32px var(--accent-glow); }
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
     padding: 24px;

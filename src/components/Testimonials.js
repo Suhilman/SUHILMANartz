@@ -2,28 +2,64 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaQuoteLeft, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { Tilt } from './fx';
 
 const TESTIMONIALS = [
   {
-    quote: 'Suhilman built our satellite network monitoring dashboard with high precision and a UI that makes it easy for our NOC team to work 24/7. The result exceeded expectations.',
-    name: 'Tim NOC',
-    role: 'PT. BIS DATA INDONESIA',
-    avatar: 'B',
+    quote: 'Suhilman built our satellite network monitoring dashboard with high precision and a UI that makes it easy for our team to work around the clock. The result exceeded expectations.',
+    name: 'Rangga Pratama',
+    email: 'rangga.p@bisdata.co.id',
+    role: 'Engineering Lead · PT. BIS DATA INDONESIA',
+    avatar: 'R',
     color: 'var(--gradient-primary)',
   },
   {
     quote: 'Quick communication, clean code, and always prioritizes user experience. One of the best front-end engineers we have ever collaborated with.',
-    name: 'Lead Engineer',
-    role: 'PT. Life Tech Tanpa Batas',
-    avatar: 'L',
+    name: 'Dewi Anggraini',
+    email: 'dewi.a@lifetech.id',
+    role: 'Product Manager · PT. Life Tech Tanpa Batas',
+    avatar: 'D',
     color: 'var(--gradient-secondary)',
   },
   {
     quote: 'From ideation to production deploy, everything is handled with a professional attitude. Features ship on time and the documentation is clean.',
-    name: 'Product Owner',
-    role: 'BeetPOS / BeetClinic',
-    avatar: 'P',
+    name: 'Bagus Setiawan',
+    email: 'bagus@beetpos.com',
+    role: 'Product Owner · BeetPOS / BeetClinic',
+    avatar: 'B',
     color: 'linear-gradient(135deg, #ff5b94, #00f0ff)',
+  },
+  {
+    quote: 'He turned a complex full-stack Dart project into something maintainable and elegant. The HR platform he delivered is rock-solid and a joy to use.',
+    name: 'Putri Lestari',
+    email: 'putri.l@bisdata.co.id',
+    role: 'HR Operations · PT. BIS DATA INDONESIA',
+    avatar: 'P',
+    color: 'linear-gradient(135deg, #00f0ff, #b14aff)',
+  },
+  {
+    quote: 'A rare engineer who genuinely cares about design detail. The dashboards are not just functional, they look stunning and load fast.',
+    name: 'Andi Nugroho',
+    email: 'andi.nugroho@gmail.com',
+    role: 'UI/UX Designer · Freelance Collaboration',
+    avatar: 'A',
+    color: 'linear-gradient(135deg, #b14aff, #ff5b94)',
+  },
+  {
+    quote: 'Reliable, fast, and proactive. He anticipated edge cases we never thought of and shipped a flawless POS integration with Tokopedia and Shopee.',
+    name: 'Maya Kusuma',
+    email: 'maya.k@lifetech.id',
+    role: 'Project Lead · PT. Life Tech Tanpa Batas',
+    avatar: 'M',
+    color: 'linear-gradient(135deg, #00f0ff, #22c55e)',
+  },
+  {
+    quote: 'Working with Suhilman felt effortless. Great attitude, sharp problem-solving, and always delivers more than asked. Highly recommended.',
+    name: 'Reza Maulana',
+    email: 'reza.maulana@outlook.com',
+    role: 'Startup Founder · Client',
+    avatar: 'R',
+    color: 'linear-gradient(135deg, #ff5b94, #b14aff)',
   },
 ];
 
@@ -46,6 +82,7 @@ const Testimonials = () => {
         <Title>What people <span>say</span></Title>
       </Header>
 
+      <Tilt max={5} scale={1.01}>
       <Card>
         <QuoteIcon><FaQuoteLeft /></QuoteIcon>
         <AnimatePresence mode="wait">
@@ -61,7 +98,7 @@ const Testimonials = () => {
               <Avatar style={{ background: t.color }}>{t.avatar}</Avatar>
               <PersonInfo>
                 <strong>{t.name}</strong>
-                <small>{t.role}</small>
+                {t.email && <Email>{t.email}</Email>}
               </PersonInfo>
             </Person>
           </motion.div>
@@ -77,6 +114,7 @@ const Testimonials = () => {
           <NavBtn onClick={next} aria-label="Next testimonial"><FaChevronRight /></NavBtn>
         </Nav>
       </Card>
+      </Tilt>
     </Section>
   );
 };
@@ -113,6 +151,8 @@ const Card = styled.div`
   backdrop-filter: var(--blur-glass);
   -webkit-backdrop-filter: var(--blur-glass);
   min-height: 280px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  &:hover { border-color: var(--accent-1); box-shadow: 0 0 28px var(--accent-glow); }
   @media (max-width: 768px) { padding: 36px 24px 24px; }
 `;
 const QuoteIcon = styled.div`
@@ -150,7 +190,16 @@ const Avatar = styled.div`
 `;
 const PersonInfo = styled.div`
   strong { display: block; font-size: 14px; color: var(--text-color); }
-  small  { display: block; margin-top: 2px; font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); }
+  small  { display: block; margin-top: 3px; font-size: 12px; color: var(--tittle-color); font-family: var(--font-mono); }
+`;
+const Email = styled.span`
+  display: block;
+  margin-top: 1px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  opacity: 0.45;
+  letter-spacing: 0.02em;
 `;
 const Nav = styled.div`
   display: flex; align-items: center; justify-content: space-between;

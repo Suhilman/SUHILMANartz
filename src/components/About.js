@@ -103,56 +103,59 @@ const AboutPage = () => {
                             { title: 'Formal Skills',       data: FORMAL_SKILLS,       gradient: 'var(--gradient-primary)' },
                             { title: 'Professional Skills', data: PROFESSIONAL_SKILLS, gradient: 'var(--gradient-secondary)' },
                         ].map((sec, idx) => (
-                            <Card
-                                key={sec.title}
-                                as={motion.div}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={viewport}
-                                transition={{ duration: 0.6, delay: idx * 0.15 }}
-                            >
-                                <CardTitle>{sec.title}</CardTitle>
-                                {sec.data.map((s, i) => (
-                                    <Skill key={s.name}>
-                                        <SkillHead>
-                                            <span>{s.name}</span>
-                                            <em>{s.level}%</em>
-                                        </SkillHead>
-                                        <ProgressTrack>
-                                            <ProgressFill
-                                                as={motion.div}
-                                                initial={{ width: 0 }}
-                                                whileInView={{ width: `${s.level}%` }}
-                                                viewport={viewport}
-                                                transition={{ duration: 1.1, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-                                                style={{ background: sec.gradient }}
-                                            />
-                                        </ProgressTrack>
-                                    </Skill>
-                                ))}
-                            </Card>
+                            <Tilt key={sec.title} max={6} scale={1.02}>
+                                <Card
+                                    as={motion.div}
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={viewport}
+                                    transition={{ duration: 0.6, delay: idx * 0.15 }}
+                                >
+                                    <CardTitle>{sec.title}</CardTitle>
+                                    {sec.data.map((s, i) => (
+                                        <Skill key={s.name}>
+                                            <SkillHead>
+                                                <span>{s.name}</span>
+                                                <em>{s.level}%</em>
+                                            </SkillHead>
+                                            <ProgressTrack>
+                                                <ProgressFill
+                                                    as={motion.div}
+                                                    initial={{ width: 0 }}
+                                                    whileInView={{ width: `${s.level}%` }}
+                                                    viewport={viewport}
+                                                    transition={{ duration: 1.1, delay: 0.2 + i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+                                                    style={{ background: sec.gradient }}
+                                                />
+                                            </ProgressTrack>
+                                        </Skill>
+                                    ))}
+                                </Card>
+                            </Tilt>
                         ))}
                     </Row>
 
                     <Row>
-                        <Card
-                            as={motion.div}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={viewport}
-                            transition={{ duration: 0.6 }}
-                        >
-                            <CardTitle><FaGraduationCap style={{ marginRight: 8 }} /> Education</CardTitle>
-                            <StyledTimeline mode="left">
-                                {EDUCATION_HISTORY.map((edu, i) => (
-                                    <Timeline.Item key={i} color="var(--accent-1)">
-                                        <EduSchool>{edu.school}</EduSchool>
-                                        {edu.major && <EduMajor>{edu.major}</EduMajor>}
-                                        <EduYear>{edu.year}</EduYear>
-                                    </Timeline.Item>
-                                ))}
-                            </StyledTimeline>
-                        </Card>
+                        <Tilt max={6} scale={1.02}>
+                            <Card
+                                as={motion.div}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={viewport}
+                                transition={{ duration: 0.6 }}
+                            >
+                                <CardTitle><FaGraduationCap style={{ marginRight: 8 }} /> Education</CardTitle>
+                                <StyledTimeline mode="left">
+                                    {EDUCATION_HISTORY.map((edu, i) => (
+                                        <Timeline.Item key={i} color="var(--accent-1)">
+                                            <EduSchool>{edu.school}</EduSchool>
+                                            {edu.major && <EduMajor>{edu.major}</EduMajor>}
+                                            <EduYear>{edu.year}</EduYear>
+                                        </Timeline.Item>
+                                    ))}
+                                </StyledTimeline>
+                            </Card>
+                        </Tilt>
 
                         <FileCol>
                             {FILES.map((f, i) => (
@@ -242,7 +245,10 @@ const ProfileCard = styled.div`
     text-align: center;
     position: sticky;
     top: 100px;
-    &:hover { border-color: var(--accent-1); }
+    &:hover {
+        border-color: var(--accent-1);
+        box-shadow: 0 0 28px var(--accent-glow);
+    }
     @media (max-width: 968px) { position: relative; top: 0; }
 `;
 
@@ -340,7 +346,11 @@ const Row = styled.div`
 
 const Card = styled.div`
     ${baseCard}
-    &:hover { border-color: var(--accent-1); }
+    height: 100%;
+    &:hover {
+        border-color: var(--accent-1);
+        box-shadow: 0 0 28px var(--accent-glow);
+    }
 `;
 
 const CardTitle = styled.h3`

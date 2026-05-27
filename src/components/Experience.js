@@ -39,13 +39,24 @@ const BackToCenterButton = ({ center }) => {
 const AutoFitBounds = ({ userLocation, CENTER_POSITION }) => {
     const map = useMap();
     useEffect(() => {
-        if (userLocation && CENTER_POSITION) {
-            const bounds = L.latLngBounds([userLocation, CENTER_POSITION]);
-            const isMobile = window.innerWidth <= 768;
+        if (!userLocation || !CENTER_POSITION) return;
+        const isMobile = window.innerWidth <= 768;
+        const padding = isMobile ? [36, 36] : [56, 44];
+        const bounds = L.latLngBounds([userLocation, CENTER_POSITION]);
+
+        // Keep things readable: never zoom out past MIN_ZOOM, never closer than MAX_ZOOM.
+        const MIN_ZOOM = 12; // if the two pins are far apart, don't shrink below this
+        const MAX_ZOOM = 15;
+        const fitZoom = map.getBoundsZoom(bounds, false, L.point(padding[0], padding[1]));
+
+        if (fitZoom < MIN_ZOOM) {
+            // Pins too far apart — focus on the destination pin so it's clearly visible.
+            map.setView(CENTER_POSITION, MIN_ZOOM, { animate: true, duration: 1 });
+        } else {
             map.fitBounds(bounds, {
-                paddingTopLeft: isMobile ? [40, 40] : [180, 40],
-                paddingBottomRight: [40, 40],
-                maxZoom: 10,
+                paddingTopLeft: padding,
+                paddingBottomRight: padding,
+                maxZoom: MAX_ZOOM,
                 animate: true,
                 duration: 1,
             });
@@ -220,17 +231,19 @@ const Experience = ({ isDarkMode }) => {
                     })
                     .catch(() => {});
 
-                // 5) Reverse geocode (best-effort)
-                fetch(`https://geocode.xyz/${latitude},${longitude}?geoit=json`)
+                // 5) Reverse geocode — BigDataCloud client API (free, no key, no throttling)
+                const coordFallback = `${latitude.toFixed(4)}, ${longitude.toFixed(4)}`;
+                fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`)
                     .then((r) => r.json())
                     .then((d) => {
-                        if (d?.staddress && d?.city) {
-                            setAddress(`${d.staddress}, ${d.city}${d.country ? ', ' + d.country : ''}`);
-                        } else {
-                            setAddress(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`);
-                        }
+                        const parts = [
+                            d?.locality || d?.city,
+                            d?.principalSubdivision,
+                            d?.countryName,
+                        ].filter(Boolean);
+                        setAddress(parts.length ? parts.join(', ') : coordFallback);
                     })
-                    .catch(() => setAddress(`${latitude.toFixed(4)}, ${longitude.toFixed(4)}`))
+                    .catch(() => setAddress(coordFallback))
                     .finally(() => setIsLoading(false));
             },
             () => setIsLoading(false),
@@ -283,7 +296,7 @@ const Experience = ({ isDarkMode }) => {
                 </MapRow>
             </Panel>
 
-            <Panel
+            <CareerSection
                 as={motion.div}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -307,13 +320,16 @@ const Experience = ({ isDarkMode }) => {
                             <JobCard>
                                 <JobHeader onClick={() => toggleSection(idx)}>
                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                        <JobCompany>{exp.company}</JobCompany>
+                                        <CompanyRow>
+                                            <JobCompany>{exp.company}</JobCompany>
+                                            {/present/i.test(exp.period) && <NowBadge>Current</NowBadge>}
+                                        </CompanyRow>
                                         <JobRoleRow>
                                             <JobRole>{exp.role}</JobRole>
                                             <JobPeriod>{exp.period}</JobPeriod>
                                         </JobRoleRow>
                                     </div>
-                                    <ExpandBtn>
+                                    <ExpandBtn aria-label={openSections[idx] ? 'Collapse' : 'Expand'}>
                                         {openSections[idx] ? <FaChevronUp /> : <FaChevronDown />}
                                     </ExpandBtn>
                                 </JobHeader>
@@ -332,7 +348,12 @@ const Experience = ({ isDarkMode }) => {
                                                     <BulletList>
                                                         {p.bullets.map((b, k) => <li key={k}>{b}</li>)}
                                                     </BulletList>
-                                                    <TechLine><strong>Used Technologies:</strong> {p.tech}</TechLine>
+                                                    <TechLabel>Tech Stack</TechLabel>
+                                                    <TechRow>
+                                                        {p.tech.split(',').map((t, k) => (
+                                                            <TechChip key={k}>{t.trim()}</TechChip>
+                                                        ))}
+                                                    </TechRow>
                                                 </Position>
                                             ))}
                                         </motion.div>
@@ -342,7 +363,7 @@ const Experience = ({ isDarkMode }) => {
                         </TLItem>
                     ))}
                 </TimelineWrap>
-            </Panel>
+            </CareerSection>
         </Page>
     );
 };
@@ -383,6 +404,13 @@ const Panel = styled.div`
     -webkit-backdrop-filter: var(--blur-glass);
     transition: border-color 0.3s;
     &:hover { border-color: var(--accent-1); }
+`;
+const CareerSection = styled.div`
+    background: transparent;
+    border: none;
+    padding: 0;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
 `;
 const PanelTitle = styled.h3`
     margin: 0 0 18px;
@@ -438,103 +466,183 @@ const MapBtn = styled.button`
 const TimelineWrap = styled.div`
     position: relative;
     margin-top: 24px;
-    padding-left: 60px;
-    @media (max-width: 768px) { padding-left: 44px; }
+    padding-left: 64px;
+    @media (max-width: 768px) { padding-left: 46px; }
 `;
 const TimelineLine = styled.div`
     position: absolute;
-    top: 8px; bottom: 8px;
-    left: 18px;
+    top: 12px; bottom: 12px;
+    /* dot center (settled): padding-left(64) + dot left(-56) + radius(22) = 30 → line at 29 (2px) */
+    left: 29px;
     width: 2px;
     background: linear-gradient(180deg, var(--accent-1), var(--accent-2), var(--accent-3));
-    opacity: 0.4;
     border-radius: 999px;
-    @media (max-width: 768px) { left: 12px; }
+    box-shadow: 0 0 12px var(--accent-glow);
+    /* mobile: padding(46) + dot left(-40) + radius(16) = 22 → line at 21 (2px) */
+    @media (max-width: 768px) { left: 21px; }
 `;
 const TLItem = styled.div`
     position: relative;
-    margin-bottom: 20px;
+    margin-bottom: 22px;
     &:last-child { margin-bottom: 0; }
 `;
 const TLDot = styled.div`
     position: absolute;
-    top: 18px;
-    left: -52px;
-    width: 36px; height: 36px;
+    top: 20px;
+    left: -56px;
+    width: 44px; height: 44px;
     border-radius: 50%;
     background: var(--gradient-primary);
     color: #fff;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-mono);
-    font-size: 13px; font-weight: 700;
-    border: 3px solid var(--body-bg-color);
-    box-shadow: 0 0 0 2px var(--accent-1), 0 0 24px var(--accent-glow);
+    font-size: 15px; font-weight: 700;
+    border: 4px solid var(--body-bg-color);
+    box-shadow: 0 0 0 1.5px var(--accent-1), 0 6px 20px var(--accent-glow);
     z-index: 2;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    ${TLItem}:hover & { transform: scale(1.08) rotate(-4deg); }
     @media (max-width: 768px) {
-        width: 28px; height: 28px;
-        left: -38px;
-        top: 14px;
-        font-size: 11px;
+        width: 32px; height: 32px;
+        left: -40px;
+        top: 16px;
+        font-size: 12px;
+        border-width: 3px;
     }
 `;
 
 const JobCard = styled.div`
-    background: var(--card-bg-color);
+    position: relative;
+    background: var(--gradient-card);
     border: 1px solid var(--glass-border);
-    border-radius: var(--radius-md);
-    padding: 16px;
-    transition: border-color 0.25s;
-    &:hover { border-color: var(--accent-1); }
+    border-radius: var(--radius-lg);
+    padding: 18px 20px;
+    overflow: hidden;
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s, box-shadow 0.3s;
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0; top: 0; bottom: 0;
+        width: 3px;
+        background: var(--gradient-primary);
+        opacity: 0.85;
+    }
+    &:hover {
+        transform: translateY(-3px);
+        border-color: var(--accent-1);
+        box-shadow: 0 16px 44px rgba(0, 0, 0, 0.22), 0 0 26px var(--accent-glow);
+    }
+    @media (max-width: 768px) { padding: 14px 16px; }
 `;
 const JobHeader = styled.div`
     display: flex; justify-content: space-between; align-items: flex-start;
     cursor: pointer;
     gap: 12px;
 `;
-const JobCompany = styled.h4` margin: 0; font-size: 17px; color: var(--text-color); font-family: var(--font-display); letter-spacing: -0.01em; `;
-const JobRoleRow = styled.div` display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 4px; align-items: baseline; `;
+const CompanyRow = styled.div`
+    display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+`;
+const JobCompany = styled.h4` margin: 0; font-size: 18px; color: var(--text-color); font-family: var(--font-display); letter-spacing: -0.01em; `;
+const NowBadge = styled.span`
+    display: inline-flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px; font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #22c55e;
+    background: rgba(34, 197, 94, 0.12);
+    border: 1px solid rgba(34, 197, 94, 0.35);
+    padding: 3px 9px;
+    border-radius: 999px;
+    &::before {
+        content: '';
+        width: 6px; height: 6px; border-radius: 50%;
+        background: #22c55e;
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.9);
+    }
+`;
+const JobRoleRow = styled.div` display: flex; flex-wrap: wrap; gap: 6px 14px; margin-top: 6px; align-items: baseline; `;
 const JobRole    = styled.span` font-size: 13px; color: var(--tittle-color); font-weight: 600; `;
-const JobPeriod  = styled.span` font-size: 12px; color: var(--text-muted); font-family: var(--font-mono); `;
+const JobPeriod  = styled.span`
+    font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);
+    display: inline-flex; align-items: center; gap: 6px;
+    &::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--accent-2); }
+`;
 const ExpandBtn  = styled.button`
     background: var(--button-background-color);
     color: var(--tittle-color);
     border: 1px solid var(--glass-border);
-    width: 32px; height: 32px;
+    width: 34px; height: 34px;
     border-radius: 50%;
     cursor: pointer;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
-    transition: all 0.2s;
-    &:hover { background: var(--button-background-color-hover); }
+    transition: all 0.25s;
+    &:hover { background: var(--gradient-primary); color: #fff; border-color: transparent; box-shadow: 0 0 18px var(--accent-glow); }
 `;
 
 const Position = styled.div`
-    margin-top: 14px;
-    padding-top: 14px;
+    margin-top: 16px;
+    padding-top: 16px;
     border-top: 1px dashed var(--divider-color);
+    &:first-of-type { margin-top: 16px; }
 `;
 const PosTitle = styled.h5`
-    margin: 0 0 8px;
-    font-size: 13px;
+    margin: 0 0 10px;
+    font-size: 13.5px;
     color: var(--accent-2);
     font-weight: 600;
+    line-height: 1.4;
+    display: flex; gap: 8px;
+    &::before {
+        content: '';
+        flex-shrink: 0;
+        width: 4px; margin-top: 3px;
+        background: var(--gradient-primary);
+        border-radius: 2px;
+    }
 `;
 const BulletList = styled.ul`
-    margin: 0 0 8px;
+    margin: 0;
     padding-left: 18px;
+    list-style: none;
     li {
+        position: relative;
         font-size: 13px;
         color: var(--text-color);
         line-height: 1.6;
-        margin-bottom: 4px;
-        &::marker { color: var(--accent-1); }
+        margin-bottom: 6px;
+        padding-left: 4px;
+        &::before {
+            content: '▸';
+            position: absolute;
+            left: -14px;
+            color: var(--accent-1);
+            font-weight: 700;
+        }
     }
 `;
-const TechLine = styled.p`
-    margin: 8px 0 0;
-    font-size: 12px;
-    color: var(--text-muted);
+const TechLabel = styled.div`
+    margin: 14px 0 8px;
     font-family: var(--font-mono);
-    line-height: 1.55;
-    strong { color: var(--text-color); font-family: var(--font-body); }
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+`;
+const TechRow = styled.div`
+    display: flex; flex-wrap: wrap; gap: 6px;
+`;
+const TechChip = styled.span`
+    font-family: var(--font-mono);
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--button-background-color);
+    border: 1px solid var(--glass-border);
+    color: var(--tittle-color);
+    transition: border-color 0.2s, color 0.2s;
+    &:hover { border-color: var(--accent-1); color: var(--accent-1); }
 `;
