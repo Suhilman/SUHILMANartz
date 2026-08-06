@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YouTube to MP3 — SUHILMANartz</title>
+<link rel="icon" href="../moon.gif">
+<link rel="stylesheet" href="style.css">
+<style>
+  .stage2{flex:1;min-width:0;display:flex;flex-direction:column;background:var(--bg)}
+  .audwrap{flex:1;overflow:auto;padding:28px;display:flex;flex-direction:column;justify-content:center;align-items:center;position:relative;gap:18px}
+  .audCover{width:180px;height:180px;border-radius:16px;background:linear-gradient(145deg,var(--acc),#8b5cf6);
+    display:grid;place-items:center;color:#fff;box-shadow:0 8px 34px #0007}
+  .audCover svg{width:64px;height:64px}
+  .audwrap audio{width:100%;max-width:420px}
+  .ph-empty{color:var(--dim);font-style:italic}
+  .kv{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--dim);padding:3px 0}
+  .kv b{color:var(--txt);font-weight:600;font-variant-numeric:tabular-nums;text-align:right;word-break:break-all}
+  input[type=url],input[type=password],input[type=text].fld{width:100%;background:var(--bg);color:var(--txt);
+    border:1px solid var(--line);border-radius:8px;padding:8px 9px;font:12.5px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;margin-bottom:8px}
+</style>
+</head>
+<body>
+<header>
+  <a class="switch" href="../">← SUHILMANartz</a>
+  <div class="logo"><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8v8l7-4z" fill="currentColor" stroke="none"/></svg></div>
+  <h1>YouTube to MP3</h1>
+  <span class="tag">Tempel link YouTube (atau sosial media lain) · diekstrak jadi MP3</span>
+  <div class="spacer"></div>
+  <span class="tag" id="fileInfo"></span>
+</header>
+
+<main>
+<aside>
+  <div class="card">
+    <div class="flabel">1 · URL video</div>
+    <input type="url" id="urlInput" placeholder="https://www.youtube.com/watch?v=..." autocomplete="off" spellcheck="false">
+    <button class="btn" id="btnLoad"><svg class="i sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 8v8l7-4z" fill="currentColor" stroke="none"/></svg>Ekstrak ke MP3</button>
+    <div class="hint" style="margin-top:8px">Tempel link YouTube atau platform lain yang didukung yt-dlp. Audio diambil &amp; dikonversi ke MP3 kualitas terbaik.</div>
+  </div>
+
+  <details class="card" id="advSettings">
+    <summary><svg class="i sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1.05 1.56V21a2 2 0 11-4 0v-.09A1.7 1.7 0 009 19.36a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.64 15a1.7 1.7 0 00-1.56-1.05H3a2 2 0 110-4h.09A1.7 1.7 0 004.64 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.64a1.7 1.7 0 001.05-1.56V3a2 2 0 114 0v.09a1.7 1.7 0 001.05 1.56 1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.36 9a1.7 1.7 0 001.56 1.05H21a2 2 0 110 4h-.09a1.7 1.7 0 00-1.56 1.05z"/></svg>Pengaturan lanjutan</summary>
+    <div class="body">
+      <div class="flabel">Layanan ekstraksi</div>
+      <input type="url" id="extractorInstance" placeholder="http://127.0.0.1:8765" autocomplete="off" spellcheck="false">
+      <input type="password" id="extractorApiKey" placeholder="Api key (opsional)" autocomplete="off">
+      <button class="btn ghost" id="btnTestInstance" style="margin-bottom:8px"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>Tes koneksi</button>
+      <div class="hint" id="testResult" style="margin-bottom:8px"></div>
+      <div class="hint">Default: server lokal <b>yt-dlp</b> di mesin ini (<code>http://127.0.0.1:8765</code>) — jalankan lewat <code>node server/yt-server.js</code>.</div>
+    </div>
+  </details>
+
+  <div class="card" id="cardInfo" style="display:none">
+    <div class="flabel">Info audio</div>
+    <div class="kv"><span>Tipe konten</span><b id="infoType">—</b></div>
+    <div class="kv"><span>Ukuran</span><b id="infoSize">—</b></div>
+    <div class="kv"><span>Durasi</span><b id="infoDur">—</b></div>
+  </div>
+
+  <div class="card" style="margin-top:auto">
+    <div class="flabel">Catatan teknis</div>
+    <div class="hint">
+      Server ekstraksi menjalankan <code>yt-dlp -x --audio-format mp3</code> — audio terbaik yang tersedia diunduh lalu dikonversi lewat ffmpeg. Playlist tidak diikuti, hanya video/track tunggal dari URL yang ditempel.
+    </div>
+  </div>
+</aside>
+
+<section class="stage2">
+  <div class="toolbar">
+    <span id="stageInfo">Belum ada audio dimuat.</span>
+    <div class="spacer"></div>
+    <a class="tbtn" id="openOrigLink" href="#" target="_blank" rel="noopener" style="display:none">Buka URL asli di tab baru ↗</a>
+    <span id="stageMeta"></span>
+  </div>
+  <div class="audwrap" id="audWrap">
+    <div id="audContent">
+      <div class="ph-empty">Ekstrak audio untuk melihat pratinjau di sini.</div>
+    </div>
+    <div class="overlay" id="ov">
+      <div id="ovTxt">Mengekstrak audio…</div>
+      <div class="bar"><i id="ovBar"></i></div>
+    </div>
+  </div>
+
+  <div class="floatcard" id="floatPanel" style="position:fixed;top:70px;right:22px">
+    <div class="fhead">
+      <svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>
+      <h2>Unduh</h2>
+      <button class="fmin" id="btnMin" title="Sembunyikan / tampilkan">–</button>
+    </div>
+    <div class="fbody" id="fbody">
+      <input type="text" id="saveName" class="fld" placeholder="nama-berkas.mp3">
+      <button class="btn ghost" id="btnSave" disabled><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>Unduh MP3</button>
+      <div class="hint" id="outInfo" style="margin-top:8px"></div>
+      <div class="err" id="err"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<script src="youtube-to-mp3.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enhance / Upscale — SUHILMANartz</title>
+<link rel="icon" href="../moon.gif">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="switch" href="../">← SUHILMANartz</a>
+  <div class="logo"><svg class="i" viewBox="0 0 24 24"><path d="M4 16l4.5-6 3 4 2.5-3L20 16"/><rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8" cy="8.5" r="1.4" fill="currentColor" stroke="none"/></svg></div>
+  <h1>Image Enhancer</h1>
+  <span class="tag">Upscale &amp; perbaikan kualitas · 100% lokal di browser</span>
+  <div class="spacer"></div>
+  <span class="tag" id="fileInfo"></span>
+</header>
+
+<main>
+<aside>
+  <div class="card">
+    <div class="fieldset">
+      <div class="flabel">1 · Sumber gambar</div>
+      <label class="dz" id="dz" for="file">
+        <span class="dzico"><svg class="i" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></span>
+        <b id="dzTitle">Pilih atau tarik gambar</b>
+        <span>Klik untuk memilih file, atau drag &amp; drop ke sini</span>
+        <span class="fmts">PNG · JPG · WEBP · GIF · BMP</span>
+      </label>
+    </div>
+    <div class="fieldset">
+      <div class="flabel">2 · Preset</div>
+      <select id="preset">
+        <option value="foto" selected>Foto — natural</option>
+        <option value="detail">Foto — detail maksimal</option>
+        <option value="jpeg">Perbaiki JPEG berisik</option>
+        <option value="art">Ilustrasi / line-art</option>
+        <option value="text">Screenshot / teks</option>
+        <option value="custom">Kustom</option>
+      </select>
+    </div>
+  </div>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-8 8M3 21l8-8"/></svg>Skala &amp; resampling</summary>
+    <div class="body">
+      <div class="fieldset">
+        <div class="seg" id="segScale">
+          <button data-s="1">1×</button><button data-s="2" class="on">2×</button>
+          <button data-s="3">3×</button><button data-s="4">4×</button>
+        </div>
+      </div>
+      <div class="fieldset">
+        <label class="row">Skala kustom <b id="vScale">2.00×</b></label>
+        <input type="range" id="scale" min="1" max="6" step="0.05" value="2">
+      </div>
+      <div class="fieldset">
+        <div class="flabel">Kernel</div>
+        <select id="kernel">
+          <option value="lanczos3" selected>Lanczos3 — paling tajam</option>
+          <option value="lanczos2">Lanczos2 — minim ringing</option>
+          <option value="mitchell">Mitchell — halus &amp; natural</option>
+          <option value="catrom">Catmull-Rom — netral</option>
+        </select>
+        <div class="hint" style="margin-top:6px">Diproses di ruang warna linear-light, alpha premultiplied — tanpa pergeseran warna atau halo tepi.</div>
+      </div>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><path d="M12 3l2.2 6.6L21 12l-6.8 2.4L12 21l-2.2-6.6L3 12l6.8-2.4z"/></svg>Ketajaman &amp; detail</summary>
+    <div class="body">
+      <label class="row">Unsharp amount <b id="vAmt">55</b></label>
+      <input type="range" id="amount" min="0" max="200" step="1" value="55">
+      <label class="row">Radius <b id="vRad">1.0 px</b></label>
+      <input type="range" id="radius" min="0.3" max="4" step="0.1" value="1">
+      <label class="row">Threshold <b id="vThr">3</b></label>
+      <input type="range" id="thresh" min="0" max="40" step="1" value="3">
+      <label class="row">Local contrast <b id="vClar">18</b></label>
+      <input type="range" id="clarity" min="0" max="100" step="1" value="18">
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><svg class="i" viewBox="0 0 24 24"><path d="M12 3c4 4 7 7.2 7 10.5A7 7 0 015 13.5C5 10.2 8 7 12 3z"/></svg>Reduksi noise</summary>
+    <div class="body">
+      <label class="row">Kekuatan <b id="vDen">0</b></label>
+      <input type="range" id="denoise" min="0" max="100" step="1" value="0">
+      <div class="hint">Bilateral filter — meredam noise &amp; artefak JPEG tanpa melunturkan tepi.</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9.5" cy="9" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="9" cy="14.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="15" r="1.3" fill="currentColor" stroke="none"/></svg>Tone &amp; warna</summary>
+    <div class="body">
+      <label class="row">Saturasi <b id="vSat">0</b></label>
+      <input type="range" id="sat" min="-100" max="100" step="1" value="0">
+      <label class="row">Kontras <b id="vCon">0</b></label>
+      <input type="range" id="con" min="-100" max="100" step="1" value="0">
+      <label class="row">Exposure <b id="vExp">0</b></label>
+      <input type="range" id="exp" min="-100" max="100" step="1" value="0">
+    </div>
+  </details>
+
+  <button class="btn ghost" id="btnReset" style="margin-top:auto"><svg class="i sm" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 2.6 5.9"/><path d="M4 21v-5h5"/></svg>Reset setelan</button>
+</aside>
+
+<section class="stage">
+  <div class="toolbar">
+    <button class="tbtn on" id="btnCompare"><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>Bandingkan</button>
+    <button class="tbtn ico" id="btnZoomOut" title="Zoom out"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6"/></svg></button>
+    <span id="zoomLbl" style="min-width:52px;text-align:center">100%</span>
+    <button class="tbtn ico" id="btnZoomIn" title="Zoom in"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></button>
+    <button class="tbtn" id="btnFit"><svg class="i sm" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 00-1 1v4M15 4h4a1 1 0 011 1v4M9 20H5a1 1 0 01-1-1v-4M15 20h4a1 1 0 001-1v-4"/></svg>Fit</button>
+    <button class="tbtn" id="btn100">1:1</button>
+    <div class="sep"></div>
+    <span id="dims"></span>
+    <div class="spacer"></div>
+    <span>Scroll = zoom · Drag = geser · Tarik garis hijau untuk before/after</span>
+  </div>
+  <div class="viewport" id="vp">
+    <div id="wrap" style="--split:50%">
+      <canvas id="cvIn"></canvas>
+      <canvas id="cvOut"></canvas>
+      <div id="handle"></div>
+      <span class="badge l" id="bl">ASLI</span>
+      <span class="badge r" id="br">HASIL</span>
+    </div>
+
+    <div class="floatcard" id="floatPanel">
+      <div class="fhead">
+        <svg class="i sm" viewBox="0 0 24 24"><path d="M13 3l-8 10h6l-1 8 8-10h-6z" fill="currentColor" stroke="none"/></svg>
+        <h2>Proses &amp; simpan</h2>
+        <button class="fmin" id="btnMin" title="Sembunyikan / tampilkan">–</button>
+      </div>
+      <div class="fbody" id="fbody">
+        <button class="btn" id="btnRun" disabled><svg class="i sm" viewBox="0 0 24 24"><path d="M13 3l-8 10h6l-1 8 8-10h-6z" fill="currentColor" stroke="none"/></svg>Proses</button>
+        <label class="chk" style="margin:10px 0 8px"><input type="checkbox" id="live"> Auto-proses ulang saat setelan berubah</label>
+        <div class="grid2" style="margin-bottom:8px">
+          <select id="fmt">
+            <option value="image/png" selected>PNG (lossless)</option>
+            <option value="image/webp">WebP</option>
+            <option value="image/jpeg">JPEG</option>
+          </select>
+          <input type="number" id="q" min="1" max="100" value="95" title="Kualitas (WebP/JPEG)">
+        </div>
+        <button class="btn ghost" id="btnSave" disabled><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>Unduh hasil</button>
+        <div class="hint" id="outInfo" style="margin-top:8px"></div>
+        <div class="err" id="err"></div>
+      </div>
+    </div>
+
+    <div class="drop" id="drop">
+      <h3><span class="dropico"><svg class="i lg" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></span>Taruh gambar di sini</h3>
+      <div>atau klik “Pilih atau tarik gambar” di panel kiri</div>
+    </div>
+    <div class="overlay" id="ov">
+      <div id="ovTxt">Memproses…</div>
+      <div class="bar"><i id="ovBar"></i></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<input type="file" id="file" accept="image/*" hidden>
+<script>window.MODE = 'enhance';</script>
+<script src="engine.js"></script>
+</body>
+</html>

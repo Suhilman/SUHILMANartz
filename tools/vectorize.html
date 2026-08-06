@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vectorize SVG — SUHILMANartz</title>
+<link rel="icon" href="../moon.gif">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="switch" href="../">← SUHILMANartz</a>
+  <div class="logo"><svg class="i" viewBox="0 0 24 24"><path d="M4 17l6-11 4 7 2-3 4 5"/><circle cx="18" cy="6" r="2"/></svg></div>
+  <h1>Image Vectorizer</h1>
+  <span class="tag">Raster → SVG vektor · 100% lokal di browser</span>
+  <div class="spacer"></div>
+  <span class="tag" id="fileInfo"></span>
+</header>
+
+<main>
+<aside>
+  <div class="card">
+    <div class="flabel">1 · Sumber gambar</div>
+    <label class="dz" id="dz" for="file">
+      <span class="dzico"><svg class="i" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></span>
+      <b id="dzTitle">Pilih atau tarik gambar</b>
+      <span>Klik untuk memilih file, atau drag &amp; drop ke sini</span>
+      <span class="fmts">PNG · JPG · WEBP · GIF · BMP</span>
+    </label>
+  </div>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="9.5" cy="9" r="1.3" fill="currentColor" stroke="none"/><circle cx="15" cy="9.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="9" cy="14.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.5" cy="15" r="1.3" fill="currentColor" stroke="none"/></svg>Warna</summary>
+    <div class="body">
+      <label class="row">Jumlah warna <b id="vCols">12</b></label>
+      <input type="range" id="colors" min="2" max="64" step="1" value="12">
+      <label class="row">Pra-blur <b id="vVb">0.6 px</b></label>
+      <input type="range" id="vblur" min="0" max="3" step="0.1" value="0.6">
+      <div class="hint">Kuantisasi median-cut, lalu setiap layer warna ditrace menjadi path SVG.</div>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><path d="M4 19c4-1 5-5 6-9s2-7 6-6M4 19c6 2 12 0 16-6"/></svg>Bentuk &amp; kehalusan</summary>
+    <div class="body">
+      <label class="row">Presisi kurva <b id="vTol">1.0</b></label>
+      <input type="range" id="tol" min="0.2" max="5" step="0.1" value="1">
+      <label class="row">Buang bercak &lt; <b id="vMin">12 px²</b></label>
+      <input type="range" id="minArea" min="0" max="200" step="1" value="12">
+      <label class="chk" style="margin:2px 0 12px"><input type="checkbox" id="smooth" checked> Haluskan dengan kurva Bézier</label>
+      <div class="flabel">Detail trace</div>
+      <select id="vscale">
+        <option value="1">1× — cepat</option>
+        <option value="2" selected>2× — halus</option>
+        <option value="3">3× — paling halus (lambat)</option>
+      </select>
+    </div>
+  </details>
+
+  <button class="btn ghost" id="btnReset" style="margin-top:auto"><svg class="i sm" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 2.6 5.9"/><path d="M4 21v-5h5"/></svg>Reset setelan</button>
+</aside>
+
+<section class="stage">
+  <div class="toolbar">
+    <button class="tbtn on" id="btnCompare"><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>Bandingkan</button>
+    <button class="tbtn ico" id="btnZoomOut" title="Zoom out"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6"/></svg></button>
+    <span id="zoomLbl" style="min-width:52px;text-align:center">100%</span>
+    <button class="tbtn ico" id="btnZoomIn" title="Zoom in"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></button>
+    <button class="tbtn" id="btnFit"><svg class="i sm" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 00-1 1v4M15 4h4a1 1 0 011 1v4M9 20H5a1 1 0 01-1-1v-4M15 20h4a1 1 0 001-1v-4"/></svg>Fit</button>
+    <button class="tbtn" id="btn100">1:1</button>
+    <div class="sep"></div>
+    <span id="dims"></span>
+    <div class="spacer"></div>
+    <span>Scroll = zoom · Drag = geser · Tarik garis hijau untuk before/after</span>
+  </div>
+  <div class="viewport" id="vp">
+    <div id="wrap" style="--split:50%">
+      <canvas id="cvIn"></canvas>
+      <canvas id="cvOut"></canvas>
+      <div id="handle"></div>
+      <span class="badge l" id="bl">ASLI</span>
+      <span class="badge r" id="br">HASIL</span>
+    </div>
+
+    <div class="floatcard" id="floatPanel">
+      <div class="fhead">
+        <svg class="i sm" viewBox="0 0 24 24"><path d="M13 3l-8 10h6l-1 8 8-10h-6z" fill="currentColor" stroke="none"/></svg>
+        <h2>Proses &amp; simpan</h2>
+        <button class="fmin" id="btnMin" title="Sembunyikan / tampilkan">–</button>
+      </div>
+      <div class="fbody" id="fbody">
+        <button class="btn" id="btnRun" disabled><svg class="i sm" viewBox="0 0 24 24"><path d="M13 3l-8 10h6l-1 8 8-10h-6z" fill="currentColor" stroke="none"/></svg>Proses</button>
+        <label class="chk" style="margin:10px 0 8px"><input type="checkbox" id="live"> Auto-proses ulang saat setelan berubah</label>
+        <button class="btn ghost" id="btnSave" disabled><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>Unduh SVG</button>
+        <div class="hint" id="outInfo" style="margin-top:8px"></div>
+        <div class="err" id="err"></div>
+      </div>
+    </div>
+
+    <div class="drop" id="drop">
+      <h3><span class="dropico"><svg class="i lg" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></span>Taruh gambar di sini</h3>
+      <div>atau klik “Pilih atau tarik gambar” di panel kiri</div>
+    </div>
+    <div class="overlay" id="ov">
+      <div id="ovTxt">Memproses…</div>
+      <div class="bar"><i id="ovBar"></i></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<input type="file" id="file" accept="image/*" hidden>
+<script>window.MODE = 'vector';</script>
+<script src="engine.js"></script>
+</body>
+</html>
