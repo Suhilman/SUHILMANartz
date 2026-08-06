@@ -78,7 +78,7 @@ const Testimonials = () => {
   return (
     <Section>
       <Header>
-        <Eyebrow>{'// 06 — Voices'}</Eyebrow>
+        <Eyebrow>{'// 07 — Voices'}</Eyebrow>
         <Title>What people <span>say</span></Title>
       </Header>
 

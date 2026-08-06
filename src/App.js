@@ -13,6 +13,7 @@ import './App.css';
 
 const Experience    = lazy(() => import('./components/Experience'));
 const Animation     = lazy(() => import('./components/Animation'));
+const Tools         = lazy(() => import('./components/Tools'));
 const Documentation = lazy(() => import('./components/Documentation'));
 const Testimonials  = lazy(() => import('./components/Testimonials'));
 const Contact       = lazy(() => import('./components/Contact'));
@@ -46,6 +47,12 @@ function MainPage({ isDarkMode, toggleTheme }) {
       <section id="animation">
         <Suspense fallback={<SectionFallback />}>
           <Animation isDarkMode={isDarkMode} />
+        </Suspense>
+      </section>
+
+      <section id="tools">
+        <Suspense fallback={<SectionFallback />}>
+          <Tools />
         </Suspense>
       </section>
 

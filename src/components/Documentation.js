@@ -5,6 +5,8 @@ import { FaTimes, FaChevronDown } from 'react-icons/fa';
 import { Tilt, RevealWords } from './fx';
 
 const ITEMS = [
+  { src: require('../assets/document/elara.jpeg'),      alt: 'Elara',                  tag: 'Enterprise Logic, Analytics & Responsiveness Assistant' },
+  { src: require('../assets/document/Benggala.png'),    alt: 'Benggala',               tag: 'Monitoring Pengadaan · LKPP' },
   { src: require('../assets/document/nmt.png'),         alt: 'Network Monitoring',     tag: 'PT. BIS DATA INDONESIA' },
   { src: require('../assets/document/nadia.png'),       alt: 'NADIA Dashboard',        tag: 'PT. BIS DATA INDONESIA' },
   { src: require('../assets/document/viona.png'),       alt: 'Viona App',              tag: 'PT. BIS DATA INDONESIA' },
@@ -33,7 +35,7 @@ const Documentation = () => {
   return (
     <Page>
       <SectionHeader>
-        <Eyebrow>{'// 04 — Showcase'}</Eyebrow>
+        <Eyebrow>{'// 05 — Showcase'}</Eyebrow>
         <Title>
           <RevealWords>Selected</RevealWords>{' '}
           <RevealWords as="span" className="grad" delay={0.2}>Projects</RevealWords>

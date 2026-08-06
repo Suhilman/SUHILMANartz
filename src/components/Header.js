@@ -4,7 +4,7 @@ import { Link as ScrollLink, animateScroll as scroll } from 'react-scroll';
 import {
     FaBars, FaTimes, FaWhatsapp, FaSun, FaMoon,
     FaCog, FaAdjust, FaArrowUp, FaInfoCircle,
-    FaBriefcase, FaFileAlt, FaEnvelope, FaPalette
+    FaBriefcase, FaFileAlt, FaEnvelope, FaPalette, FaToolbox
 } from 'react-icons/fa';
 import artzLogo     from '../assets/artz.png';
 import artzDarkLogo from '../assets/artzdark.png';
@@ -14,6 +14,7 @@ const NAV_ITEMS = [
     { id: 'about',         label: 'About',         icon: <FaInfoCircle  size={16} /> },
     { id: 'experience',    label: 'Experience',    icon: <FaBriefcase   size={16} /> },
     { id: 'animation',     label: 'Animation',     icon: <FaPalette     size={16} /> },
+    { id: 'tools',         label: 'Tools',         icon: <FaToolbox     size={16} /> },
     { id: 'documentation', label: 'Documentation', icon: <FaFileAlt     size={16} /> },
     { id: 'contact',       label: 'Contact',       icon: <FaEnvelope    size={16} /> },
 ];

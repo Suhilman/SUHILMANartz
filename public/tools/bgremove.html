@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remove Background — SUHILMANartz</title>
+<link rel="icon" href="../moon.gif">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <a class="switch" href="../">← SUHILMANartz</a>
+  <div class="logo"><svg class="i" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><path d="M8.2 7.6L20 18M8.2 16.4L20 6"/></svg></div>
+  <h1>Background Remover</h1>
+  <span class="tag">Cutout, edit, resize &amp; ganti background · 100% lokal di browser</span>
+  <div class="spacer"></div>
+  <span class="tag" id="fileInfo"></span>
+</header>
+
+<main>
+<aside>
+  <div class="card">
+    <div class="flabel">1 · Sumber gambar</div>
+    <label class="dz" id="dz" for="file">
+      <span class="dzico"><svg class="i" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></span>
+      <b id="dzTitle">Pilih atau tarik gambar</b>
+      <span>Klik untuk memilih file, atau drag &amp; drop ke sini</span>
+      <span class="fmts">PNG · JPG · WEBP · GIF · BMP</span>
+    </label>
+  </div>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><path d="M8.2 7.6L20 18M8.2 16.4L20 6"/></svg>Cutout otomatis</summary>
+    <div class="body">
+      <div class="fieldset">
+        <div class="flabel">Sumber warna background</div>
+        <div class="seg" id="segSample">
+          <button data-s="auto" class="on">Otomatis (tepi)</button>
+          <button data-s="pick">Klik warna</button>
+        </div>
+        <div class="hint" id="pickHint" style="display:none;margin-top:6px">Klik pada area background di gambar untuk memilih warnanya.</div>
+      </div>
+      <label class="row">Toleransi <b id="vTol2">35</b></label>
+      <input type="range" id="tol2" min="1" max="100" step="1" value="35">
+      <label class="row">Kelembutan tepi <b id="vFeather">12</b></label>
+      <input type="range" id="feather" min="0" max="40" step="1" value="12">
+      <button class="btn ghost" id="btnCutout" style="margin-top:4px"><svg class="i sm" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.3"/><circle cx="6" cy="18" r="2.3"/><path d="M8.2 7.6L20 18M8.2 16.4L20 6"/></svg>Cutout ulang</button>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18"/><path d="M2 2l7.6 7.6"/><circle cx="11" cy="11" r="2"/></svg>Edit manual</summary>
+    <div class="body">
+      <div class="fieldset">
+        <div class="seg" id="segTool">
+          <button data-tool="pan" class="on">Navigasi</button>
+          <button data-tool="restore">Pulihkan</button>
+          <button data-tool="erase">Hapus</button>
+        </div>
+      </div>
+      <label class="row">Ukuran brush <b id="vBrush">40 px</b></label>
+      <input type="range" id="brushSize" min="4" max="200" step="1" value="40">
+      <label class="row">Kelembutan brush <b id="vSoft">10</b></label>
+      <input type="range" id="brushSoft" min="0" max="40" step="1" value="10">
+      <button class="btn ghost" id="btnUndo"><svg class="i sm" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 2.6 5.9"/><path d="M4 21v-5h5"/></svg>Undo sapuan terakhir</button>
+      <div class="hint" style="margin-top:8px">Pilih “Pulihkan” untuk mengembalikan bagian yang terhapus, atau “Hapus” untuk menghapus bagian yang tersisa.</div>
+    </div>
+  </details>
+
+  <details class="card">
+    <summary><svg class="i" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-8 8M3 21l8-8"/></svg>Ukuran output</summary>
+    <div class="body">
+      <div class="grid2" style="margin-bottom:6px">
+        <div>
+          <div class="flabel">Lebar</div>
+          <input type="number" id="outW" min="1" max="8000">
+        </div>
+        <div>
+          <div class="flabel">Tinggi</div>
+          <input type="number" id="outH" min="1" max="8000">
+        </div>
+      </div>
+      <label class="chk" style="margin:4px 0 4px"><input type="checkbox" id="lockAspect" checked> Kunci rasio aspek</label>
+      <div class="pct-row">
+        <button data-pct="50">50%</button><button data-pct="100">100%</button>
+        <button data-pct="150">150%</button><button data-pct="200">200%</button>
+      </div>
+    </div>
+  </details>
+
+  <details class="card" open>
+    <summary><svg class="i" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2.5"/><circle cx="9" cy="9" r="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/></svg>Latar belakang</summary>
+    <div class="body">
+      <div class="fieldset">
+        <div class="seg" id="segBg">
+          <button data-bg="transparent" class="on">Transparan</button>
+          <button data-bg="color">Warna</button>
+          <button data-bg="image">Gambar</button>
+        </div>
+      </div>
+      <div class="fieldset" id="bgColorRow" style="display:none">
+        <div class="swatch-row">
+          <input type="color" id="bgColor" value="#ffffff">
+          <div class="hint">Pilih warna latar solid untuk menggantikan background.</div>
+        </div>
+      </div>
+      <div class="fieldset" id="bgImageRow" style="display:none">
+        <div class="swatch-row">
+          <div class="bgprev" id="bgPrev"></div>
+          <button class="btn ghost" id="btnBgPick" style="margin:0"><svg class="i sm" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg>Unggah gambar</button>
+        </div>
+        <div class="flabel">Penyesuaian</div>
+        <select id="bgFit">
+          <option value="cover" selected>Cover — penuhi &amp; potong</option>
+          <option value="contain">Contain — muat semua</option>
+          <option value="stretch">Stretch — regangkan</option>
+        </select>
+      </div>
+    </div>
+  </details>
+
+  <button class="btn ghost" id="btnReset" style="margin-top:auto"><svg class="i sm" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 1 2.6 5.9"/><path d="M4 21v-5h5"/></svg>Reset semua</button>
+</aside>
+
+<section class="stage">
+  <div class="toolbar">
+    <button class="tbtn on" id="btnCompare"><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg>Bandingkan</button>
+    <button class="tbtn ico" id="btnZoomOut" title="Zoom out"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M8 11h6"/></svg></button>
+    <span id="zoomLbl" style="min-width:52px;text-align:center">100%</span>
+    <button class="tbtn ico" id="btnZoomIn" title="Zoom in"><svg class="i sm" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></button>
+    <button class="tbtn" id="btnFit"><svg class="i sm" viewBox="0 0 24 24"><path d="M9 4H5a1 1 0 00-1 1v4M15 4h4a1 1 0 011 1v4M9 20H5a1 1 0 01-1-1v-4M15 20h4a1 1 0 001-1v-4"/></svg>Fit</button>
+    <button class="tbtn" id="btn100">1:1</button>
+    <div class="sep"></div>
+    <span id="dims"></span>
+    <div class="spacer"></div>
+    <span>Scroll = zoom · Navigasi: drag geser · Brush: drag melukis</span>
+  </div>
+  <div class="viewport" id="vp">
+    <div id="wrap" class="cutmode" style="--split:50%">
+      <canvas id="cvIn"></canvas>
+      <canvas id="cvOut"></canvas>
+      <div id="handle"></div>
+      <span class="badge l" id="bl">ASLI</span>
+      <span class="badge r" id="br">HASIL</span>
+    </div>
+    <div class="brushcur" id="brushcur"></div>
+
+    <div class="floatcard" id="floatPanel">
+      <div class="fhead">
+        <svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>
+        <h2>Ekspor</h2>
+        <button class="fmin" id="btnMin" title="Sembunyikan / tampilkan">–</button>
+      </div>
+      <div class="fbody" id="fbody">
+        <div class="grid2" style="margin-bottom:8px">
+          <select id="fmt">
+            <option value="image/png" selected>PNG (alpha)</option>
+            <option value="image/webp">WebP (alpha)</option>
+            <option value="image/jpeg">JPEG</option>
+          </select>
+          <input type="number" id="q" min="1" max="100" value="95" title="Kualitas (WebP/JPEG)">
+        </div>
+        <button class="btn" id="btnSave" disabled><svg class="i sm" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5"/><path d="M4 21h16"/></svg>Unduh hasil</button>
+        <div class="hint" id="outInfo" style="margin-top:8px"></div>
+        <div class="err" id="err"></div>
+      </div>
+    </div>
+
+    <div class="drop" id="drop">
+      <h3><span class="dropico"><svg class="i lg" viewBox="0 0 24 24"><path d="M12 16V4M12 4l-4 4M12 4l4 4"/><path d="M4 16v3a2 2 0 002 2h12a2 2 0 002-2v-3"/></svg></span>Taruh gambar di sini</h3>
+      <div>atau klik “Pilih atau tarik gambar” di panel kiri</div>
+    </div>
+    <div class="overlay" id="ov">
+      <div id="ovTxt">Memproses…</div>
+      <div class="bar"><i id="ovBar"></i></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<input type="file" id="file" accept="image/*" hidden>
+<input type="file" id="bgFile" accept="image/*" hidden>
+<script src="bg-remove.js"></script>
+</body>
+</html>

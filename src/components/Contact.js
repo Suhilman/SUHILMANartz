@@ -45,7 +45,7 @@ const ContactForm = ({ isDarkMode }) => {
     return (
         <Page>
             <Header>
-                <Eyebrow>{'// 05 — Contact'}</Eyebrow>
+                <Eyebrow>{'// 06 — Contact'}</Eyebrow>
                 <Title><RevealWords>Let's</RevealWords> <RevealWords as="span" className="grad" delay={0.18}>build</RevealWords> <RevealWords delay={0.35}>something together</RevealWords></Title>
                 <Sub>Have a project, role, or idea in mind? Drop a message — I usually reply within a day.</Sub>
             </Header>
