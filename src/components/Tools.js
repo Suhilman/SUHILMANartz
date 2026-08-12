@@ -1,11 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   FaMagic, FaBezierCurve, FaCut, FaFileExport,
   FaFileImage, FaYoutube, FaMusic, FaToolbox, FaExternalLinkAlt,
+  FaLocationArrow,
 } from 'react-icons/fa';
 import { RevealWords, Tilt } from './fx';
+
+const MotionLink = motion(Link);
 
 const TOOLS = [
   { href: 'video-download.html',  label: 'YouTube Video Downloader',desc: 'Grab video files straight from a URL', icon: <FaYoutube />   },
@@ -15,6 +19,12 @@ const TOOLS = [
   { href: 'vectorize.html',       label: 'Vectorize SVG',           desc: 'Raster to scalable vector art',      icon: <FaBezierCurve /> },
   { href: 'imageconvert.html',    label: 'Image Converter',         desc: 'PNG · JPEG · WebP · BMP · ICO',      icon: <FaFileImage />   },
   { href: 'convert.html',         label: 'Document Converter',      desc: 'TXT · MD · HTML · DOCX · PDF',       icon: <FaFileExport />  },
+  {
+    route: '/tools/location-simulator',
+    label: 'Location Simulator',
+    desc: 'Interactive map demo — teleport & simulate a route',
+    icon: <FaLocationArrow />,
+  },
 ];
 
 const Tools = () => {
@@ -36,12 +46,12 @@ const Tools = () => {
 
       <ChipGrid>
         {TOOLS.map((t, i) => (
-          <Tilt key={t.href} max={6} scale={1.02}>
+          <Tilt key={t.route || t.href} max={6} scale={1.02}>
             <Chip
-              href={`${pub}/tools/${t.href}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              as={motion.a}
+              as={t.route ? MotionLink : motion.a}
+              {...(t.route
+                ? { to: t.route }
+                : { href: `${pub}/tools/${t.href}`, target: '_blank', rel: 'noopener noreferrer' })}
               initial={{ opacity: 0, y: 18 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}

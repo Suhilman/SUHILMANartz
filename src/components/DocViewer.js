@@ -1,23 +1,36 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { FaArrowLeft, FaDownload, FaExpand, FaCompress, FaExchangeAlt } from 'react-icons/fa';
+import { FaArrowLeft, FaDownload, FaExpand, FaCompress, FaExchangeAlt, FaSpinner } from 'react-icons/fa';
+import CvDocument from './CvDocument';
+import PortfolioDocument from './PortfolioDocument';
 
-const DocViewer = ({ title, htmlSrc, downloadSrc, downloadName, swapRoute, swapLabel }) => {
+const DOC_COMPONENTS = { cv: CvDocument, portfolio: PortfolioDocument };
+const PDF_GENERATORS = { cv: 'generateCvPdf', portfolio: 'generatePortfolioPdf' };
+
+const DocViewer = ({ title, docType, swapRoute, swapLabel }) => {
   const navigate = useNavigate();
   const [fullscreen, setFullscreen] = React.useState(false);
-  const iframeRef = React.useRef(null);
+  const [busy, setBusy] = React.useState(false);
+  const [error, setError] = React.useState('');
 
-  const onDownload = () => {
-    // Langsung buat elemen anchor <a> untuk mendownload file statis
-    const a = document.createElement('a');
-    a.href = downloadSrc; 
-    a.download = downloadName || 'Suhilman-Document.pdf';
-    
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+  const DocComponent = DOC_COMPONENTS[docType];
+
+  const onDownload = async () => {
+    if (busy) return;
+    setBusy(true);
+    setError('');
+    try {
+      // Digambar sebagai vector PDF (bukan screenshot HTML), lalu langsung ter-download.
+      const url = `${process.env.PUBLIC_URL}/pdf/index.js`;
+      const mod = await import(/* webpackIgnore: true */ url);
+      await mod[PDF_GENERATORS[docType]]();
+    } catch (e) {
+      setError('Gagal membuat PDF. Coba lagi.');
+    } finally {
+      setBusy(false);
+    }
   };
 
   return (
@@ -64,23 +77,24 @@ const DocViewer = ({ title, htmlSrc, downloadSrc, downloadName, swapRoute, swapL
           </IconBtn>
           <DownloadBtn
             onClick={onDownload}
+            disabled={busy}
             as={motion.button}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.96 }}
+            whileHover={busy ? undefined : { y: -2 }}
+            whileTap={busy ? undefined : { scale: 0.96 }}
+            title={busy ? 'Sedang membuat PDF…' : 'Download PDF'}
           >
-            <FaDownload />
-            <span>Download PDF</span>
+            {busy ? <Spinner as={FaSpinner} /> : <FaDownload />}
+            <span>{busy ? 'Membuat PDF…' : 'Download PDF'}</span>
           </DownloadBtn>
         </Actions>
       </TopBar>
 
+      {error && <ErrorBar role="alert">{error}</ErrorBar>}
+
       <Stage fullscreen={fullscreen ? 1 : 0}>
-        <Iframe
-          ref={iframeRef}
-          src={htmlSrc}
-          title={title}
-          sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-downloads allow-modals"
-        />
+        <DocFrame>
+          <DocComponent />
+        </DocFrame>
       </Stage>
     </Viewer>
   );
@@ -238,11 +252,32 @@ const DownloadBtn = styled.button`
   box-shadow: var(--shadow-neon);
   transition: all 0.25s;
   &:hover { box-shadow: 0 0 28px var(--accent-glow); }
+  &:disabled { cursor: progress; opacity: 0.75; }
   @media (max-width: 768px) {
     padding: 7px 14px;
     font-size: 12px;
     span { display: none; }
   }
+`;
+
+const spin = keyframes`
+  to { transform: rotate(360deg); }
+`;
+
+const Spinner = styled.svg`
+  animation: ${spin} 0.9s linear infinite;
+`;
+
+const ErrorBar = styled.div`
+  padding: 8px 24px;
+  background: rgba(255, 91, 148, 0.12);
+  border-bottom: 1px solid rgba(255, 91, 148, 0.4);
+  color: #ff5b94;
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
 `;
 
 const Stage = styled.div`
@@ -258,11 +293,11 @@ const Stage = styled.div`
   }
 `;
 
-const Iframe = styled.iframe`
+const DocFrame = styled.div`
   width: 100%;
   height: 100%;
   min-height: calc(100vh - 110px);
-  border: none;
+  overflow: auto;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);

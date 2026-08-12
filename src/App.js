@@ -11,6 +11,8 @@ import CursorOverlay from './components/CursorOverlay';
 import DocViewer from './components/DocViewer';
 import './App.css';
 
+const ToolLocationSimulator = lazy(() => import('./pages/tools/ToolLocationSimulator'));
+
 const Experience    = lazy(() => import('./components/Experience'));
 const Animation     = lazy(() => import('./components/Animation'));
 const Tools         = lazy(() => import('./components/Tools'));
@@ -21,7 +23,24 @@ const Footer        = lazy(() => import('./components/Footer'));
 
 const SectionFallback = () => <div style={{ minHeight: '40vh' }} />;
 
-function MainPage({ isDarkMode, toggleTheme }) {
+function MainPage({ isDarkMode, toggleTheme, bootDone }) {
+  // Scoped here (not in App) so Lenis's global wheel-event takeover only runs while
+  // this route is actually mounted — otherwise it also intercepts scrolling inside
+  // DocViewer's own scrollable area on /cv and /portfolio, and dragging the native
+  // scrollbar thumb becomes the only thing that still works there.
+  useEffect(() => {
+    if (!bootDone) return;
+    const lenis = new Lenis({
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    let raf;
+    const loop = (time) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
+    raf = requestAnimationFrame(loop);
+    return () => { cancelAnimationFrame(raf); lenis.destroy(); };
+  }, [bootDone]);
+
   return (
     <div className="App">
       <Header isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
@@ -102,23 +121,7 @@ function App() {
     localStorage.setItem('theme', t);
   }, [isDarkMode]);
 
-  useEffect(() => {
-    if (!bootDone) return;
-    const lenis = new Lenis({
-      duration: 1.1,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smoothWheel: true,
-    });
-    let raf;
-    const loop = (time) => { lenis.raf(time); raf = requestAnimationFrame(loop); };
-    raf = requestAnimationFrame(loop);
-    return () => { cancelAnimationFrame(raf); lenis.destroy(); };
-  }, [bootDone]);
-
   const toggleTheme = () => setIsDarkMode((m) => !m);
-
-  // Asset URLs (respect PUBLIC_URL for /SUHILMANartz/ subpath on GitHub Pages)
-  const pub = process.env.PUBLIC_URL || '';
 
   return (
     <HashRouter>
@@ -128,16 +131,14 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<MainPage isDarkMode={isDarkMode} toggleTheme={toggleTheme} />}
+          element={<MainPage isDarkMode={isDarkMode} toggleTheme={toggleTheme} bootDone={bootDone} />}
         />
         <Route
           path="/cv"
           element={
             <DocViewer
               title="Suhilman — Curiculum Vitae"
-              htmlSrc={`${pub}/cv-suhilman.html`}
-              downloadSrc={`${pub}/CV-SUHILMAN.pdf`}
-              downloadName="CV Suhilman.pdf"
+              docType="cv"
               swapRoute="/portfolio"
               swapLabel="View Portfolio"
             />
@@ -148,12 +149,18 @@ function App() {
           element={
             <DocViewer
               title="Suhilman — Portfolio"
-              htmlSrc={`${pub}/portfolio.html`}
-              downloadSrc={`${pub}/portofolio-suhilman.pdf`}
-              downloadName="Portofolio Suhilman.pdf"
+              docType="portfolio"
               swapRoute="/cv"
               swapLabel="View Curiculum Vitae"
             />
+          }
+        />
+        <Route
+          path="/tools/location-simulator"
+          element={
+            <Suspense fallback={<SectionFallback />}>
+              <ToolLocationSimulator />
+            </Suspense>
           }
         />
       </Routes>

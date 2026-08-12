@@ -19,7 +19,6 @@
     "framer-motion": "^11.4.0",
     "geolib": "^3.3.4",
     "hammerjs": "^2.0.8",
-    "html2pdf.js": "^0.14.0",
     "leaflet": "^1.9.4",
     "lenis": "^1.3.23",
     "micro-slider": "^1.1.0",
