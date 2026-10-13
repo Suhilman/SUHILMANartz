@@ -66,7 +66,7 @@ export default {
     {
       company: 'PT. BIS DATA INDONESIA',
       period: '08/2023 — Present',
-      role: 'Front End Developer',
+      role: 'Supervisor Front-End',
       location: 'Jakarta, Indonesia',
       bullets: [
         [{ text: 'NADIA — NMS for SATRIA-1 Satellite HUB (BAKTI KOMINFO, Jayapura):', strong: true }, { text: ' mobile & web monitoring, integrated FORTIGATE, HUAWEI Core Switch, HPE ProLiant.', strong: false }],

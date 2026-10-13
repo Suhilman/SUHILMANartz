@@ -70,7 +70,7 @@ const CENTER_POSITION = [-6.659333, 106.850664];
 const EXPERIENCES = [
     {
         company: 'PT. BIS DATA INDONESIA',
-        role: 'Front End Developer',
+        role: 'Supervisor Front-End',
         period: '08/2023 – Present',
         positions: [
             {
