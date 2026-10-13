@@ -142,7 +142,7 @@ const Backdrop = styled.div`
   width: 100%;
   background: #f4f6fa;
   padding: 24px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: 14px;
   line-height: 1.55;
   color: #0f172a;
@@ -252,9 +252,9 @@ const AvatarInner = styled.div`
 `;
 
 const HeadId = styled.div`
-  .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .2em; color: #00f0ff; text-transform: uppercase; margin-bottom: 5px; }
+  .eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .2em; color: #00f0ff; text-transform: uppercase; margin-bottom: 5px; }
   h1 {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: 'Fraunces', 'Hanken Grotesk', serif;
     font-weight: 700;
     font-size: 34px;
     line-height: 1;
@@ -277,11 +277,11 @@ const HeadMeta = styled.div`
   gap: 4px;
   text-align: right;
   min-width: 140px;
-  .meta-row { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; letter-spacing: .04em; color: #e8e9f3; display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
+  .meta-row { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; letter-spacing: .04em; color: #e8e9f3; display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
   .meta-row .l { font-size: 8px; color: #00f0ff; letter-spacing: .16em; text-transform: uppercase; }
   .meta-status {
     display: inline-flex; align-items: center; gap: 7px;
-    font-family: 'JetBrains Mono', monospace; font-size: 9.5px; color: #e8e9f3;
+    font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; color: #e8e9f3;
     background: rgba(34, 197, 94, .12); border: 1px solid rgba(34, 197, 94, .35);
     padding: 3px 10px; border-radius: 999px; align-self: flex-end; margin-top: 5px;
   }
@@ -298,8 +298,8 @@ const SectionTitle = styled.div`
   align-items: flex-end;
   gap: 10px;
   margin-bottom: 9px;
-  .num { font-family: 'JetBrains Mono', monospace; font-size: 9.5px; line-height: 1; letter-spacing: .16em; color: #b14aff; text-transform: uppercase; padding-bottom: 2px; }
-  h2 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -.01em; line-height: 1; color: #0f172a; }
+  .num { font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; line-height: 1; letter-spacing: .16em; color: #b14aff; text-transform: uppercase; padding-bottom: 2px; }
+  h2 { font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 17px; letter-spacing: -.01em; line-height: 1; color: #0f172a; }
   &::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; margin-bottom: 5px; }
 `;
 
@@ -314,12 +314,12 @@ const Highlight = styled.div`
   overflow: hidden;
   &::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(135deg, #00f0ff, #b14aff); }
   .n {
-    font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 20px; line-height: 1;
+    font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 20px; line-height: 1;
     background: linear-gradient(135deg, #00f0ff 0%, #b14aff 50%, #ff5b94 100%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     margin-bottom: 4px;
   }
-  .l { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; letter-spacing: .1em; color: #475569; text-transform: uppercase; line-height: 1.3; }
+  .l { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: .1em; color: #475569; text-transform: uppercase; line-height: 1.3; }
 `;
 
 const Projects = styled.div`display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;`;
@@ -336,16 +336,16 @@ const Project = styled.article`
   &::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(135deg, #00f0ff 0%, #b14aff 50%, #ff5b94 100%); }
   .project-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; gap: 6px; }
   .project-glyph {
-    font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 10.5px; letter-spacing: .04em;
+    font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 10.5px; letter-spacing: .04em;
     background: linear-gradient(135deg, #00f0ff 0%, #b14aff 50%, #ff5b94 100%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     text-transform: uppercase;
   }
-  h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 12px; color: #0f172a; line-height: 1.25; letter-spacing: -.01em; margin-bottom: 3px; }
-  .meta { font-family: 'JetBrains Mono', monospace; font-size: 8.5px; color: #b14aff; letter-spacing: .02em; margin-bottom: 5px; }
+  h3 { font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 12px; color: #0f172a; line-height: 1.25; letter-spacing: -.01em; margin-bottom: 3px; }
+  .meta { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; color: #b14aff; letter-spacing: .02em; margin-bottom: 5px; }
   p { font-size: 9.5px; line-height: 1.5; color: #0f172a; margin-bottom: 7px; flex: 1; }
   .tags { display: flex; flex-wrap: wrap; gap: 4px; }
-  .tag { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; padding: 2px 6px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 999px; color: #7c3aed; }
+  .tag { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; padding: 2px 6px; background: #f5f3ff; border: 1px solid #ddd6fe; border-radius: 999px; color: #7c3aed; }
 `;
 
 /* Closing tile in the Featured Work grid — signals more shipped work exists beyond
@@ -365,11 +365,11 @@ const MoreProjects = styled.div`
   gap: 5px;
   &::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(135deg, #00f0ff 0%, #b14aff 50%, #ff5b94 100%); }
   .n {
-    font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 24px;
+    font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 24px;
     background: linear-gradient(135deg, #00f0ff 0%, #b14aff 50%, #ff5b94 100%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
   }
-  .l { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: .08em; color: #475569; text-transform: uppercase; line-height: 1.3; }
+  .l { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: .08em; color: #475569; text-transform: uppercase; line-height: 1.3; }
 `;
 
 const PIN_COLORS = {
@@ -379,7 +379,7 @@ const PIN_COLORS = {
 };
 
 const Pin = styled.span`
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 7.5px;
   letter-spacing: .1em;
   padding: 2px 7px;
@@ -403,7 +403,7 @@ const SkillWrap = styled.div`
   margin-bottom: 6px;
   .skill-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 2px; }
   .skill-name { font-size: 9.5px; color: #0f172a; font-weight: 500; }
-  .skill-lv { font-family: 'JetBrains Mono', monospace; font-size: 8px; color: #475569; }
+  .skill-lv { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: #475569; }
   .bar { height: 4px; background: #eef0f5; border-radius: 999px; overflow: hidden; }
   .bar > span { display: block; height: 100%; background: linear-gradient(135deg, #00f0ff, #b14aff); border-radius: 999px; box-shadow: 0 0 6px rgba(0, 240, 255, .4); }
 `;
@@ -412,7 +412,7 @@ const StackChips = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  .chip { font-family: 'Inter', sans-serif; font-size: 7px; font-weight: 500; padding: 3px 9px; background: #13131f; color: #e8e9f3; border: 1px solid #26263a; border-radius: 999px; }
+  .chip { font-family: 'Hanken Grotesk', sans-serif; font-size: 7px; font-weight: 500; padding: 3px 9px; background: #13131f; color: #e8e9f3; border: 1px solid #26263a; border-radius: 999px; }
 `;
 
 const ContactBlock = styled.div`
@@ -441,7 +441,7 @@ const ContactBlock = styled.div`
 const ContactInfo = styled.div`
   flex: 1;
   min-width: 0;
-  h3 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-size: 13px; font-weight: 700; margin-bottom: 3px; line-height: 1.15; }
+  h3 { font-family: 'Fraunces', 'Hanken Grotesk', serif; font-size: 13px; font-weight: 700; margin-bottom: 3px; line-height: 1.15; }
   h3 .grad {
     background: linear-gradient(135deg, #00f0ff 0%, #b14aff 50%, #ff5b94 100%);
     -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
@@ -456,7 +456,7 @@ const ContactItem = styled.div`
   flex-direction: column;
   font-size: 9px;
   min-width: 0;
-  .l { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: .14em; color: #00f0ff; text-transform: uppercase; margin-bottom: 1px; }
+  .l { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; letter-spacing: .14em; color: #00f0ff; text-transform: uppercase; margin-bottom: 1px; }
   .v { color: #e8e9f3; word-break: break-word; line-height: 1.35; }
 `;
 
@@ -470,5 +470,5 @@ const QrMini = styled.div`
   background: #fff;
   border-radius: 8px;
   img { width: 72px; height: 72px; display: block; }
-  .l { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: .16em; color: #b14aff; text-transform: uppercase; font-weight: 700; }
+  .l { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; letter-spacing: .16em; color: #b14aff; text-transform: uppercase; font-weight: 700; }
 `;

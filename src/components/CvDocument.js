@@ -182,7 +182,7 @@ const Backdrop = styled.div`
   width: 100%;
   background: #f4f6fa;
   padding: 24px 0;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Hanken Grotesk', sans-serif;
   font-size: 14px;
   line-height: 1.55;
   color: #0f172a;
@@ -305,7 +305,7 @@ const AvatarStatus = styled.div`
 `;
 
 const Name = styled.h1`
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-family: 'Fraunces', 'Hanken Grotesk', serif;
   font-weight: 700;
   font-size: 30px;
   line-height: 1;
@@ -323,7 +323,7 @@ const Role = styled.div`
   color: #8b8da3;
   margin-bottom: 16px;
   text-align: center;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   letter-spacing: .04em;
 `;
 
@@ -340,7 +340,7 @@ const SSection = styled.div`
 `;
 
 const SectionTitle = styled.div`
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-family: 'Fraunces', 'Hanken Grotesk', serif;
   font-weight: 700;
   font-size: 10.5px;
   letter-spacing: .16em;
@@ -361,7 +361,7 @@ const ContactItem = styled.div`
   gap: 2px;
   font-size: 10.5px;
   word-break: break-word;
-  .label { font-family: 'JetBrains Mono', monospace; font-size: 8px; letter-spacing: .16em; color: #00f0ff; text-transform: uppercase; }
+  .label { font-family: 'IBM Plex Mono', monospace; font-size: 8px; letter-spacing: .16em; color: #00f0ff; text-transform: uppercase; }
   .value { color: #e8e9f3; line-height: 1.4; }
 `;
 
@@ -369,7 +369,7 @@ const SkillWrap = styled.div`
   margin-bottom: 9px;
   .skill-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 3px; }
   .skill-name { font-size: 10.5px; color: #e8e9f3; font-weight: 500; }
-  .skill-lv { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #8b8da3; }
+  .skill-lv { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #8b8da3; }
   .bar { height: 4px; background: rgba(255, 255, 255, .06); border-radius: 999px; overflow: hidden; }
   .bar > span { display: block; height: 100%; background: linear-gradient(135deg, #00f0ff, #b14aff); border-radius: 999px; }
 `;
@@ -380,7 +380,7 @@ const LangItem = styled.div`
   font-size: 10.5px;
   padding: 4px 0;
   strong { color: #e8e9f3; font-weight: 600; }
-  span { color: #8b8da3; font-family: 'JetBrains Mono', monospace; font-size: 9.5px; }
+  span { color: #8b8da3; font-family: 'IBM Plex Mono', monospace; font-size: 9.5px; }
 `;
 
 const Main = styled.main`
@@ -401,7 +401,7 @@ const MainHead = styled.div`
 `;
 
 const MainEyebrow = styled.div`
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
   letter-spacing: .2em;
   color: #b14aff;
@@ -410,7 +410,7 @@ const MainEyebrow = styled.div`
 `;
 
 const MainTitle = styled.div`
-  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-family: 'Fraunces', 'Hanken Grotesk', serif;
   font-weight: 700;
   font-size: 15px;
   letter-spacing: .03em;
@@ -419,7 +419,7 @@ const MainTitle = styled.div`
 `;
 
 const MainTag = styled.div`
-  font-family: 'JetBrains Mono', monospace;
+  font-family: 'IBM Plex Mono', monospace;
   font-size: 9.5px;
   color: #475569;
   letter-spacing: .05em;
@@ -433,8 +433,8 @@ const MTitle = styled.div`
   align-items: flex-end;
   gap: 10px;
   margin-bottom: 7px;
-  .num { font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1; color: #b14aff; letter-spacing: .18em; text-transform: uppercase; padding-bottom: 2px; }
-  h2 { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 17px; letter-spacing: -.01em; color: #0f172a; line-height: 1; }
+  .num { font-family: 'IBM Plex Mono', monospace; font-size: 10px; line-height: 1; color: #b14aff; letter-spacing: .18em; text-transform: uppercase; padding-bottom: 2px; }
+  h2 { font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 17px; letter-spacing: -.01em; color: #0f172a; line-height: 1; }
   &::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; margin-bottom: 5px; }
 `;
 
@@ -456,7 +456,7 @@ const Kpi = styled.div`
   overflow: hidden;
   &::before { content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(135deg, #00f0ff, #b14aff); }
   .n {
-    font-family: 'Space Grotesk', 'Inter', sans-serif;
+    font-family: 'Fraunces', 'Hanken Grotesk', serif;
     font-weight: 700;
     font-size: 17px;
     line-height: 1;
@@ -466,24 +466,24 @@ const Kpi = styled.div`
     -webkit-text-fill-color: transparent;
     margin-bottom: 2px;
   }
-  .l { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: .1em; color: #475569; text-transform: uppercase; line-height: 1.3; }
+  .l { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; letter-spacing: .1em; color: #475569; text-transform: uppercase; line-height: 1.3; }
 `;
 
 const Job = styled.article`
   margin-bottom: ${({ $last }) => ($last ? '3px' : '7px')};
   ${({ $last }) => !$last && `padding-bottom: 7px; border-bottom: 1px dashed #e2e8f0;`}
   .job-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1px; }
-  .job-company { font-family: 'Space Grotesk', 'Inter', sans-serif; font-weight: 700; font-size: 12px; color: #0f172a; }
-  .job-period { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #b14aff; font-weight: 500; }
+  .job-company { font-family: 'Fraunces', 'Hanken Grotesk', serif; font-weight: 700; font-size: 12px; color: #0f172a; }
+  .job-period { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #b14aff; font-weight: 500; }
   .job-sub { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
   .job-role { font-size: 10px; font-weight: 600; color: #0891b2; }
-  .job-loc { font-size: 8.5px; color: #475569; font-family: 'JetBrains Mono', monospace; }
+  .job-loc { font-size: 8.5px; color: #475569; font-family: 'IBM Plex Mono', monospace; }
   ul { list-style: none; padding: 0; margin: 0 0 4px; }
   li { position: relative; padding-left: 11px; margin-bottom: 2px; font-size: 9.5px; line-height: 1.45; color: #0f172a; }
   li::before { content: '▸'; position: absolute; left: 0; top: 0; color: #00f0ff; font-weight: 700; }
   li strong { color: #0f172a; font-weight: 600; }
   .job-tech {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 8px;
     color: #7c3aed;
     background: #f5f3ff;
@@ -523,7 +523,7 @@ const EduItem = styled.div`
   .edu-info { flex: 1; min-width: 0; }
   .edu-school { font-weight: 700; font-size: 11px; color: #0f172a; line-height: 1.25; }
   .edu-major { font-size: 9.5px; color: #475569; margin-top: 1px; }
-  .edu-year { font-family: 'JetBrains Mono', monospace; font-size: 9px; color: #b14aff; font-weight: 500; flex-shrink: 0; }
+  .edu-year { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: #b14aff; font-weight: 500; flex-shrink: 0; }
 `;
 
 const BottomCard = styled.div`
@@ -542,7 +542,7 @@ const StackChips = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
-  .chip { font-family: 'Inter', sans-serif; font-size: 8.5px; font-weight: 500; padding: 2px 7px; background: #13131f; border: 1px solid #26263a; border-radius: 999px; color: #e8e9f3; }
+  .chip { font-family: 'Hanken Grotesk', sans-serif; font-size: 8.5px; font-weight: 500; padding: 2px 7px; background: #13131f; border: 1px solid #26263a; border-radius: 999px; color: #e8e9f3; }
 `;
 
 const QrCard = styled.div`
@@ -555,6 +555,6 @@ const QrCard = styled.div`
   border: 1px solid #e2e8f0;
   border-radius: 6px;
   img { width: 72px; height: 72px; display: block; }
-  .qr-label { font-family: 'JetBrains Mono', monospace; font-size: 7.5px; letter-spacing: .18em; color: #b14aff; text-transform: uppercase; font-weight: 700; }
-  .qr-url { font-family: 'JetBrains Mono', monospace; font-size: 7px; color: #475569; text-align: center; letter-spacing: .02em; }
+  .qr-label { font-family: 'IBM Plex Mono', monospace; font-size: 7.5px; letter-spacing: .18em; color: #b14aff; text-transform: uppercase; font-weight: 700; }
+  .qr-url { font-family: 'IBM Plex Mono', monospace; font-size: 7px; color: #475569; text-align: center; letter-spacing: .02em; }
 `;
