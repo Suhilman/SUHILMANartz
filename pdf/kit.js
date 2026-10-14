@@ -47,16 +47,16 @@ export const GRADIENT_2 = [
 export const CONIC_RING = ['#00f0ff', '#b14aff', '#ff5b94', '#00f0ff'];
 
 const FONT_FILES = {
-  'body:regular': 'Inter-Regular.ttf',
-  'body:medium': 'Inter-Medium.ttf',
-  'body:semibold': 'Inter-SemiBold.ttf',
-  'body:bold': 'Inter-Bold.ttf',
-  'display:bold': 'SpaceGrotesk-Bold.ttf',
-  'mono:regular': 'JetBrainsMono-Regular.ttf',
-  'mono:medium': 'JetBrainsMono-Medium.ttf',
-  'mono:bold': 'JetBrainsMono-Bold.ttf',
+  'body:regular': 'HankenGrotesk-Regular.ttf',
+  'body:medium': 'HankenGrotesk-Medium.ttf',
+  'body:semibold': 'HankenGrotesk-SemiBold.ttf',
+  'body:bold': 'HankenGrotesk-Bold.ttf',
+  'display:bold': 'Fraunces-Bold.ttf',
+  'mono:regular': 'IBMPlexMono-Regular.ttf',
+  'mono:medium': 'IBMPlexMono-Medium.ttf',
+  'mono:bold': 'IBMPlexMono-Bold.ttf',
 };
-const CANVAS_FAMILY = { body: 'PdfKitInter', display: 'PdfKitSpaceGrotesk', mono: 'PdfKitJetBrainsMono' };
+const CANVAS_FAMILY = { body: 'PdfKitHankenGrotesk', display: 'PdfKitFraunces', mono: 'PdfKitIBMPlexMono' };
 const CANVAS_WEIGHT = { regular: '400', medium: '500', semibold: '600', bold: '700' };
 
 const jsPdfNameOf = (family, weight) => `${family}-${weight}`;

@@ -66,9 +66,10 @@ export default {
     {
       company: 'PT. BIS DATA INDONESIA',
       period: '08/2023 — Present',
-      role: 'Front End Developer',
+      role: 'Supervisor Front-End',
       location: 'Jakarta, Indonesia',
       bullets: [
+        [{ text: 'MAHAPATIH Human Affiliation, Profiling, and Target Intelligence Hub.', strong: true }, { text: ' surveillance-massal/profiling manusia untuk kepentingan intelijen-militer', strong: false }],
         [{ text: 'NADIA — NMS for SATRIA-1 Satellite HUB (BAKTI KOMINFO, Jayapura):', strong: true }, { text: ' mobile & web monitoring, integrated FORTIGATE, HUAWEI Core Switch, HPE ProLiant.', strong: false }],
         [{ text: 'VIONA — Multi-HUB NMS (Jayapura, Manokwari, Timika):', strong: true }, { text: ' unified topology, alert routing, device status across 3 regions.', strong: false }],
         [{ text: 'LOOKUP MY IP', strong: true }, { text: ' internal monitoring tool: built an application to track detailed device IP, geolocation, and network data; maintained AWS, weekly progress reports to BAKTI KOMINFO.', strong: false }],

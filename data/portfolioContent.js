@@ -32,6 +32,12 @@ export default {
 
   projects: [
     {
+      glyph: 'MAHAPATIH', pin: 'live', pinLabel: '● Live',
+      title: 'Human Affiliation, Profiling, and Target Intelligence Hub', meta: '',
+      desc: 'surveillance-massal/profiling manusia untuk intelijen-militer.',
+      tags: ['Next.js', 'REST', 'JWT', 'Three.Js'],
+    },
+    {
       glyph: 'NADIA', pin: 'live', pinLabel: '● Live',
       title: 'Network Monitoring System', meta: 'SATRIA-1 HUB · BAKTI · 2024',
       desc: 'Monitoring dashboard for the SATRIA-1 satellite HUB in Jayapura. Integrates FORTIGATE, HUAWEI Core Switch & HPE ProLiant via JWT REST. Used daily by the operations team.',
