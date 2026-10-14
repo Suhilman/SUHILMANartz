@@ -92,9 +92,7 @@ const ToolLocationSimulator = () => {
 
   const jumpTo = (loc) => { setMode('teleport'); setPin([loc.lat, loc.lng]); };
 
-  const tileUrl = theme === 'dark'
-    ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-    : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+  const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
   return (
     <ToolShell
@@ -172,7 +170,11 @@ const ToolLocationSimulator = () => {
 
         <MapWrap>
           <MapContainer center={pin} zoom={14} style={{ height: '100%', width: '100%' }} key={theme}>
-            <TileLayer url={tileUrl} />
+            <TileLayer
+              url={tileUrl}
+              attribution="&copy; OpenStreetMap contributors"
+              className={theme === 'dark' ? 'map-tiles-dark' : ''}
+            />
             <ClickHandler onPick={handlePick} />
             {mode === 'teleport' && <Marker position={pin} icon={pinIcon} />}
             {mode === 'route' && route.length > 0 && (
@@ -229,6 +231,7 @@ const MapWrap = styled.div`
   overflow: hidden;
   border: 1px solid var(--glass-border);
   .leaflet-container { background: var(--card-bg-solid); }
+  .map-tiles-dark { filter: invert(100%) hue-rotate(180deg) brightness(0.92) contrast(0.9); }
   @media (max-width: 900px) {
     height: 420px;
   }

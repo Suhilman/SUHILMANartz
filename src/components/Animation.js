@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Select, MenuItem, Box } from '@mui/material';
+import { WireframeIcon3D, MatcapIcon3D, SpotlightIcon3D, LayersIcon3D, OceanIcon3D } from './Animation/threejs/icons';
 import BasicGlobe from './Animation/Globe';
 import { RevealWords } from './fx';
 import CarColorPicker from './Animation/Car';
@@ -9,8 +10,18 @@ import Car360Viewer from './Animation/360';
 import ArtWork from './Animation/Artwork';
 import DeviceShowcase from './Animation/netflix';
 import DonutLoader from './Animation/donut';
+import WireframeShapes from './Animation/threejs/WireframeShapes';
+import MatcapNormalDemo from './Animation/threejs/MatcapNormalDemo';
+import SpotlightDemo from './Animation/threejs/SpotlightDemo';
+import TextureArrayViewer from './Animation/threejs/TextureArrayViewer';
+import CyberOcean from './Animation/threejs/CyberOcean';
 
 const tabs = [
+  { key: 'wireframe', label: 'Wireframe Shapes', icon: <WireframeIcon3D size={22} /> },
+  { key: 'matcap',    label: 'Matcap / Normal',  icon: <MatcapIcon3D size={22} /> },
+  { key: 'spotlight', label: 'Spotlight Stage',  icon: <SpotlightIcon3D size={22} /> },
+  { key: 'texArray',  label: 'Texture Slices',   icon: <LayersIcon3D size={22} /> },
+  { key: 'cyberOcean', label: 'Cyber Ocean',     icon: <OceanIcon3D size={22} /> },
   { key: 'netflix',   label: 'Netflix Showcase', iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/Netflix_2016_N_logo.svg/250px-Netflix_2016_N_logo.svg.png' },
   { key: 'shoes360',  label: 'Shoes 360 Viewer', iconUrl: 'https://ir.ebaystatic.com/pictures/aw/pics/sneakers/58_c513b4495f.png' },
   { key: 'carPicker', label: 'Car Color Picker', iconUrl: 'https://pngimg.com/uploads/volkswagen/volkswagen_PNG1777.png' },
@@ -20,7 +31,7 @@ const tabs = [
 ];
 
 const Animation = () => {
-  const [selectedTab, setSelectedTab] = useState('netflix');
+  const [selectedTab, setSelectedTab] = useState('wireframe');
 
   const renderContent = () => {
     switch (selectedTab) {
@@ -30,6 +41,11 @@ const Animation = () => {
       case 'carPicker': return <CarColorPicker />;
       case 'artwork':   return <ArtWork />;
       case 'circular':  return <DonutLoader />;
+      case 'wireframe': return <WireframeShapes />;
+      case 'matcap':    return <MatcapNormalDemo />;
+      case 'spotlight': return <SpotlightDemo />;
+      case 'texArray':  return <TextureArrayViewer />;
+      case 'cyberOcean': return <CyberOcean />;
       default: return null;
     }
   };
@@ -51,7 +67,7 @@ const Animation = () => {
               onClick={() => setSelectedTab(t.key)}
               whileHover={{ x: 4 }}
             >
-              <IconBox><img src={t.iconUrl} alt={t.label} /></IconBox>
+              <IconBox>{t.icon || <img src={t.iconUrl} alt={t.label} />}</IconBox>
               <span>{t.label}</span>
               {selectedTab === t.key && <ActiveDot layoutId="activeTab" />}
             </SideItem>
@@ -69,12 +85,18 @@ const Animation = () => {
               if (!t) return null;
               return (
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                  <Box
-                    component="img"
-                    src={t.iconUrl}
-                    alt={t.label}
-                    sx={{ width: 22, height: 22, objectFit: 'contain', borderRadius: '6px', flexShrink: 0 }}
-                  />
+                  {t.icon ? (
+                    <Box sx={{ width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--tittle-color)', flexShrink: 0 }}>
+                      {t.icon}
+                    </Box>
+                  ) : (
+                    <Box
+                      component="img"
+                      src={t.iconUrl}
+                      alt={t.label}
+                      sx={{ width: 22, height: 22, objectFit: 'contain', borderRadius: '6px', flexShrink: 0 }}
+                    />
+                  )}
                   <Box sx={{ fontWeight: 600, fontSize: 14 }}>{t.label}</Box>
                 </Box>
               );
@@ -143,12 +165,18 @@ const Animation = () => {
           >
             {tabs.map((t) => (
               <MenuItem key={t.key} value={t.key} sx={{ display: 'flex', gap: 1.5 }}>
-                <Box
-                  component="img"
-                  src={t.iconUrl}
-                  alt={t.label}
-                  sx={{ width: 22, height: 22, objectFit: 'contain', borderRadius: '6px', flexShrink: 0 }}
-                />
+                {t.icon ? (
+                  <Box sx={{ width: 22, height: 22, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--tittle-color)', flexShrink: 0 }}>
+                    {t.icon}
+                  </Box>
+                ) : (
+                  <Box
+                    component="img"
+                    src={t.iconUrl}
+                    alt={t.label}
+                    sx={{ width: 22, height: 22, objectFit: 'contain', borderRadius: '6px', flexShrink: 0 }}
+                  />
+                )}
                 <Box sx={{ flex: 1 }}>{t.label}</Box>
               </MenuItem>
             ))}
@@ -214,6 +242,9 @@ const Shell = styled.div`
 
 const Sidebar = styled.div`
   display: flex; flex-direction: column; gap: 6px;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 4px;
   @media (max-width: 968px) { display: none; }
 `;
 
@@ -265,8 +296,8 @@ const Content = styled.div`
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-md);
   padding: 20px;
-  min-height: 540px;
-  max-height: 80vh;
+  min-height: 460px;
+  max-height: 520px;
   display: flex;
   align-items: center;
   justify-content: center;

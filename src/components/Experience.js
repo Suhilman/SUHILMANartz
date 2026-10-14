@@ -251,9 +251,7 @@ const Experience = ({ isDarkMode }) => {
         );
     }, []);
 
-    const mapTileUrl = isDarkMode
-        ? 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
-        : 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png';
+    const mapTileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
     return (
         <Page>
@@ -274,7 +272,11 @@ const Experience = ({ isDarkMode }) => {
                 <MapRow>
                     <MapWrap>
                         <MapContainer center={CENTER_POSITION} zoom={13} style={{ height: isMobile ? 320 : 420, width: '100%' }} key={String(isDarkMode)}>
-                            <TileLayer url={mapTileUrl} />
+                            <TileLayer
+                                url={mapTileUrl}
+                                attribution="&copy; OpenStreetMap contributors"
+                                className={isDarkMode ? 'map-tiles-dark' : ''}
+                            />
                             <Marker position={CENTER_POSITION} icon={redIcon}>
                                 <Popup>Ciawi, Bogor, Indonesia</Popup>
                             </Marker>
@@ -443,6 +445,7 @@ const MapWrap = styled.div`
     border: 1px solid var(--glass-border);
     min-width: 0;
     .leaflet-container { background: var(--card-bg-solid); }
+    .map-tiles-dark { filter: invert(100%) hue-rotate(180deg) brightness(0.92) contrast(0.9); }
 `;
 const LocationSide = styled.div`
     display: flex; align-items: stretch;

@@ -5,6 +5,7 @@ import { FaTimes, FaChevronDown } from 'react-icons/fa';
 import { Tilt, RevealWords } from './fx';
 
 const ITEMS = [
+  { src: require('../assets/document/mahapatih.png'),   alt: 'Mahapatih',              tag: 'Human Affiliation, Profiling, and Target Intelligence Hub' },
   { src: require('../assets/document/elara.jpeg'),      alt: 'Elara',                  tag: 'Enterprise Logic, Analytics & Responsiveness Assistant' },
   { src: require('../assets/document/Benggala.png'),    alt: 'Benggala',               tag: 'Monitoring Pengadaan · LKPP' },
   { src: require('../assets/document/nmt.png'),         alt: 'Network Monitoring',     tag: 'PT. BIS DATA INDONESIA' },

@@ -20,9 +20,9 @@ const NAV_ITEMS = [
 ];
 
 const FONTS = [
-    { name: 'Hanken Grotesk', family: "'Hanken Grotesk', sans-serif" },
-    { name: 'Fraunces',       family: "'Fraunces', serif" },
+    { name: 'Inter',          family: "'Inter', sans-serif" },
     { name: 'DM Sans',        family: "'DM Sans', sans-serif" },
+    { name: 'Space Grotesk',  family: "'Space Grotesk', sans-serif" },
     { name: 'IBM Plex Mono',  family: "'IBM Plex Mono', monospace" },
 ];
 
@@ -32,7 +32,7 @@ const Header = ({ isDarkMode, toggleTheme }) => {
     const [isContrast, setIsContrast]       = useState(false);
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [isScrolled, setIsScrolled]       = useState(false);
-    const [selectedFont, setSelectedFont]   = useState('Hanken Grotesk');
+    const [selectedFont, setSelectedFont]   = useState('Inter');
     const [fontSize, setFontSize]           = useState(16);
 
     useEffect(() => {
